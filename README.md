@@ -9,3 +9,23 @@
 Provides [ECharts](https://echarts.apache.org/en/index.html) for Jenkins Plugins.
 
 This plugin contains the latest [WebJars](https://www.webjars.org) release and corresponding Jenkins UI elements. 
+
+## How to use the plugin
+
+In order to use this JS library, add a maven dependency to your pom:
+```xml
+    <dependency>
+      <groupId>io.jenkins.plugins</groupId>
+      <artifactId>echarts-api</artifactId>
+      <version>[latest version]</version>
+    </dependency>
+```
+
+Then you can use ECharts in your jelly files using the following snippet:
+```xml
+      <st:adjunct includes="io.jenkins.plugins.echarts"/>
+```
+ 
+You can find several examples of Jenkins views that use ECharts in the 
+[Warnings Next Generation plugin](https://github.com/jenkinsci/warnings-ng-plugin).
+

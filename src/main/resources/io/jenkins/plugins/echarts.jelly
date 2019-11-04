@@ -1,0 +1,9 @@
+<?jelly escape-by-default='true'?>
+<!--
+Use it like <st:adjunct includes="io.jenkins.plugins.echarts"/>
+-->
+<j:jelly xmlns:j="jelly:core">
+
+  <script type="text/javascript" src="${resURL}/plugin/echarts-api/webjars/echarts-en.common.min.js" />
+
+</j:jelly>
