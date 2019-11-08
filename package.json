@@ -21,9 +21,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jenkins/echarts-api-plugin.git"
+    "url": "git+https://github.com/jenkinsci/echarts-api-plugin.git"
   },
   "author": "Ullrich Hafner",
   "license": "MIT",
-  "homepage": "https://github.com/jenkins/echarts-api-plugin#readme"
+  "homepage": "https://github.com/jenkinsci/echarts-api-plugin#readme"
 }
