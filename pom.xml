@@ -13,7 +13,7 @@
   <groupId>io.jenkins.plugins</groupId>
   <packaging>hpi</packaging>
   <name>ECharts API Plugin</name>
-  <version>4.4.0-1-SNAPSHOT</version>
+  <version>4.4.0-1-beta1-SNAPSHOT</version>
   <description>Jenkins plug-in that provides ECharts.</description>
 
   <properties>
