@@ -14,6 +14,7 @@
   <name>ECharts API Plugin</name>
   <version>4.4.0-2-beta1-SNAPSHOT</version>
   <description>Jenkins plug-in that provides ECharts.</description>
+  <url>https://github.com/jenkinsci/echarts-api-plugin</url>
 
   <properties>
     <echarts.version>4.4.0</echarts.version>

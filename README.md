@@ -14,16 +14,16 @@ This plugin contains the latest [WebJars](https://www.webjars.org) release and c
 
 In order to use this JS library, add a maven dependency to your pom:
 ```xml
-    <dependency>
-      <groupId>io.jenkins.plugins</groupId>
-      <artifactId>echarts-api</artifactId>
-      <version>[latest version]</version>
-    </dependency>
+<dependency>
+  <groupId>io.jenkins.plugins</groupId>
+  <artifactId>echarts-api</artifactId>
+  <version>[latest version]</version>
+</dependency>
 ```
 
 Then you can use ECharts in your jelly files using the following snippet:
 ```xml
-      <st:adjunct includes="io.jenkins.plugins.echarts"/>
+<st:adjunct includes="io.jenkins.plugins.echarts"/>
 ```
  
 You can find several examples of Jenkins views that use ECharts in the 
