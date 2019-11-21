@@ -34,7 +34,7 @@
     <spotbugs.annotations>3.1.12</spotbugs.annotations>
     <commons.lang.version>3.9</commons.lang.version>
     <eclipse-collections.version>9.2.0</eclipse-collections.version>
-    <jackson-databind.version>2.9.10.1</jackson-databind.version>
+    <jackson-databind.version>2.10.1</jackson-databind.version>
 
     <!-- Test Library Dependencies Versions -->
     <junit.version>5.5.2</junit.version>
