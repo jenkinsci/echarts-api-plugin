@@ -1,18 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
     <version>3.53</version>
-    <relativePath />
+    <relativePath/>
   </parent>
 
   <artifactId>echarts-api</artifactId>
   <groupId>io.jenkins.plugins</groupId>
   <packaging>hpi</packaging>
   <name>ECharts API Plugin</name>
-  <version>4.4.0-2-beta1-SNAPSHOT</version>
+  <version>4.4.0-1-beta2-SNAPSHOT</version>
   <description>Jenkins plug-in that provides ECharts.</description>
   <url>https://github.com/jenkinsci/echarts-api-plugin</url>
 
@@ -83,6 +84,21 @@
       <email>ullrich.hafner@gmail.com</email>
     </developer>
   </developers>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-core</artifactId>
+        <version>2.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.ow2.asm</groupId>
+        <artifactId>asm</artifactId>
+        <version>5.0.4</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -223,7 +239,8 @@
               <outputDirectory>${project.build.directory}/${project.artifactId}/webjars</outputDirectory>
               <resources>
                 <resource>
-                  <directory>${project.build.directory}/webjars/META-INF/resources/webjars/echarts/${echarts.version}</directory>
+                  <directory>${project.build.directory}/webjars/META-INF/resources/webjars/echarts/${echarts.version}
+                  </directory>
                   <filtering>false</filtering>
                 </resource>
               </resources>

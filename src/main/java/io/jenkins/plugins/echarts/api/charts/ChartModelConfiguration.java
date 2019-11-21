@@ -32,7 +32,7 @@ public class ChartModelConfiguration {
      *
      * @return the X-axis type
      */
-    AxisType getAxisType() {
+    public AxisType getAxisType() {
         return axisType;
     }
 
@@ -41,7 +41,7 @@ public class ChartModelConfiguration {
      *
      * @return the number of builds to consider
      */
-    int getBuildCount() {
+    public int getBuildCount() {
         return buildCount;
     }
 
@@ -50,7 +50,7 @@ public class ChartModelConfiguration {
      *
      * @return {@code true} if there is a valid build count is defined, {@code false} otherwise
      */
-    boolean isBuildCountDefined() {
+    public boolean isBuildCountDefined() {
         return buildCount > 1;
     }
 

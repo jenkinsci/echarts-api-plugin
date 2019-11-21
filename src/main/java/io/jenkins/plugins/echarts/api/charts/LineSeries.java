@@ -36,7 +36,7 @@ public class LineSeries {
      * @param color
      *         the color of the series
      */
-    LineSeries(final String name, final String color, final StackedMode stackedMode, final FilledMode filledMode) {
+    public LineSeries(final String name, final String color, final StackedMode stackedMode, final FilledMode filledMode) {
         this.name = name;
         itemStyle = new ItemStyle(color);
         this.stackedMode = stackedMode;
@@ -93,13 +93,13 @@ public class LineSeries {
     }
 
     /** Determines whether multiple lines of a chart will be stacked or shown as separate lines. */
-    enum StackedMode {
+    public enum StackedMode {
         STACKED,
         SEPARATE_LINES
     }
 
     /** Determines whether the area of the lines should be filled or just the lines should be shown. */
-    enum FilledMode {
+    public enum FilledMode {
         FILLED,
         LINES
     }

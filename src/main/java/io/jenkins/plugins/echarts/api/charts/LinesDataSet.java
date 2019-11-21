@@ -20,15 +20,15 @@ public class LinesDataSet {
     private final List<String> xAxisLabels = new ArrayList<>();
     private final List<Integer> buildNumbers = new ArrayList<>();
 
-    int getXAxisSize() {
+    public int getXAxisSize() {
         return xAxisLabels.size();
     }
 
-    List<String> getXAxisLabels() {
+    public List<String> getXAxisLabels() {
         return xAxisLabels;
     }
 
-    Set<String> getDataSetIds() {
+    public Set<String> getDataSetIds() {
         return dataSetSeries.keySet();
     }
 
@@ -44,7 +44,7 @@ public class LinesDataSet {
      *
      * @return the series (list of integer values for each X-Axis label)
      */
-    List<Integer> getSeries(final String dataSetId) {
+    public List<Integer> getSeries(final String dataSetId) {
         if (!hasSeries(dataSetId)) {
             throw new NoSuchElementException(String.format("No dataset '%s' registered", dataSetId));
         }
@@ -96,7 +96,7 @@ public class LinesDataSet {
         buildNumbers.add(buildNumber);
     }
 
-    List<Integer> getBuildNumbers() {
+    public List<Integer> getBuildNumbers() {
         return buildNumbers;
     }
 }

@@ -27,7 +27,7 @@ public class LinesChartModel {
     /**
      * Creates a new {@link LinesChartModel} with no id.
      */
-    LinesChartModel() {
+    public LinesChartModel() {
         this(StringUtils.EMPTY);
     }
 
@@ -55,7 +55,7 @@ public class LinesChartModel {
      * @param labels
      *         the X-axis labels of the model
      */
-    void setXAxisLabels(final List<String> labels) {
+    public void setXAxisLabels(final List<String> labels) {
         xAxisLabels.addAll(labels);
     }
 
@@ -65,7 +65,7 @@ public class LinesChartModel {
      * @param builds
      *         the build numbers of the model
      */
-    void setBuildNumbers(final List<Integer> builds) {
+    public void setBuildNumbers(final List<Integer> builds) {
         buildNumbers.addAll(builds);
     }
 
@@ -85,7 +85,7 @@ public class LinesChartModel {
      * @param lineSeries
      *         the series of the model
      */
-    void addSeries(final LineSeries... lineSeries) {
+    public void addSeries(final LineSeries... lineSeries) {
         Collections.addAll(series, lineSeries);
     }
 

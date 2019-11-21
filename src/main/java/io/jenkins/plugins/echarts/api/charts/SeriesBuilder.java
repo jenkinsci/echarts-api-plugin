@@ -26,13 +26,13 @@ import static java.util.stream.Collectors.*;
  *
  * @author Ullrich Hafner
  */
-abstract class SeriesBuilder<T> {
+public abstract class SeriesBuilder<T> {
     private final ResultTime resultTime;
 
     /**
      * Creates a new {@link SeriesBuilder}.
      */
-    SeriesBuilder() {
+    public SeriesBuilder() {
         this(new ResultTime());
     }
 
