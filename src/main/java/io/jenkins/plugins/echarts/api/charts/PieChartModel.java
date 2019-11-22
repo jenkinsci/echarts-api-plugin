@@ -3,6 +3,8 @@ package io.jenkins.plugins.echarts.api.charts;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * UI model for the data series of an ECharts pie chart.
  * <p>
@@ -17,15 +19,22 @@ public class PieChartModel {
     private final String name;
 
     /**
+     * Creates a new {@link PieChartModel} that does not provide a name.
+     */
+    public PieChartModel() {
+        this(StringUtils.EMPTY);
+    }
+
+    /**
      * Creates a new {@link PieChartModel} with the specified human readable name.
      *
      * @param name the name of the chart
      */
-    PieChartModel(final String name) {
+    public PieChartModel(final String name) {
         this.name = name;
     }
 
-    void add(final PieData pieData, final Palette color) {
+    public void add(final PieData pieData, final Palette color) {
         data.add(pieData);
         colors.add(color.getNormal());
     }

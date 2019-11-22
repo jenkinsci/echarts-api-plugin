@@ -1,0 +1,28 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+  <st:documentation>
+    Renders a pie chart. The pie data is loaded asynchronously from the associated view using
+    an Ajax call. In order to correctly connect the jelly view with the Jenkins ModelObject via a Stapler proxy
+    your model Java class needs to implement the AsyncTableContentProvider interface.
+
+    <st:attribute name="id" use="required" type="String">
+      The ID of the pie chart.
+    </st:attribute>
+    <st:attribute name="model" use="required" type="String">
+      The model of the pie chart.
+    </st:attribute>
+    <st:attribute name="height" use="required" type="int">
+      The minimum height of the pie chart.
+    </st:attribute>
+    <st:attribute name="title" use="optional" type="String">
+      An optional title of the pie chart.
+    </st:attribute>
+
+  </st:documentation>
+
+  <st:adjunct includes="io.jenkins.plugins.echarts"/>
+
+  <div id="${id}-chart" class="graph-cursor-pointer echarts" style="min-height: ${height}px;"
+       data-chart-model="${model}" data-title="${title}"/>
+
+</j:jelly>

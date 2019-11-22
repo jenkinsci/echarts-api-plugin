@@ -25,6 +25,11 @@ public enum Palette {
         this.hover = hover;
     }
 
+    public static Palette color(final int index) {
+        Palette[] colors = Palette.values();
+        return colors[index % (colors.length)];
+    }
+
     public String getNormal() {
         return normal;
     }

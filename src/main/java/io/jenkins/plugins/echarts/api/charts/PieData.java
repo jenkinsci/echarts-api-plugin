@@ -22,7 +22,7 @@ public class PieData {
      * @param value
      *         value of the data point
      */
-    PieData(final String name, final int value) {
+    public PieData(final String name, final int value) {
         this.value = value;
         this.name = name;
     }

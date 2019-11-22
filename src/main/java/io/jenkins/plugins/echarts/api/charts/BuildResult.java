@@ -2,6 +2,10 @@ package io.jenkins.plugins.echarts.api.charts;
 
 /**
  * Provides results of a build that should be rendered.
+ *
+ * @param <T> type of the result
+ *
+ * @author Ullrich Hafner
  */
 public class BuildResult<T> {
     private final Build build;

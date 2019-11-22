@@ -24,6 +24,8 @@ import static java.util.stream.Collectors.*;
  * Provides the base algorithms to create a data set for a static analysis graph. The actual series for each result
  * needs to be implemented by sub classes in method {@link #computeSeries}.
  *
+ * @param <T> type of the result
+ *
  * @author Ullrich Hafner
  */
 public abstract class SeriesBuilder<T> {
@@ -66,7 +68,6 @@ public abstract class SeriesBuilder<T> {
         }
     }
 
-    @SuppressWarnings("rawtypes")
     private SortedMap<Build, Map<String, Integer>> createSeriesPerBuild(
             final ChartModelConfiguration configuration, final Iterable<? extends BuildResult<T>> results) {
         int buildCount = 0;

@@ -5,6 +5,7 @@ package io.jenkins.plugins.echarts.api.charts;
  *
  * @author Ullrich Hafner
  */
+// TODO: make this configurable in the UI
 public class ChartModelConfiguration {
     private final AxisType axisType;
 
