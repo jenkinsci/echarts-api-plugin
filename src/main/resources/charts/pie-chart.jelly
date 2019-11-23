@@ -14,7 +14,10 @@
     <st:attribute name="height" use="required" type="int">
       The minimum height of the pie chart.
     </st:attribute>
-    <st:attribute name="title" use="optional" type="String">
+    <st:attribute name="header" use="optional" type="String">
+      An optional header for the pie chart.
+    </st:attribute>
+    <st:attribute name="enableLinks" use="optional" type="Boolean">
       An optional title of the pie chart.
     </st:attribute>
 
@@ -23,6 +26,6 @@
   <st:adjunct includes="io.jenkins.plugins.echarts"/>
 
   <div id="${id}-chart" class="graph-cursor-pointer echarts" style="min-height: ${height}px;"
-       data-chart-model="${model}" data-title="${title}"/>
+       data-chart-model="${model}" data-title="${header}" data-links="${enableLinks}"/>
 
 </j:jelly>

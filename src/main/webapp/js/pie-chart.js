@@ -17,8 +17,8 @@ function renderCharts($) {
      * @param {String} chartDivId - the ID of the div where the chart should be shown in
      */
     function renderPieChart (chartDivId) {
-        function isEmpty(str) {
-            return (!str || str.length === 0);
+        function isEmpty(string) {
+            return (!string || string.length === 0);
         }
 
         /**
@@ -41,11 +41,12 @@ function renderCharts($) {
             }
         }
 
-        const chartPlaceHolder = document.getElementById(chartDivId);
-        const model = JSON.parse(chartPlaceHolder.getAttribute('data-chart-model'));
-        const title = chartPlaceHolder.getAttribute('data-title');
-        const chart = echarts.init(chartPlaceHolder);
-        chartPlaceHolder.echart = chart;
+        const chartPlaceHolder = $("#" + chartDivId);
+        const model = JSON.parse(chartPlaceHolder.attr('data-chart-model'));
+        const title = chartPlaceHolder.attr('data-title');
+        const chartDiv = chartPlaceHolder[0];
+        const chart = echarts.init(chartDiv);
+        chartDiv.echart = chart;
 
         const options = {
             title: getTitle(title),
@@ -84,9 +85,13 @@ function renderCharts($) {
         };
         chart.setOption(options);
         chart.resize();
-        chart.on('click', function (params) {
-            window.location.assign(params.name);
-        });
+
+        const useLinks = chartPlaceHolder.attr('data-links');
+        if (useLinks && useLinks !== "false") {
+            chart.on('click', function (params) {
+                window.location.assign(params.name);
+            });
+        }
 
         window.onresize = function() {
             chart.resize();
