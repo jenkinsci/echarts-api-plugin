@@ -13,11 +13,13 @@
   <groupId>io.jenkins.plugins</groupId>
   <packaging>hpi</packaging>
   <name>ECharts API Plugin</name>
-  <version>4.4.0-1-beta2-SNAPSHOT</version>
+  <version>${revision}${changelist}</version>
   <description>Jenkins plug-in that provides ECharts.</description>
   <url>https://github.com/jenkinsci/echarts-api-plugin</url>
 
   <properties>
+    <revision>4.4.0-1-beta2</revision>
+    <changelist>-SNAPSHOT</changelist>
     <echarts.version>4.4.0</echarts.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -54,7 +56,6 @@
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
     <maven-surefire.plugin>3.0.0-M4</maven-surefire.plugin>
     <maven-failsafe.plugin>3.0.0-M4</maven-failsafe.plugin>
-    <jar.maven.plugin>3.0.2</jar.maven.plugin>
     <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
     <depgraph-maven-plugin.version>3.3.0</depgraph-maven-plugin.version>
     <animal-sniffer-maven-plugin.version>1.18</animal-sniffer-maven-plugin.version>
@@ -559,7 +560,7 @@
     <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
     <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
-    <tag>HEAD</tag>
+    <tag>${scmTag}</tag>
   </scm>
 
   <repositories>
