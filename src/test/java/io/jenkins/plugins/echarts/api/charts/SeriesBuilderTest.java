@@ -227,7 +227,7 @@ class SeriesBuilderTest {
         }
 
         @Override
-        protected Map<String, Integer> computeSeries(final BuildResult<Object> current) {
+        protected Map<String, Integer> computeSeries(final Object current) {
             Map<String, Integer> values = new HashMap<>();
             values.put(FIRST_KEY, count++);
             values.put(SECOND_KEY, count++);

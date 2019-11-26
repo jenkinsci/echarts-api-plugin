@@ -76,7 +76,7 @@ public abstract class SeriesBuilder<T> {
             if (resultTime.isResultTooOld(configuration, current)) {
                 break;
             }
-            Map<String, Integer> series = computeSeries(current);
+            Map<String, Integer> series = computeSeries(current.getResult());
             if (!series.isEmpty()) {
                 valuesPerBuildNumber.put(current.getBuild(), series);
             }
@@ -109,11 +109,11 @@ public abstract class SeriesBuilder<T> {
      * Returns the series to plot for the specified build result.
      *
      * @param current
-     *         the current build result
+     *         the result of the current build for which the series should be computed
      *
      * @return the series to plot
      */
-    protected abstract Map<String, Integer> computeSeries(BuildResult<T> current);
+    protected abstract Map<String, Integer> computeSeries(T current);
 
     /**
      * Creates a data set that contains a series per build number.
