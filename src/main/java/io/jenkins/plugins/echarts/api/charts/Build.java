@@ -2,6 +2,8 @@ package io.jenkins.plugins.echarts.api.charts;
 
 import java.util.Objects;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import hudson.model.Run;
 
 /**
@@ -29,11 +31,23 @@ public class Build implements Comparable<Build> {
      *
      * @param number
      *         build number
+     */
+    @VisibleForTesting
+    public Build(final int number) {
+        this(number, "#" + number, 0);
+    }
+
+    /**
+     * Creates a new instance of {@link Build}.
+     *
+     * @param number
+     *         build number
      * @param displayName
      *         human readable name of the build
      * @param timeInMillis
      *         the build time (in milli seconds)
      */
+    @VisibleForTesting
     public Build(final int number, final String displayName, final long timeInMillis) {
         this.timeInMillis = timeInMillis;
         this.number = number;
