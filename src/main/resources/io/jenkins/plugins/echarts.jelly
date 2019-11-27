@@ -2,9 +2,12 @@
 <!--
 Use it like <st:adjunct includes="io.jenkins.plugins.echarts"/>
 -->
-<j:jelly xmlns:j="jelly:core">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
 
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/webjars/echarts-en.common.min.js" />
+
+  <st:adjunct includes="io.jenkins.plugins.jquery3"/>
+
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/trend-chart.js"/>
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/pie-chart.js"/>
 

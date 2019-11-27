@@ -29,19 +29,19 @@ class LinesChartModelTest {
 
         assertThat(model.getId()).isEmpty();
         assertThat(model.getSeries()).isEmpty();
-        assertThat(model.getXAxisLabels()).isEmpty();
+        assertThat(model.getDomainAxisLabels()).isEmpty();
     }
 
     @Test
     void shouldAddLabels() {
         LinesChartModel model = new LinesChartModel(ID);
 
-        model.setXAxisLabels(BUILDS);
+        model.setDomainAxisLabels(BUILDS);
 
         assertThat(model.size()).isEqualTo(3);
-        assertThat(model.getXAxisLabels()).hasSize(3);
+        assertThat(model.getDomainAxisLabels()).hasSize(3);
         assertThat(model.toString()).isEqualTo(
-                "{\"buildNumbers\":[],\"series\":[],\"id\":\"spotbugs\",\"xAxisLabels\":[\"#1\",\"#2\",\"#3\"]}");
+                "{\"domainAxisLabels\":[\"#1\",\"#2\",\"#3\"],\"buildNumbers\":[],\"series\":[],\"id\":\"spotbugs\"}");
     }
 
     @Test
@@ -64,20 +64,20 @@ class LinesChartModelTest {
     }
 
     @Test
-    void testGetXAxisLabels() {
+    void testGetDomainAxisLabels() {
         LinesChartModel modelForSingleXAxisLabelTest = new LinesChartModel(ID);
-        modelForSingleXAxisLabelTest.setXAxisLabels(Collections.singletonList("a"));
-        assertThat(modelForSingleXAxisLabelTest.getXAxisLabels())
+        modelForSingleXAxisLabelTest.setDomainAxisLabels(Collections.singletonList("a"));
+        assertThat(modelForSingleXAxisLabelTest.getDomainAxisLabels())
                 .hasSize(1)
                 .isEqualTo(Collections.singletonList("a"));
 
         LinesChartModel modelForXAxisListLabelTest = new LinesChartModel(ID);
-        modelForXAxisListLabelTest.setXAxisLabels(Arrays.asList("a", "b", "c"));
-        assertThat(modelForXAxisListLabelTest.getXAxisLabels())
+        modelForXAxisListLabelTest.setDomainAxisLabels(Arrays.asList("a", "b", "c"));
+        assertThat(modelForXAxisListLabelTest.getDomainAxisLabels())
                 .hasSize(3)
                 .isEqualTo(Arrays.asList("a", "b", "c"));
-        modelForXAxisListLabelTest.setXAxisLabels(Arrays.asList("d", "e", "f"));
-        assertThat(modelForXAxisListLabelTest.getXAxisLabels())
+        modelForXAxisListLabelTest.setDomainAxisLabels(Arrays.asList("d", "e", "f"));
+        assertThat(modelForXAxisListLabelTest.getDomainAxisLabels())
                 .hasSize(6)
                 .isEqualTo(Arrays.asList("a", "b", "c", "d", "e", "f"));
     }
@@ -100,10 +100,10 @@ class LinesChartModelTest {
             }
         }
 
-        model.setXAxisLabels(builds);
+        model.setDomainAxisLabels(builds);
         model.addSeries(series);
 
-        assertThatJson(model).node("xAxisLabels")
+        assertThatJson(model).node("domainAxisLabels")
                 .isArray().hasSize(5)
                 .contains("#1")
                 .contains("#2")

@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * UI model for an ECharts line chart. Simple data bean that will be converted to JSON. On the client side the three
  * properties need to be placed into the correct place in the options structure.
@@ -19,9 +17,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @SuppressWarnings("PMD.DataClass")
 public class LinesChartModel {
-    private final List<String> xAxisLabels = new ArrayList<>();
+    private final List<String> domainAxisLabels = new ArrayList<>();
     private final List<Integer> buildNumbers = new ArrayList<>();
     private final List<LineSeries> series = new ArrayList<>();
+
     private String id;
 
     /**
@@ -50,13 +49,13 @@ public class LinesChartModel {
     }
 
     /**
-     * Adds the specified X axis labels to this model.
+     * Adds the specified domain axis (X-axis) labels to this model.
      *
      * @param labels
      *         the X-axis labels of the model
      */
-    public void setXAxisLabels(final List<String> labels) {
-        xAxisLabels.addAll(labels);
+    public void setDomainAxisLabels(final List<String> labels) {
+        domainAxisLabels.addAll(labels);
     }
 
     /**
@@ -89,9 +88,8 @@ public class LinesChartModel {
         Collections.addAll(series, lineSeries);
     }
 
-    @JsonProperty("xAxisLabels")
-    public List<String> getXAxisLabels() {
-        return xAxisLabels;
+    public List<String> getDomainAxisLabels() {
+        return domainAxisLabels;
     }
 
     public List<Integer> getBuildNumbers() {
@@ -108,7 +106,7 @@ public class LinesChartModel {
      * @return number of points
      */
     public int size() {
-        return xAxisLabels.size();
+        return domainAxisLabels.size();
     }
 
     @Override

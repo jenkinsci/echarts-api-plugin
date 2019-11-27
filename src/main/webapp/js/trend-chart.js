@@ -38,7 +38,7 @@ function renderTrendChart (chartDivId, model, urlName) { // eslint-disable-line 
                 }
 
                 const builds = chartModel.buildNumbers;
-                const labels = chartModel.xAxisLabels;
+                const labels = chartModel.domainAxisLabels;
                 for (let i = 0; i < builds.length; i++) {
                     if (params[0].name === labels[i]) {
                         selectedBuild = builds[i];
@@ -70,7 +70,7 @@ function renderTrendChart (chartDivId, model, urlName) { // eslint-disable-line 
         xAxis: [{
             type: 'category',
             boundaryGap: false,
-            data: chartModel.xAxisLabels
+            data: chartModel.domainAxisLabels
         }
         ],
         yAxis: [{

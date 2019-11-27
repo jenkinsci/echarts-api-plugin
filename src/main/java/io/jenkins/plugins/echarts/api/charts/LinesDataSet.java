@@ -17,15 +17,15 @@ import java.util.Set;
  */
 public class LinesDataSet {
     private final Map<String, List<Integer>> dataSetSeries = new HashMap<>();
-    private final List<String> xAxisLabels = new ArrayList<>();
+    private final List<String> domainAxisLabels = new ArrayList<>();
     private final List<Integer> buildNumbers = new ArrayList<>();
 
-    public int getXAxisSize() {
-        return xAxisLabels.size();
+    public int getDomainAxisSize() {
+        return domainAxisLabels.size();
     }
 
-    public List<String> getXAxisLabels() {
-        return xAxisLabels;
+    public List<String> getDomainAxisLabels() {
+        return domainAxisLabels;
     }
 
     public Set<String> getDataSetIds() {
@@ -53,20 +53,20 @@ public class LinesDataSet {
     }
 
     /**
-     * Adds data points for a new xAxisLabel. The data points for the X-axis tick are given by a map. Each dataSetId
+     * Adds data points for a new domainAxisLabel. The data points for the X-axis tick are given by a map. Each dataSetId
      * provides one value for the specified X-axis label.
      *
-     * @param xAxisLabel
+     * @param domainAxisLabel
      *         the label of the X-axis
      * @param dataSetValues
      *         the values for each of the series at the given X-axis tick
      */
-    public void add(final String xAxisLabel, final Map<String, Integer> dataSetValues) {
-        if (xAxisLabels.contains(xAxisLabel)) {
-            throw new IllegalStateException("Label already registered: " + xAxisLabel);
+    public void add(final String domainAxisLabel, final Map<String, Integer> dataSetValues) {
+        if (domainAxisLabels.contains(domainAxisLabel)) {
+            throw new IllegalStateException("Label already registered: " + domainAxisLabel);
         }
 
-        xAxisLabels.add(xAxisLabel);
+        domainAxisLabels.add(domainAxisLabel);
 
         for (Entry<String, Integer> dataPoints : dataSetValues.entrySet()) {
             dataSetSeries.putIfAbsent(dataPoints.getKey(), new ArrayList<>());
@@ -75,18 +75,18 @@ public class LinesDataSet {
     }
 
     /**
-     * Adds data points for a new xAxisLabel. The data points for the X-axis tick are given by a map. Each dataSetId
+     * Adds data points for a new domainAxisLabel. The data points for the X-axis tick are given by a map. Each dataSetId
      * provides one value for the specified X-axis label.
      *
-     * @param xAxisLabel
+     * @param domainAxisLabel
      *         the label of the X-axis
      * @param dataSetValues
      *         the values for each of the series at the given X-axis tick
      * @param buildNumber
      *         the number of the associated build
      */
-    public void add(final String xAxisLabel, final Map<String, Integer> dataSetValues, final int buildNumber) {
-        add(xAxisLabel, dataSetValues);
+    public void add(final String domainAxisLabel, final Map<String, Integer> dataSetValues, final int buildNumber) {
+        add(domainAxisLabel, dataSetValues);
 
         if (buildNumbers.contains(buildNumber)) {
             throw new IllegalStateException("Build number already registered: " + buildNumber);
