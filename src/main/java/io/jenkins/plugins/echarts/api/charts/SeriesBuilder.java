@@ -1,6 +1,7 @@
 package io.jenkins.plugins.echarts.api.charts;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -24,7 +25,8 @@ import static java.util.stream.Collectors.*;
  * Provides the base algorithms to create a data set for a static analysis graph. The actual series for each result
  * needs to be implemented by sub classes in method {@link #computeSeries}.
  *
- * @param <T> type of the result
+ * @param <T>
+ *         type of the result
  *
  * @author Ullrich Hafner
  */
@@ -41,6 +43,24 @@ public abstract class SeriesBuilder<T> {
     @VisibleForTesting
     SeriesBuilder(final ResultTime resultTime) {
         this.resultTime = resultTime;
+    }
+
+    /**
+     * Creates a new data set for a category graph from the specified static analysis results. The list of results (each
+     * one provided by an iterator) must be sorted by build number in descending order. I.e., the iterator starts with
+     * the newest build and stops at the oldest build. The actual series for each result needs to be implemented by sub
+     * classes by overriding method {@link #computeSeries}.
+     *
+     * @param configuration
+     *         configures the data set (how many results should be process, etc.)
+     * @param results
+     *         the ordered static analysis results
+     *
+     * @return the created data set
+     */
+    public LinesDataSet createDataSet(final ChartModelConfiguration configuration,
+            final List<Iterable<? extends BuildResult<T>>> results) {
+        return createDataSetPerDay(averageByDate(configuration, results));
     }
 
     /**
@@ -188,6 +208,15 @@ public abstract class SeriesBuilder<T> {
     private SortedMap<LocalDate, Map<String, Integer>> averageByDate(
             final SortedMap<Build, Map<String, Integer>> valuesPerBuild) {
         return createSeriesPerDay(createMultiSeriesPerDay(valuesPerBuild));
+    }
+
+    private SortedMap<LocalDate, Map<String, Integer>> averageByDate(final ChartModelConfiguration configuration,
+            final List<Iterable<? extends BuildResult<T>>> results) {
+        MutableListMultimap<LocalDate, Map<String, Integer>> valuesPerDate = FastListMultimap.newMultimap();
+        for (Iterable<? extends BuildResult<T>> result : results) {
+            valuesPerDate.putAll(createMultiSeriesPerDay(createSeriesPerBuild(configuration, result)));
+        }
+        return createSeriesPerDay(valuesPerDate);
     }
 
     /**

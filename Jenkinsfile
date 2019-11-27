@@ -132,6 +132,7 @@
                                     error 'There were static analysis warnings; halting early'
                                 }
                                 jacoco()
+                                sh "curl -s https://codecov.io/bash | bash -s - -t 95583a7b-8565-4f34-bd91-8e895d925b88"
                             }
                             if (doArchiveArtifacts) {
                                 if (incrementals) {
