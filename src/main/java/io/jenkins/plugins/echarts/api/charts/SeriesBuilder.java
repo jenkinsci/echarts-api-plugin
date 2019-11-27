@@ -58,7 +58,7 @@ public abstract class SeriesBuilder<T> {
      *
      * @return the created data set
      */
-    public LinesDataSet createDataSet(final ChartModelConfiguration configuration,
+    public LinesDataSet createAggregatedDataSet(final ChartModelConfiguration configuration,
             final List<Iterable<? extends BuildResult<T>>> results) {
         return createDataSetPerDay(averageByDate(configuration, results));
     }
