@@ -35,8 +35,13 @@ public class LineSeries {
      *         the name of the series
      * @param color
      *         the color of the series
+     * @param stackedMode
+     *         determines the {@link StackedMode} to use
+     * @param filledMode
+     *         determines the {@link FilledMode} to use
      */
-    public LineSeries(final String name, final String color, final StackedMode stackedMode, final FilledMode filledMode) {
+    public LineSeries(final String name, final String color,
+            final StackedMode stackedMode, final FilledMode filledMode) {
         this.name = name;
         itemStyle = new ItemStyle(color);
         this.stackedMode = stackedMode;

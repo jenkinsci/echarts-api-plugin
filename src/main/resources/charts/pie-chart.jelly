@@ -25,7 +25,7 @@
 
   <st:adjunct includes="io.jenkins.plugins.echarts"/>
 
-  <div id="${id}-chart" class="graph-cursor-pointer echarts" style="min-height: ${height}px;"
+  <div id="${id}-chart" class="graph-cursor-pointer echarts-pie-chart" style="min-height: ${height}px;"
        data-chart-model="${model}" data-title="${header}" data-links="${enableLinks}"/>
 
 </j:jelly>

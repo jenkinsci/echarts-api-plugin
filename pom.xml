@@ -400,7 +400,7 @@
             <exclude>**/InjectedTest.java</exclude>
           </excludes>
           <includeTests>true</includeTests>
-          <minimumTokens>50</minimumTokens>
+          <minimumTokens>100</minimumTokens>
         </configuration>
         <dependencies>
           <dependency>

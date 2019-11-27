@@ -28,12 +28,21 @@ public class PieChartModel {
     /**
      * Creates a new {@link PieChartModel} with the specified human readable name.
      *
-     * @param name the name of the chart
+     * @param name
+     *         the name of the chart
      */
     public PieChartModel(final String name) {
         this.name = name;
     }
 
+    /**
+     * Adds the specified data element to the existing set of data elements.
+     *
+     * @param pieData
+     *         the data element to add
+     * @param color
+     *         the color of the element
+     */
     public void add(final PieData pieData, final Palette color) {
         data.add(pieData);
         colors.add(color.getNormal());

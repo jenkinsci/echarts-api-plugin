@@ -1,7 +1,7 @@
 /* global jQuery */
 (function ($) {
     $(document).ready(function () {
-        renderCharts($);
+        renderPieCharts($);
     });
 })(jQuery);
 
@@ -10,7 +10,7 @@
  *
  * @param {Object} $ - JQuery
  */
-function renderCharts($) {
+function renderPieCharts ($) {
     /**
      * Renders a trend chart in the a div using ECharts.
      *
@@ -98,7 +98,7 @@ function renderCharts($) {
         };
     }
 
-    const allCharts = $('div.echarts');
+    const allCharts = $('div.echarts-pie-chart');
     allCharts.each(function () {
         const chart = $(this);
         const id = chart.attr('id');

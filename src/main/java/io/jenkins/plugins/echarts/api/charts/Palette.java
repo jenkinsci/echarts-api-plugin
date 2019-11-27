@@ -25,6 +25,14 @@ public enum Palette {
         this.hover = hover;
     }
 
+    /**
+     * Returns the color at the specified index.
+     *
+     * @param index
+     *         the index to use
+     *
+     * @return the color at the index
+     */
     public static Palette color(final int index) {
         Palette[] colors = Palette.values();
         return colors[index % (colors.length)];
