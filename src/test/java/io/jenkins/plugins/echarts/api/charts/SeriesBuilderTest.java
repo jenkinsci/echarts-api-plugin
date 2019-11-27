@@ -10,7 +10,6 @@ import java.util.Map;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.stubbing.Answer;
 
 import com.google.common.annotations.VisibleForTesting;
 
@@ -186,22 +185,11 @@ class SeriesBuilderTest {
         return mock(ChartModelConfiguration.class);
     }
 
-    private static BuildResult<?> createRun(final int buildNo, final LocalDateTime buildTime) {
-        BuildResult<?> run = mock(BuildResult.class);
+    private static BuildResult<?> createRun(final int buildNumber, final LocalDateTime buildTime) {
+        Build build = new Build(buildNumber, String.format("#%s", buildNumber),
+                buildTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
 
-        Build build = mock(Build.class);
-        when(build.getTimeInMillis()).thenReturn(buildTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
-        when(build.getNumber()).thenReturn(buildNo);
-        when(build.getDisplayName()).thenReturn(String.format("#%s", buildNo));
-        when(build.compareTo(any())).thenAnswer((Answer<Integer>) invocation -> {
-            Object[] args = invocation.getArguments();
-            Object mock = invocation.getMock();
-
-            return ((Build)mock).getNumber() - ((Build)args[0]).getNumber();
-        });
-        when(run.getBuild()).thenReturn(build);
-
-        return run;
+        return new BuildResult<>(build, DAY);
     }
 
     private static ResultTime resultTime(final Boolean value, final Boolean... continuations) {
