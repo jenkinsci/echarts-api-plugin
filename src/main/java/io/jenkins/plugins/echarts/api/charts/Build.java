@@ -4,27 +4,15 @@ import java.util.Objects;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import hudson.model.Run;
-
 /**
  * Represents the build that contains results that should be rendered using ECharts.
  *
  * @author Ullrich Hafner
  */
 public class Build implements Comparable<Build> {
-    private long timeInMillis;
+    private int buildTime;
     private int number;
     private String displayName;
-
-    /**
-     * Creates a new instance of {@link Build}.
-     *
-     * @param run
-     *         the properties of the run
-     */
-    public Build(final Run<?, ?> run) {
-        this(run.getNumber(), run.getDisplayName(), run.getTimeInMillis());
-    }
 
     /**
      * Creates a new instance of {@link Build}.
@@ -44,23 +32,24 @@ public class Build implements Comparable<Build> {
      *         build number
      * @param displayName
      *         human readable name of the build
-     * @param timeInMillis
-     *         the build time (in milli seconds)
+     * @param buildTime
+     *         the build time (given as number of seconds since the standard base time known as "the epoch", namely
+     *         January 1, 1970, 00:00:00 GMT).
      */
-    @VisibleForTesting
-    public Build(final int number, final String displayName, final long timeInMillis) {
-        this.timeInMillis = timeInMillis;
+    public Build(final int number, final String displayName, final int buildTime) {
+        this.buildTime = buildTime;
         this.number = number;
         this.displayName = displayName;
     }
 
     /**
-     * Returns the start time value of this build in milliseconds.
+     * Returns the start time of this build (given as number of seconds since the standard base time known as "the
+     * epoch", namely January 1, 1970, 00:00:00 GMT).
      *
-     * @return the time as UTC milliseconds from the epoch
+     * @return start time of this build
      */
-    public long getTimeInMillis() {
-        return timeInMillis;
+    public long getBuildTime() {
+        return buildTime;
     }
 
     /**

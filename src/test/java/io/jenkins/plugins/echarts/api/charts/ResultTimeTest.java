@@ -71,7 +71,7 @@ class ResultTimeTest {
     private BuildResult<?> createRunAt(final LocalDate now) {
         BuildResult<?> run = mock(BuildResult.class);
         Build build = mock(Build.class);
-        when(build.getTimeInMillis()).thenReturn(now.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        when(build.getBuildTime()).thenReturn(now.atStartOfDay(ZoneId.systemDefault()).toInstant().getEpochSecond());
         when(run.getBuild()).thenReturn(build);
         return run;
     }
