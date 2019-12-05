@@ -187,7 +187,7 @@ class SeriesBuilderTest {
 
     private static BuildResult<?> createRun(final int buildNumber, final LocalDateTime buildTime) {
         Build build = new Build(buildNumber, String.format("#%s", buildNumber),
-                buildTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+                (int) buildTime.atZone(ZoneId.systemDefault()).toInstant().getEpochSecond());
 
         return new BuildResult<>(build, DAY);
     }

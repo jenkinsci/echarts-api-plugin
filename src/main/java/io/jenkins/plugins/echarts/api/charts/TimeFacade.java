@@ -56,7 +56,7 @@ public class TimeFacade {
      * @return current date from the system clock in the default time-zone
      */
     public LocalDate getBuildDate(final Build build) {
-        return Instant.ofEpochMilli(build.getTimeInMillis())
+        return Instant.ofEpochSecond(build.getBuildTime())
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
     }

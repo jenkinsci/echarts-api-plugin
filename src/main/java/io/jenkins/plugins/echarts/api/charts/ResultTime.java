@@ -27,10 +27,10 @@ class ResultTime {
 
     private long computeDayDelta(final BuildResult<?> result) {
         return Math.abs(ChronoUnit.DAYS.between(
-                toLocalDate(result.getBuild().getTimeInMillis()), TimeFacade.getInstance().getToday()));
+                toLocalDate(result.getBuild().getBuildTime()), TimeFacade.getInstance().getToday()));
     }
 
-    private LocalDate toLocalDate(final long timeInMillis) {
-        return Instant.ofEpochMilli(timeInMillis).atZone(ZoneId.systemDefault()).toLocalDate();
+    private LocalDate toLocalDate(final long timeInSeconds) {
+        return Instant.ofEpochSecond(timeInSeconds).atZone(ZoneId.systemDefault()).toLocalDate();
     }
 }
