@@ -21,7 +21,6 @@
     <revision>4.4.0-1-beta2</revision>
     <changelist>-SNAPSHOT</changelist>
     <echarts.version>4.4.0</echarts.version>
-    <plugin-util-api.version>0.1.0-beta1-rc9.942d3de9b9a6</plugin-util-api.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jenkins.version>2.138.4</jenkins.version>
@@ -108,11 +107,6 @@
   </dependencyManagement>
 
   <dependencies>
-    <dependency>
-      <groupId>io.jenkins.plugins</groupId>
-      <artifactId>plugin-util-api</artifactId>
-      <version>${plugin-util-api.version}</version>
-    </dependency>
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>echarts</artifactId>
