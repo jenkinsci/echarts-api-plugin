@@ -1,16 +1,12 @@
-/* global jQuery */
-(function ($) {
-    $(document).ready(function () {
-        renderPieCharts($);
-    });
-})(jQuery);
+/* global jQuery3 */
+jQuery3(document).ready(function () {
+    renderPieCharts(jQuery3);
+});
 
 /**
  * Renders all charts that have the class 'echarts' using ECharts.
- *
- * @param {Object} $ - JQuery
  */
-function renderPieCharts ($) {
+function renderPieCharts () {
     /**
      * Renders a trend chart in the a div using ECharts.
      *
@@ -41,7 +37,7 @@ function renderPieCharts ($) {
             }
         }
 
-        const chartPlaceHolder = $("#" + chartDivId);
+        const chartPlaceHolder = jQuery3("#" + chartDivId);
         const model = JSON.parse(chartPlaceHolder.attr('data-chart-model'));
         const title = chartPlaceHolder.attr('data-title');
         const chartDiv = chartPlaceHolder[0];
@@ -98,9 +94,9 @@ function renderPieCharts ($) {
         };
     }
 
-    const allCharts = $('div.echarts-pie-chart');
+    const allCharts = jQuery3('div.echarts-pie-chart');
     allCharts.each(function () {
-        const chart = $(this);
+        const chart = jQuery3(this);
         const id = chart.attr('id');
 
         renderPieChart(id);
