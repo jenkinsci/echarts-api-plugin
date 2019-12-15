@@ -1,4 +1,4 @@
-package io.jenkins.plugins.echarts.api.charts;
+package io.jenkins.plugins.echarts;
 
 /**
  * Configures the model of a trend chart.

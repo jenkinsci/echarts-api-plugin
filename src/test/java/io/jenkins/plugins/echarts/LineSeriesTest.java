@@ -1,10 +1,10 @@
-package io.jenkins.plugins.echarts.api.charts;
+package io.jenkins.plugins.echarts;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
-import io.jenkins.plugins.echarts.api.charts.LineSeries.FilledMode;
-import io.jenkins.plugins.echarts.api.charts.LineSeries.StackedMode;
+import io.jenkins.plugins.echarts.LineSeries.FilledMode;
+import io.jenkins.plugins.echarts.LineSeries.StackedMode;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.*;
 

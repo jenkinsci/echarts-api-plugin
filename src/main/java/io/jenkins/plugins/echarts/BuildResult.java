@@ -1,4 +1,4 @@
-package io.jenkins.plugins.echarts.api.charts;
+package io.jenkins.plugins.echarts;
 
 /**
  * Provides results of a build that should be rendered.

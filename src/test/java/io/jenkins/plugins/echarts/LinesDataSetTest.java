@@ -1,4 +1,4 @@
-package io.jenkins.plugins.echarts.api.charts;
+package io.jenkins.plugins.echarts;
 
 import java.util.Collections;
 import java.util.HashMap;

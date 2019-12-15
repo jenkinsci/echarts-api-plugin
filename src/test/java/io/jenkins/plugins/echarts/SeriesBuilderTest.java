@@ -1,4 +1,4 @@
-package io.jenkins.plugins.echarts.api.charts;
+package io.jenkins.plugins.echarts;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -15,7 +15,7 @@ import com.google.common.annotations.VisibleForTesting;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import io.jenkins.plugins.echarts.api.charts.ChartModelConfiguration.AxisType;
+import io.jenkins.plugins.echarts.ChartModelConfiguration.AxisType;
 
 import static java.util.Arrays.*;
 import static org.assertj.core.api.Assertions.*;

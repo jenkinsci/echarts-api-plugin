@@ -1,4 +1,4 @@
-package io.jenkins.plugins.echarts.api.charts;
+package io.jenkins.plugins.echarts;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import io.jenkins.plugins.echarts.api.charts.LineSeries.FilledMode;
-import io.jenkins.plugins.echarts.api.charts.LineSeries.StackedMode;
+import io.jenkins.plugins.echarts.LineSeries.FilledMode;
+import io.jenkins.plugins.echarts.LineSeries.StackedMode;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.*;
 import static org.assertj.core.api.Assertions.*;

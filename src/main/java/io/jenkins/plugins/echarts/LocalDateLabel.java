@@ -1,4 +1,4 @@
-package io.jenkins.plugins.echarts.api.charts;
+package io.jenkins.plugins.echarts;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
