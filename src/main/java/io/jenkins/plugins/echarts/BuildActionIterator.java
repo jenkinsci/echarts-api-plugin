@@ -12,22 +12,21 @@ import hudson.model.Run;
 import io.jenkins.plugins.util.BuildAction;
 
 /**
- * Iterates over a collection of builds that contain results of a given generic type. A new iterator starts from a
- * baseline build where it selects the attached action of the given type. From this action it obtains and returns the
- * current result. Then it moves back in the build history until no more builds are available.
+ * Iterates over a collection of builds that contain results of a given generic type. These results are available via a
+ * given sub type of {@link BuildAction} that has to be attached to each build of the selected job. A new iterator
+ * starts from a baseline build where it selects the attached action of the given type. Then it moves back in the build
+ * history until no more builds are available.
  *
- * @param <A>
+ * @param <T>
  *         type of the action that stores the result
- * @param <R>
- *         type of the result that is persisted within the action
  *
  * @author Ullrich Hafner
  */
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-public class BuildResultIterator<A extends BuildAction<R>, R> implements Iterator<BuildResult<R>> {
-    private final Class<A> actionType;
+public class BuildActionIterator<T extends BuildAction<?>> implements Iterator<BuildResult<T>> {
+    private final Class<T> actionType;
 
-    private Optional<A> latestAction;
+    private Optional<T> latestAction;
 
     /**
      * Creates a new iterator that selects action of the given type {@code actionType}.
@@ -37,7 +36,7 @@ public class BuildResultIterator<A extends BuildAction<R>, R> implements Iterato
      * @param baseline
      *         the baseline to start from
      */
-    public BuildResultIterator(final Class<A> actionType, final Optional<A> baseline) {
+    public BuildActionIterator(final Class<T> actionType, final Optional<T> baseline) {
         this.actionType = actionType;
         this.latestAction = baseline;
     }
@@ -48,17 +47,18 @@ public class BuildResultIterator<A extends BuildAction<R>, R> implements Iterato
     }
 
     @Override
-    public BuildResult<R> next() {
+    public BuildResult<T> next() {
         if (!latestAction.isPresent()) {
-            throw new NoSuchElementException("There is no action available anymore. Use hasNext() before calling next().");
+            throw new NoSuchElementException(
+                    "There is no action available anymore. Use hasNext() before calling next().");
         }
 
-        A buildAction = latestAction.get();
+        T buildAction = latestAction.get();
         Run<?, ?> run = buildAction.getOwner();
         latestAction = BuildAction.getBuildActionFromHistoryStartingFrom(run.getPreviousBuild(), actionType);
 
         int buildTimeInSeconds = (int) (run.getTimeInMillis() / 1000);
         Build build = new Build(run.getNumber(), run.getDisplayName(), buildTimeInSeconds);
-        return new BuildResult<>(build, buildAction.getResult());
+        return new BuildResult<>(build, buildAction);
     }
 }
