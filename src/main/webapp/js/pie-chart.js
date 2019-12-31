@@ -4,7 +4,7 @@ jQuery3(document).ready(function () {
 });
 
 /**
- * Renders all charts that have the class 'echarts' using ECharts.
+ * Renders all div elements that have the class 'echarts-pie-chart' using ECharts.
  */
 function renderPieCharts () {
     /**
