@@ -1,0 +1,46 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+  <st:documentation>
+    Creates a trend chart in a floating box. The model of the chart will be loaded asynchronously using an Ajax call
+    after the document has been loaded.
+
+    <st:attribute name="it" use="required" type="io.jenkins.plugins.echarts.AsyncTrendJobAction">
+      The job action that defines the model of this trend chart.
+    </st:attribute>
+    <st:attribute name="title" use="required" type="String">
+      A localized title for the trend chart.
+    </st:attribute>
+    <st:attribute name="enableLinks" use="optional" type="Boolean">
+      Determines if the chart is clickable. If the chart is clickable, then clicking on a chart will
+      open the results of the selected build.
+    </st:attribute>
+
+  </st:documentation>
+
+  <j:if test="${it.isTrendVisible()}">
+
+    <div class="test-trend-caption">
+      ${title}
+    </div>
+
+    <div align="right">
+      <div id="${it.urlName}-history-chart" class="graph-cursor-pointer"
+           style="width: 500px; min-height: 200px; min-width: 500px; height: 200px;"/>
+    </div>
+
+    <st:adjunct includes="io.jenkins.plugins.echarts"/>
+
+    <script>
+        {
+            const trendProxy = <st:bind value="${it}"/>;
+            trendProxy.getBuildTrendModel(function (trendModel) {
+                const useLinks = "${enableLinks}";
+                renderTrendChart('${it.urlName}-history-chart', trendModel.responseJSON,
+                        (useLinks &amp;&amp; useLinks !== "false") ? '${it.urlName}' : null);
+            });
+      }
+    </script>
+
+  </j:if>
+
+</j:jelly>

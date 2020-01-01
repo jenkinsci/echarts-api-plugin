@@ -19,7 +19,7 @@
     </st:attribute>
     <st:attribute name="enableLinks" use="optional" type="Boolean">
       Determines if the chart is clickable. If the chart is clickable, then clicking on a segment will
-      open link that is given by the name of the
+      open a sub page that is given by the name of the segment.
     </st:attribute>
 
   </st:documentation>
