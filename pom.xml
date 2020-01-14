@@ -21,7 +21,7 @@
     <changelist>-SNAPSHOT</changelist>
     <echarts.version>4.4.0</echarts.version>
     <echarts-build-trends.version>0.1.0</echarts-build-trends.version>
-    <plugin-util-api.version>0.1.0-beta4</plugin-util-api.version>
+    <plugin-util-api.version>0.1.0-beta5</plugin-util-api.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jenkins.version>2.138.4</jenkins.version>
