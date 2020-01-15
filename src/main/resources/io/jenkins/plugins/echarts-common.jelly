@@ -1,13 +1,13 @@
 <?jelly escape-by-default='true'?>
 <!--
-Use it like <st:adjunct includes="io.jenkins.plugins.echarts"/>
+Use it like <st:adjunct includes="io.jenkins.plugins.echarts-common"/>
 -->
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
 
   <j:new var="h" className="hudson.Functions" />
   ${h.initPageVariables(context)}
 
-  <script type="text/javascript" src="${resURL}/plugin/echarts-api/webjars/echarts-en.min.js" />
+  <script type="text/javascript" src="${resURL}/plugin/echarts-api/webjars/echarts-en.common.min.js" />
 
   <st:adjunct includes="io.jenkins.plugins.jquery3"/>
 
