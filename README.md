@@ -23,6 +23,13 @@ Then you can use ECharts in your jelly files using the following snippet:
 ```xml
 <st:adjunct includes="io.jenkins.plugins.echarts"/>
 ```
+If you don't need all charts, you can also use one of
+```xml
+<st:adjunct includes="io.jenkins.plugins.echarts-common"/>
+<st:adjunct includes="io.jenkins.plugins.echarts-simple"/>
+```
+which provide smaller .js files, but also fewer charts. See the [echarts documentation](https://echarts.apache.org/en/tutorial.html#Create%20Custom%20Build%20of%20ECharts)
+for more information.
  
 You can find several examples of Jenkins views that use ECharts in the 
 [Warnings Next Generation plugin](https://github.com/jenkinsci/warnings-ng-plugin).
