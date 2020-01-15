@@ -31,8 +31,15 @@ If you don't need all charts, you can also use one of
 which provide smaller .js files, but also fewer charts. See the [echarts documentation](https://echarts.apache.org/en/tutorial.html#Create%20Custom%20Build%20of%20ECharts)
 for more information.
  
+:info: The underlying Java model of the charts is located in a different module, so it can be re-used in
+a non-Jenkins context as well. The source code (MIT license as well) is available in the associated 
+[ECharts build trend charts API](https://github.com/uhafner/echarts-build-trends) module.
+ 
 You can find several examples of Jenkins views that use ECharts in the 
-[Warnings Next Generation plugin](https://github.com/jenkinsci/warnings-ng-plugin).
+[Warnings Next Generation plugin](https://github.com/jenkinsci/warnings-ng-plugin) and in the 
+[Forensics plugin](https://github.com/jenkinsci/forensics-api-plugin). There is also a 
+[user guide](https://github.com/jenkinsci/forensics-api-plugin/etc/PluginGuide.adoc) 
+under progress that introduces the additional classes and concepts. 
 
 [![Jenkins](https://ci.jenkins.io/job/Plugins/job/echarts-api-plugin/job/master/badge/icon)](https://ci.jenkins.io/job/Plugins/job/echarts-api-plugin/job/master/)
 [![GitHub Actions](https://github.com/jenkinsci/echarts-api-plugin/workflows/GitHub%20Actions/badge.svg)](https://github.com/jenkinsci/echarts-api-plugin/actions)
