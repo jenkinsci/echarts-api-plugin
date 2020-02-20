@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>analysis-pom</artifactId>
-    <version>2.1.4</version>
+    <version>2.2.0</version>
     <relativePath />
   </parent>
 
@@ -79,7 +79,7 @@
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
-            <id>unpack-dependencies</id>
+            <id>unpack-webjars</id>
             <phase>generate-resources</phase>
             <goals>
               <goal>unpack-dependencies</goal>
@@ -87,6 +87,19 @@
             <configuration>
               <outputDirectory>${project.build.directory}/webjars</outputDirectory>
               <includeArtifactIds>echarts</includeArtifactIds>
+            </configuration>
+          </execution>
+          <execution>
+            <id>unpack-dependencies</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/classes</outputDirectory>
+              <includeArtifactIds>echarts-build-trends</includeArtifactIds>
+              <excludeTypes>test-jar</excludeTypes>
+              <excludes>META-INF/**/*</excludes>
             </configuration>
           </execution>
         </executions>
