@@ -3,6 +3,7 @@ package io.jenkins.plugins.echarts;
 import java.util.Iterator;
 
 import edu.hm.hafner.echarts.BuildResult;
+import edu.hm.hafner.echarts.JacksonFacade;
 import edu.hm.hafner.echarts.LinesChartModel;
 
 import org.kohsuke.stapler.bind.JavaScriptMethod;
