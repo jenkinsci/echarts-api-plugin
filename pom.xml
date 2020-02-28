@@ -24,7 +24,7 @@
 
     <module.name>${project.groupId}.echarts</module.name>
 
-    <echarts-build-trends.version>0.2.0</echarts-build-trends.version>
+    <echarts-build-trends.version>0.2.1</echarts-build-trends.version>
     <plugin-util-api.version>0.1.0-beta10</plugin-util-api.version>
     <jquery3-api.version>3.4.1-7-beta1</jquery3-api.version>
 
