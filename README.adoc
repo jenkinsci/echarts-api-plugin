@@ -95,7 +95,7 @@ String json = new JacksonFacade().toJson(model);
 ----
 
 [#trend-charts]
-==== Trend charts on the job level view
+=== Trend charts on the job level view
 
 In order to show a trend that renders a line chart on the job page (see <<img-trend>>) you need to provide a so called
 floating box (stored in the file `floatingBox.jelly` of your job action (see <<jenkins-chart-model>>)).
