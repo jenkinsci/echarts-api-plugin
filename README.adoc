@@ -17,19 +17,6 @@ This plugin contains the latest https://www.webjars.org[WebJars] release and cor
 
 == How to use the plugin
 
-In order to use this JS library, add a maven dependency to your pom:
-
-[source,xml]
-----
-<dependency>
-  <groupId>io.jenkins.plugins</groupId>
-  <artifactId>echarts-api</artifactId>
-  <version>[latest version]</version>
-</dependency>
-----
-
-=== Charts
-
 A Jenkins plugin typically also reports some kind of trend from build to build. Up to now Jenkins core provides only a
 quite limited concept of rendering such trends as trend charts. The
 http://www.jfree.org/jfreechart/[JFreeChart framework] offered by Jenkins core is a server
@@ -57,15 +44,15 @@ have been recorded at the same day).
 - Automatic conversion of the Java model to the required JSON model for the JS side.
 - Support for pie and line charts (more to come soon).
 
-Those charts can be used as trend chart in the project page (see <<img-job>>) or as information chart in the details
+Those charts can be used as trend chart in the project page (see <<img-trend>>) or as information chart in the details
 view of a plugin (see <<reporter-detail>>).
 
 [#pie-charts]
-==== Pie charts
+=== Pie charts
 
 A simple but still informative chart is a pie chart that illustrates numerical proportions of plugin data. In the Forensics
-plugin I am using this chart to show the numerical proportions of the number of authors or commits for the
-source code files in the Git repository (see <<img-card>>). In the warnings plugin I use this chart to show the
+plugin such a chart show the numerical proportions of the number of authors or commits for the
+source code files in the Git repository. In the warnings plugin such a chart shows the
 numerical proportions of the new, outstanding, or fixed warnings, see <<img-pie>>.
 
 .Pie chart in the Warnings plugin
@@ -73,7 +60,8 @@ numerical proportions of the new, outstanding, or fixed warnings, see <<img-pie>
 image::pie.png[Pie chart example]
 
 In order to include such a chart in your details view, you can use the provided `pie-chart` tag.
-In the following snippet you see this tag in action (embedded in a Bootstrap card, see <<cards>>):
+In the following snippet you see this tag in action (embedded in a https://github.com/jenkinsci/bootstrap4-api-plugin[Bootstrap card]):
+
 [source,xml,linenums]
 .index.jelly
 ----
@@ -95,22 +83,22 @@ representation of a corresponding `PieChartModel` instance. Such a model can be 
 [source,java,linenums]
 .ViewModel.java
 ----
-    [...]
-    PieChartModel model = new PieChartModel("Title");
+[...]
+PieChartModel model = new PieChartModel("Title");
 
-    model.add(new PieData("Segment 1 name", 10), Palette.RED);
-    model.add(new PieData("Segment 2 name", 15), Palette.GREEN);
-    model.add(new PieData("Segment 3 name", 20), Palette.YELLOW);
+model.add(new PieData("Segment 1 name", 10), Palette.RED);
+model.add(new PieData("Segment 2 name", 15), Palette.GREEN);
+model.add(new PieData("Segment 3 name", 20), Palette.YELLOW);
 
-    String json = new JacksonFacade().toJson(model);
-    [...]
+String json = new JacksonFacade().toJson(model);
+[...]
 ----
 
 [#trend-charts]
 ==== Trend charts on the job level view
 
-In order to show a trend that renders a line chart on the job page (see <<img-job>>) you need to provide a so called
-floating box (stored in the file `floatingBox.jelly` of your job action (see <<reporter-structure>>)).
+In order to show a trend that renders a line chart on the job page (see <<img-trend>>) you need to provide a so called
+floating box (stored in the file `floatingBox.jelly` of your job action (see <<jenkins-chart-model>>)).
 The content of this file is quite simple and contains just a `trend-chart` tag:
 
 [source,xml,linenums]
