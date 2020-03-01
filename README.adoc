@@ -1,0 +1,193 @@
+:tip-caption: :bulb:
+:imagesdir: etc/images
+
+= ECharts 3 Jenkins Plugin
+
+image:https://img.shields.io/jenkins/plugin/v/echarts-api.svg?label=latest%20version[Jenkins Plugin, link={https://plugins.jenkins.io/echarts-api}]
+image:https://img.shields.io/badge/Jenkins-2.138.4-green.svg?label=min.%20Jenkins[Jenkins Version, link={https://jenkins.io/download/lts}]
+image:https://img.shields.io/badge/jdk-8-yellow.svg?label=min.%20JDK[JDK8]
+image:https://img.shields.io/badge/license-MIT-yellow.svg[License: MIT, link={https://opensource.org/licenses/MIT}]
+
+Provides https://echarts.apache.org/en/index.html[ECharts] for Jenkins Plugins. ECharts is an open-sourced
+JavaScript visualization tool to create intuitive, interactive, and highly-customizable charts. It
+can run fluently on PC and mobile devices and it is compatible with most modern
+Web Browsers.
+
+This plugin contains the latest https://www.webjars.org[WebJars] release and corresponding Jenkins UI elements.
+
+== How to use the plugin
+
+In order to use this JS library, add a maven dependency to your pom:
+
+[source,xml]
+----
+<dependency>
+  <groupId>io.jenkins.plugins</groupId>
+  <artifactId>echarts-api</artifactId>
+  <version>[latest version]</version>
+</dependency>
+----
+
+=== Charts
+
+A Jenkins plugin typically also reports some kind of trend from build to build. Up to now Jenkins core provides only a
+quite limited concept of rendering such trends as trend charts. The
+http://www.jfree.org/jfreechart/[JFreeChart framework] offered by Jenkins core is a server
+side rendering engine that creates charts as static PNG images that will be included on the job and details pages.
+Nowadays, several powerful JS based charting libraries are available, that do the same job
+(well actually an even better job) on the client side. That has the advantage that these charts can be customized
+on each client without affecting the server performance. Moreover, you get a lot of additional
+features (like zooming, animation, etc.) for free. Additionally, these charting libraries not only support the typical
+build trend charts but also a lot of additional charts types that can be used to improve the user experience of
+a plugin.
+One of those charting libraries is https://echarts.apache.org/en/index.html[ECharts]: this library has a powerful API
+and supports literally every chart type one can image of. You can get some impressions of the features on the
+https://echarts.apache.org/examples/en/[examples page] of the library.
+
+In order to use these charts one can embed charts that use this library by importing the corresponding JS files and by
+defining the chart in the corresponding Jelly file. While that already works quite well it
+will be still somewhat cumbersome to provide the corresponding model for these charts from Jenkins build results. So I
+I added a powerful Java API that helps to create the model for these charts on the Java side. This API provides the
+following features:
+
+- Create trend charts based on a collection of build results.
+- Separate the chart type from the aggregation in order to simplify unit testing of the chart model.
+- Toggle the type of the X-Axis between build number or build date (with automatic aggregation of results that
+have been recorded at the same day).
+- Automatic conversion of the Java model to the required JSON model for the JS side.
+- Support for pie and line charts (more to come soon).
+
+Those charts can be used as trend chart in the project page (see <<img-job>>) or as information chart in the details
+view of a plugin (see <<reporter-detail>>).
+
+[#pie-charts]
+==== Pie charts
+
+A simple but still informative chart is a pie chart that illustrates numerical proportions of plugin data. In the Forensics
+plugin I am using this chart to show the numerical proportions of the number of authors or commits for the
+source code files in the Git repository (see <<img-card>>). In the warnings plugin I use this chart to show the
+numerical proportions of the new, outstanding, or fixed warnings, see <<img-pie>>.
+
+.Pie chart in the Warnings plugin
+[#img-pie]
+image::pie.png[Pie chart example]
+
+In order to include such a chart in your details view, you can use the provided `pie-chart` tag.
+In the following snippet you see this tag in action (embedded in a Bootstrap card, see <<cards>>):
+[source,xml,linenums]
+.index.jelly
+----
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core"  xmlns:c="/charts" xmlns:bs="/bootstrap">
+
+    [...]
+    <bs:card title="${%Number of authors}" fontAwesomeIcon="users">
+      <c:pie-chart id="authors" model="${it.authorsModel}" height="256" />
+    </bs:card>
+    [...]
+
+</j:jelly>
+----
+
+You need to provide a unique ID for this chart and the corresponding model value. The model must be the JSON
+representation of a corresponding `PieChartModel` instance. Such a model can be created with a couple of lines:
+
+[source,java,linenums]
+.ViewModel.java
+----
+    [...]
+    PieChartModel model = new PieChartModel("Title");
+
+    model.add(new PieData("Segment 1 name", 10), Palette.RED);
+    model.add(new PieData("Segment 2 name", 15), Palette.GREEN);
+    model.add(new PieData("Segment 3 name", 20), Palette.YELLOW);
+
+    String json = new JacksonFacade().toJson(model);
+    [...]
+----
+
+[#trend-charts]
+==== Trend charts on the job level view
+
+In order to show a trend that renders a line chart on the job page (see <<img-job>>) you need to provide a so called
+floating box (stored in the file `floatingBox.jelly` of your job action (see <<reporter-structure>>)).
+The content of this file is quite simple and contains just a `trend-chart` tag:
+
+[source,xml,linenums]
+.floatingBox.jelly
+----
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:c="/charts">
+
+  <c:trend-chart it="${from}" title="${%SCM Files Count Trend}" enableLinks="true"/>
+
+</j:jelly>
+----
+
+On the Java side the model for the chart needs to be provided in the corresponding sub class of `JobAction` (which is
+the owner of the floating box). Since the computation of trend charts is quite expensive on the server side as well
+(several builds need to be read from disk and the interesting data points need to be computed) this process has been
+put into a separate background job. Once the computation is done the result is shown via an Ajax call. In order to
+hide these details for plugin authors you should simply derive your `JobAction` class from the corresponding
+`AsyncTrendJobAction` class, that already contains the boilerplate code. So your static plugin object model will actually
+become a little bit more complex:
+
+
+[#jenkins-chart-model]
+.Jenkins chart model design
+image::chart-model.png[Jenkins chart model]
+
+Basically, you need to implement the method `LinesChartModel createChartModel()` to create the line
+chart. This method is quite simple to implement, since most of the hard work is provided by the library: you will
+invoked with an iterator of your build actions, starting with the latest build. The iterator advances from build to build
+until no more results are available (or the maximum number of builds to consider has been reached). The most important
+thing to implement in your plugin is the way how data points are computed for a given `BuildAction`. Here is an example of
+such a `SeriesBuilder` implementation in the Forensics Plugin:
+
+[source,java,linenums]
+.FilesCountSeriesBuilder.java
+----
+package io.jenkins.plugins.forensics.miner;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import edu.hm.hafner.echarts.SeriesBuilder;
+
+/**
+ * Builds one x-axis point for the series of a line chart showing the number of files in the repository.
+ *
+ * @author Ullrich Hafner
+ */
+public class FilesCountSeriesBuilder extends SeriesBuilder<ForensicsBuildAction> {
+    static final String TOTALS_KEY = "total";
+
+    @Override
+    protected Map<String, Integer> computeSeries(final ForensicsBuildAction current) {
+        Map<String, Integer> series = new HashMap<>();
+        series.put(TOTALS_KEY, current.getNumberOfFiles());
+        return series;
+    }
+}
+----
+
+You are not limited to a single line chart. You can show several lines in a single chart, you can show stacked values,
+or even the delta between some values. You can also have a look at the
+https://github.com/jenkinsci/warnings-ng-plugin/tree/master/src/main/java/io/jenkins/plugins/analysis/core/charts[charts of the warnings plugin]
+to see some of these features in detail.
+
+.Trend chart with several lines in the Warnings plugin
+[#img-trend]
+image::trend-lines.png[Trend with several lines example]
+
+.Trend chart with stacked lines in the Warnings plugin
+[#img-stacked]
+image::trend-stacked.png[Trend chart with stacked lines example]
+
+You can find several examples of Jenkins views that use ECharts in the
+https://github.com/jenkinsci/warnings-ng-plugin[Warnings Next Generation plugin]
+and in the https://github.com/jenkinsci/warnings-ng-plugin[Forensics plugin].
+
+image:https://ci.jenkins.io/job/Plugins/job/echarts-api-plugin/job/master/badge/icon[Jenkins, link={https://ci.jenkins.io/job/Plugins/job/echarts-api-plugin/job/master/}]
+image:https://github.com/jenkinsci/echarts-api-plugin/workflows/GitHub%20Actions/badge.svg[GitHub Actions, link={https://github.com/jenkinsci/echarts-api-plugin/actions}]
+image:https://img.shields.io/github/issues-pr/jenkinsci/echarts-api-plugin.svg[GitHub pull requests, link={https://github.com/jenkinsci/echarts-api-plugin/pulls}]
