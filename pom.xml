@@ -14,7 +14,7 @@
   <name>ECharts API Plugin</name>
   <version>${revision}${changelist}</version>
 
-  <description>Jenkins plug-in that provides ECharts.</description>
+  <description>Provides ECharts for Jenkins plugins.</description>
   <url>https://github.com/jenkinsci/echarts-api-plugin</url>
 
   <properties>
