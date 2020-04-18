@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>analysis-pom</artifactId>
-    <version>2.3.0</version>
+    <version>2.4.1</version>
     <relativePath />
   </parent>
 
@@ -24,8 +24,8 @@
 
     <module.name>${project.groupId}.echarts</module.name>
 
-    <echarts-build-trends.version>1.0.1</echarts-build-trends.version>
-    <plugin-util-api.version>1.0.2</plugin-util-api.version>
+    <echarts-build-trends.version>1.1.0</echarts-build-trends.version>
+    <plugin-util-api.version>1.1.0</plugin-util-api.version>
     <jquery3-api.version>3.4.1-10</jquery3-api.version>
 
   </properties>

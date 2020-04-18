@@ -90,6 +90,7 @@ function renderPieCharts () {
         }
 
         window.onresize = function() {
+            chart.setOption(options);
             chart.resize();
         };
     }

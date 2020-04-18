@@ -1,0 +1,31 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+  <st:documentation>
+    Creates a round progress chart (pie chart) in a div element using ECharts. The model of the chart will be copied
+    into several data attributes of the div. After the document has been loaded the corresponding script
+    (see progress-chart.js) will automatically render the chart.
+
+    <st:attribute name="id" use="required" type="String">
+      The unique ID of the progress chart.
+    </st:attribute>
+    <st:attribute name="model" use="required" type="String">
+      The model of the progress (i.e. pie) chart (JSON representation of an instance of edu.hm.hafner.echarts.PieChartModel).
+    </st:attribute>
+    <st:attribute name="height" use="required" type="int">
+      The minimum height of the pie chart.
+    </st:attribute>
+    <st:attribute name="value" use="required" type="int">
+      Percentage of the progress.
+    </st:attribute>
+    <st:attribute name="tooltip" use="optional" type="String">
+      Option tooltip to show.
+    </st:attribute>
+
+  </st:documentation>
+
+  <st:adjunct includes="io.jenkins.plugins.echarts"/>
+
+  <div id="${id}-chart" class="graph-cursor-pointer echarts-progress-chart" style="min-height: ${height}px;width: 100%"
+       data-chart-model="${model}" data-title="${value}%" data-tooltip="${tooltip}" />
+
+</j:jelly>
