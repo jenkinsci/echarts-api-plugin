@@ -57,7 +57,7 @@ numerical proportions of the new, outstanding, or fixed warnings, see <<img-pie>
 
 .Pie chart in the Warnings plugin
 [#img-pie]
-image::pie.png[Pie chart example]
+image::pie.png[Pie chart example,width=60%]
 
 In order to include such a chart in your details view, you can use the provided `pie-chart` tag.
 In the following snippet you see this tag in action (embedded in a https://github.com/jenkinsci/bootstrap4-api-plugin[Bootstrap card]):
@@ -93,6 +93,40 @@ model.add(new PieData("Segment 3 name", 20), Palette.YELLOW);
 String json = new JacksonFacade().toJson(model);
 [...]
 ----
+
+[#progress-charts]
+=== Progress charts
+
+Another simple chart (that is based on a pie chart) is the progress chart. Using this chart you can render
+a simple progress value using a pie chart as backend.
+
+.Progress chart in the Autograding plugin
+[#img-progress]
+image::progress.png[Pie chart example]
+
+In order to include such a chart in your details view, you can use the provided `progress-chart` tag.
+In the following snippet you see this tag in action (embedded in a https://github.com/jenkinsci/bootstrap4-api-plugin[Bootstrap card]):
+
+[source,xml,linenums]
+.index.jelly
+----
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core"  xmlns:c="/charts" xmlns:bs="/bootstrap">
+
+    [...]
+    <bs:card title="${%Autograding score}" fontAwesomeIcon="graduation-cap">
+      <c:progress-chart id="total-progress" model="${it.getProgressModel(80)}" height="150"
+                        value="80" tooltip="80% is very good"/>
+    </bs:card>
+    [...]
+
+</j:jelly>
+----
+
+You need to provide a unique ID for this chart and the corresponding model value. The model must be the JSON
+representation of a corresponding `PieChartModel` instance. Such a model can be created with a couple of lines,
+see the class https://github.com/jenkinsci/autograding-plugin/blob/master/src/main/java/io/jenkins/plugins/grading/PercentagePieChart.java[PercentagePieChart].
+
 
 [#trend-charts]
 === Trend charts on the job level view
