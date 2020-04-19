@@ -84,7 +84,7 @@ function renderTrendChart (chartDivId, model, urlName) { // eslint-disable-line 
         selectedBuild = 0; // clear selection to avoid navigating to the selected build
     });
     chart.resize();
-    jQuery3(window).resize(function () {
+    window.onresize = function () {
         chart.resize();
-    });
+    };
 }
