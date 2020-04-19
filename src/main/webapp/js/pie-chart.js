@@ -89,17 +89,23 @@ function renderPieCharts () {
             });
         }
 
-        window.onresize = function() {
-            chart.resize();
-        };
+        return chart;
     }
 
-    const allCharts = jQuery3('div.echarts-pie-chart');
-    allCharts.each(function () {
+    const allPieCharts = jQuery3('div.echarts-pie-chart');
+    const pieChartInstances = [];
+    allPieCharts.each(function () {
         const chart = jQuery3(this);
         const id = chart.attr('id');
 
-        renderPieChart(id);
+        pieChartInstances.push(renderPieChart(id));
     });
+    if (pieChartInstances.length > 0) {
+        jQuery3(window).resize(function () {
+            pieChartInstances.forEach(function (chartInstance) {
+                chartInstance.resize();
+            });
+        });
+    }
 }
 

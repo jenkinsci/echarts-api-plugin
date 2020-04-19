@@ -14,5 +14,6 @@ Use it like <st:adjunct includes="io.jenkins.plugins.echarts-simple"/>
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/trend-chart.js"/>
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/zoomable-trend-chart.js"/>
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/pie-chart.js"/>
+  <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/progress-chart.js"/>
 
 </j:jelly>

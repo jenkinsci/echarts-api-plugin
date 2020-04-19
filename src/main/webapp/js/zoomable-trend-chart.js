@@ -86,7 +86,7 @@ function renderZoomableTrendChart(chartDivId, model, redrawCallback) {
     chart.setOption(options);
     chart.resize();
 
-    window.onresize = function () {
+    jQuery3(window).resize(function () {
         chart.resize();
-    };
+    });
 }
