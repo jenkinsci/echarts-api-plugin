@@ -52,18 +52,24 @@ function renderProgressChart () {
         chart.setOption(options);
         chart.resize();
 
-        window.onresize = function() {
-            chart.setOption(options);
-            chart.resize();
-        };
+        return chart;
     }
 
-    const allCharts = jQuery3('div.echarts-progress-chart');
-    allCharts.each(function () {
+    const allProgressCharts = jQuery3('div.echarts-progress-chart');
+    const progressChartInstances = [];
+    allProgressCharts.each(function () {
         const chart = jQuery3(this);
         const id = chart.attr('id');
 
-        renderProgressChart(id);
+        progressChartInstances.push(renderProgressChart(id));
     });
+
+    if (progressChartInstances.length > 0) {
+        jQuery3(window).resize(function () {
+            progressChartInstances.forEach(function (chartInstance) {
+                chartInstance.resize();
+            });
+        });
+    }
 }
 
