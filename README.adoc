@@ -200,11 +200,11 @@ to see some of these features in detail.
 
 .Trend chart with several lines in the Warnings plugin
 [#img-trend]
-image::trend-lines.png[Trend with several lines example]
+image::trend-lines.png[Trend with several lines example, width=70%]
 
 .Trend chart with stacked lines in the Warnings plugin
 [#img-stacked]
-image::trend-stacked.png[Trend chart with stacked lines example]
+image::trend-stacked.png[Trend chart with stacked lines example, width=70%]
 
 You can find several examples of Jenkins views that use ECharts in the
 https://github.com/jenkinsci/warnings-ng-plugin[Warnings Next Generation plugin]
