@@ -4,20 +4,23 @@
  *
  * @param {String} chartDivId - the ID of the div where the chart should be shown in
  * @param {String} model - the line chart model
- * @param {String} urlName - the URL to the results, if empty or unset then clicking on the chart is disabled
+ * @param {String} withOnClickHandler - to enable clicking on the chart to see the results
  */
-function renderTrendChart (chartDivId, model, urlName) { // eslint-disable-line no-unused-vars
+function renderTrendChart (chartDivId, model, withOnClickHandler) { // eslint-disable-line no-unused-vars
     const chartModel = JSON.parse(model);
     const chartPlaceHolder = document.getElementById(chartDivId);
 
     let selectedBuild; // the tooltip formatter will change this value while hoovering
 
-    if (urlName) {
-        chartPlaceHolder.onclick = function () {
-            if (urlName && selectedBuild > 0) {
-                window.location.assign(selectedBuild + '/' + urlName);
-            }
-        };
+    if (withOnClickHandler) {
+        var urlName = chartPlaceHolder.getAttribute("tool");
+        if (urlName) {
+            chartPlaceHolder.onclick = function () {
+                if (urlName && selectedBuild > 0) {
+                    window.location.assign(selectedBuild + '/' + urlName);
+                }
+            };
+        }
     }
 
     const chart = echarts.init(chartPlaceHolder);
@@ -46,7 +49,7 @@ function renderTrendChart (chartDivId, model, urlName) { // eslint-disable-line 
                     }
                 }
 
-                let text = 'Build ' + params[0].name;
+                let text = 'Build ' + params[0].name.escapeHTML();
                 for (let i = 0, l = params.length; i < l; i++) {
                     text += '<br/>' + params[i].marker + params[i].seriesName + ' : ' + params[i].value;
                 }
