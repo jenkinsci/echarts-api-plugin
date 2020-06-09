@@ -1,3 +1,3 @@
-function EChartsJenkinsApi() { /* Empty placeholder */ }
-
+function EChartsJenkinsApi () { /* Empty placeholder */ }
+/* exported echartsJenkinsApi */
 const echartsJenkinsApi = new EChartsJenkinsApi();
