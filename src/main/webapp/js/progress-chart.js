@@ -1,12 +1,12 @@
-/* global jQuery3 */
+/* global jQuery3, EChartsJenkinsApi, echartsJenkinsApi */
 jQuery3(document).ready(function () {
-    renderProgressChart(jQuery3);
+    echartsJenkinsApi.renderProgressChart(jQuery3);
 });
 
 /**
  * Renders all div elements that have the class 'echarts-progress-chart' using ECharts.
  */
-function renderProgressChart () {
+EChartsJenkinsApi.prototype.renderProgressChart = function () {
     /**
      * Renders a trend chart in the a div using ECharts.
      *

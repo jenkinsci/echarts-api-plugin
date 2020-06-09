@@ -1,12 +1,12 @@
-/* global jQuery3 */
+/* global jQuery3, EChartsJenkinsApi, echartsJenkinsApi */
 jQuery3(document).ready(function () {
-    renderPieCharts(jQuery3);
+    echartsJenkinsApi.renderPieCharts(jQuery3);
 });
 
 /**
  * Renders all div elements that have the class 'echarts-pie-chart' using ECharts.
  */
-function renderPieCharts () {
+EChartsJenkinsApi.prototype.renderPieCharts = function () {
     /**
      * Renders a trend chart in the a div using ECharts.
      *
