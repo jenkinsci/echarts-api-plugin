@@ -1,4 +1,4 @@
-/* global echarts */
+/* global echarts, jQuery3, EChartsJenkinsApi */
 /**
  * Renders a trend chart in the specified div using ECharts.
  *
@@ -6,7 +6,7 @@
  * @param {String} model - the line chart model
  * @param {Function} redrawCallback - callback that will be invoked if the user toggles date or build domain
  */
-function renderZoomableTrendChart(chartDivId, model, redrawCallback) {
+EChartsJenkinsApi.prototype.renderZoomableTrendChart = function (chartDivId, model, redrawCallback) {
     const chartModel = JSON.parse(model);
     const chartPlaceHolder = document.getElementById(chartDivId);
     const chart = echarts.init(chartPlaceHolder);
@@ -90,3 +90,6 @@ function renderZoomableTrendChart(chartDivId, model, redrawCallback) {
         chart.resize();
     });
 }
+
+// Make the API change backward compatible
+renderZoomableTrendChart = echartsJenkinsApi.renderZoomableTrendChart;

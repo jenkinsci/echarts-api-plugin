@@ -1,4 +1,4 @@
-/* global echarts */
+/* global echarts, EChartsJenkinsApi */
 /**
  * Renders a trend chart in the specified div using ECharts.
  *
@@ -6,7 +6,7 @@
  * @param {String} model - the line chart model
  * @param {String} withOnClickHandler - to enable clicking on the chart to see the results
  */
-function renderTrendChart (chartDivId, model, withOnClickHandler) { // eslint-disable-line no-unused-vars
+EChartsJenkinsApi.prototype.renderTrendChart = function (chartDivId, model, withOnClickHandler) { // eslint-disable-line no-unused-vars
     const chartModel = JSON.parse(model);
     const chartPlaceHolder = document.getElementById(chartDivId);
 
