@@ -3,13 +3,13 @@ jQuery3(document).ready(function () {
     /**
      * Renders all div elements that have the class 'echarts-pie-chart' using ECharts.
      */
-     function renderPieCharts () {
+    function renderPieCharts() {
         /**
          * Renders a trend chart in the a div using ECharts.
          *
          * @param {String} chartDivId - the ID of the div where the chart should be shown in
          */
-        function renderPieChart (chartDivId) {
+        function renderPieChart(chartDivId) {
             function isEmpty(string) {
                 return (!string || string.length === 0);
             }
@@ -29,7 +29,8 @@ jQuery3(document).ready(function () {
                         },
                         left: 'center'
                     };
-                } else {
+                }
+                else {
                     return null;
                 }
             }
