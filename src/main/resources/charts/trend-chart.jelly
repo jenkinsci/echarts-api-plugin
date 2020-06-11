@@ -34,12 +34,9 @@
     <script>
         {
             const trendProxy = <st:bind value="${it}"/>;
-            trendProxy.getBuildTrendModel(function (trendModel) {
-                const useLinks = "${enableLinks}";
-                echartsJenkinsApi.renderTrendChart('${chartId}', trendModel.responseJSON,
-                        (useLinks &amp;&amp; useLinks !== "false") ? true : false);
-            });
-      }
+
+            echartsJenkinsApi.renderTrendChart('${chartId}', '${enableLinks}', trendProxy);
+        }
     </script>
 
   </j:if>
