@@ -12,6 +12,8 @@ EChartsJenkinsApi.prototype.renderZoomableTrendChart = function (chartDivId, mod
     const chart = echarts.init(chartPlaceHolder);
     chartPlaceHolder.echart = chart;
 
+    const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
+
     const options = {
         tooltip: {
             trigger: 'axis',
@@ -56,13 +58,19 @@ EChartsJenkinsApi.prototype.renderZoomableTrendChart = function (chartDivId, mod
             handleSize: '70%',
             handleStyle: {
                 color: '#b4b4b4'
+            },
+            textStyle: {
+                color: textColor
             }
         }],
         legend: {
             orient: 'horizontal',
             type: 'scroll',
             x: 'center',
-            y: 'top'
+            y: 'top',
+            textStyle: {
+                color: textColor
+            }
         },
         grid: {
             left: '20',
@@ -74,11 +82,17 @@ EChartsJenkinsApi.prototype.renderZoomableTrendChart = function (chartDivId, mod
         xAxis: [{
             type: 'category',
             boundaryGap: false,
-            data: chartModel.domainAxisLabels
+            data: chartModel.domainAxisLabels,
+            axisLabel: {
+                color: textColor
+            }
         }
         ],
         yAxis: [{
-            type: 'value'
+            type: 'value',
+            axisLabel: {
+                color: textColor
+            }
         }
         ],
         series: chartModel.series

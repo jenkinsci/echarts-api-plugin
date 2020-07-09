@@ -42,6 +42,8 @@ jQuery3(document).ready(function () {
             const chart = echarts.init(chartDiv);
             chartDiv.echart = chart;
 
+            const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
+
             const options = {
                 title: getTitle(title),
                 tooltip: {
@@ -52,7 +54,10 @@ jQuery3(document).ready(function () {
                     orient: 'horizontal',
                     x: 'center',
                     y: 'bottom',
-                    type: 'scroll'
+                    type: 'scroll',
+                    textStyle: {
+                        color: textColor
+                    }
                 },
                 series: [{
                     type: 'pie',

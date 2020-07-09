@@ -31,6 +31,8 @@ EChartsJenkinsApi.prototype.renderTrendChart = function (chartDivId, enableLinks
             }
         }
 
+        const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
+
         const options = {
             tooltip: {
                 trigger: 'axis',
@@ -67,7 +69,10 @@ EChartsJenkinsApi.prototype.renderTrendChart = function (chartDivId, enableLinks
                 orient: 'horizontal',
                 type: 'scroll',
                 x: 'center',
-                y: 'top'
+                y: 'top',
+                textStyle: {
+                    color: textColor
+                }
             },
             grid: {
                 left: '20',
@@ -79,11 +84,17 @@ EChartsJenkinsApi.prototype.renderTrendChart = function (chartDivId, enableLinks
             xAxis: [{
                 type: 'category',
                 boundaryGap: false,
-                data: chartModel.domainAxisLabels
+                data: chartModel.domainAxisLabels,
+                axisLabel: {
+                    color: textColor
+                }
             }
             ],
             yAxis: [{
-                type: 'value'
+                type: 'value',
+                axisLabel: {
+                    color: textColor
+                }
             }
             ],
             series: chartModel.series
