@@ -1,0 +1,19 @@
+version: 2
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: org.eclipse.collections:eclipse-collections
+    versions:
+    - ">= 10.a"
+    - "< 11"
+  - dependency-name: org.eclipse.collections:eclipse-collections-api
+    versions:
+    - ">= 10.a"
+    - "< 11"
+  - dependency-name: org.ow2.asm:asm
+    versions:
+    - "> 5.0.4"
