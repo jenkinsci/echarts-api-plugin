@@ -26,7 +26,7 @@
 
     <echarts-build-trends.version>2.0.0</echarts-build-trends.version>
     <plugin-util-api.version>1.4.0</plugin-util-api.version>
-    <jquery3-api.version>3.5.1-1</jquery3-api.version>
+    <jquery3-api.version>3.5.1-2</jquery3-api.version>
     <jackson2-api.version>2.11.1</jackson2-api.version>
 
   </properties>
@@ -67,6 +67,10 @@
         <exclusion>
           <artifactId>jackson-databind</artifactId>
           <groupId>com.fasterxml.jackson.core</groupId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-annotations</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
