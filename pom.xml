@@ -20,7 +20,7 @@
   <properties>
     <revision>4.9.0-4</revision>
     <changelist>-SNAPSHOT</changelist>
-    <echarts.version>4.9.0</echarts.version>
+    <echarts.version>5.0.1</echarts.version>
 
     <module.name>${project.groupId}.echarts</module.name>
 
