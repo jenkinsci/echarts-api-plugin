@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>analysis-pom</artifactId>
-    <version>4.7.0</version>
+    <version>5.0.0-beta-1</version>
     <relativePath />
   </parent>
 
@@ -25,9 +25,8 @@
     <module.name>${project.groupId}.echarts</module.name>
 
     <echarts-build-trends.version>2.0.0</echarts-build-trends.version>
-    <plugin-util-api.version>1.7.0</plugin-util-api.version>
+    <plugin-util-api.version>2.0.0-rc274.6fb09404abba</plugin-util-api.version>
     <jquery3-api.version>3.5.1-2</jquery3-api.version>
-    <jackson2-api.version>2.11.1</jackson2-api.version>
 
   </properties>
 
@@ -77,7 +76,6 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>jackson2-api</artifactId>
-      <version>${jackson2-api.version}</version>
     </dependency>
 
     <dependency>
