@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>analysis-pom</artifactId>
-    <version>4.7.0</version>
+    <version>5.0.0</version>
     <relativePath />
   </parent>
 
@@ -18,16 +18,15 @@
   <url>https://github.com/jenkinsci/echarts-api-plugin</url>
 
   <properties>
-    <revision>4.9.0-4</revision>
+    <revision>4.9.0-5</revision>
     <changelist>-SNAPSHOT</changelist>
     <echarts.version>5.0.1</echarts.version>
 
     <module.name>${project.groupId}.echarts</module.name>
 
     <echarts-build-trends.version>2.0.0</echarts-build-trends.version>
-    <plugin-util-api.version>1.6.1</plugin-util-api.version>
-    <jquery3-api.version>3.5.1-2</jquery3-api.version>
-    <jackson2-api.version>2.11.1</jackson2-api.version>
+    <plugin-util-api.version>2.0.0</plugin-util-api.version>
+    <jquery3-api.version>3.5.1-3</jquery3-api.version>
 
   </properties>
 
@@ -72,12 +71,23 @@
           <groupId>com.github.spotbugs</groupId>
           <artifactId>spotbugs-annotations</artifactId>
         </exclusion>
+        <exclusion>
+          <artifactId>codingstyle</artifactId>
+          <groupId>edu.hm.hafner</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-lang3</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>error_prone_annotations</artifactId>
+          <groupId>com.google.errorprone</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>jackson2-api</artifactId>
-      <version>${jackson2-api.version}</version>
     </dependency>
 
     <dependency>
@@ -157,6 +167,10 @@
     <repository>
       <id>repo.jenkins-ci.org</id>
       <url>https://repo.jenkins-ci.org/public/</url>
+    </repository>
+    <repository>
+      <id>incrementals.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/incrementals/</url>
     </repository>
   </repositories>
 
