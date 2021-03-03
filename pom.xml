@@ -18,7 +18,7 @@
   <url>https://github.com/jenkinsci/echarts-api-plugin</url>
 
   <properties>
-    <revision>4.9.0-5</revision>
+    <revision>5.0.1-1</revision>
     <changelist>-SNAPSHOT</changelist>
     <echarts.version>5.0.1</echarts.version>
 
