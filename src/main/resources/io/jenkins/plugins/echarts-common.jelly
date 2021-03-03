@@ -7,7 +7,7 @@ Use it like <st:adjunct includes="io.jenkins.plugins.echarts-common"/>
   <j:new var="h" className="hudson.Functions" />
   ${h.initPageVariables(context)}
 
-  <script type="text/javascript" src="${resURL}/plugin/echarts-api/webjars/echarts-en.common.min.js" />
+  <script type="text/javascript" src="${resURL}/plugin/echarts-api/webjars/echarts.common.min.js" />
 
   <st:adjunct includes="io.jenkins.plugins.jquery3"/>
 
