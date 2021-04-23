@@ -18,9 +18,8 @@
   <url>https://github.com/jenkinsci/echarts-api-plugin</url>
 
   <properties>
-    <revision>5.0.2-2</revision>
+    <revision>5.1.0-1</revision>
     <changelist>-SNAPSHOT</changelist>
-    <echarts.version>5.0.2</echarts.version>
 
     <module.name>${project.groupId}.echarts</module.name>
 
@@ -48,12 +47,6 @@
 
   <dependencies>
 
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>echarts</artifactId>
-      <version>${echarts.version}</version>
-      <scope>provided</scope>
-    </dependency>
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>plugin-util-api</artifactId>
@@ -121,31 +114,28 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>1.11.3</version>
         <executions>
           <execution>
-            <id>unpack-webjars</id>
-            <phase>generate-resources</phase>
+            <id>install node and npm</id>
             <goals>
-              <goal>unpack-dependencies</goal>
+              <goal>install-node-and-npm</goal>
             </goals>
+            <phase>generate-resources</phase>
             <configuration>
-              <outputDirectory>${project.build.directory}/webjars</outputDirectory>
-              <includeArtifactIds>echarts</includeArtifactIds>
+              <nodeVersion>v14.16.0</nodeVersion>
             </configuration>
           </execution>
           <execution>
-            <id>unpack-dependencies</id>
-            <phase>generate-resources</phase>
+            <id>npm install</id>
             <goals>
-              <goal>unpack-dependencies</goal>
+              <goal>npm</goal>
             </goals>
+            <phase>generate-resources</phase>
             <configuration>
-              <outputDirectory>${project.build.directory}/classes</outputDirectory>
-              <includeArtifactIds>echarts-build-trends</includeArtifactIds>
-              <excludeTypes>test-jar</excludeTypes>
-              <excludes>META-INF/**/*</excludes>
+              <arguments>install</arguments>
             </configuration>
           </execution>
         </executions>
@@ -161,14 +151,33 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/${project.artifactId}/webjars</outputDirectory>
+              <outputDirectory>${project.build.directory}/${project.artifactId}/js</outputDirectory>
               <resources>
                 <resource>
-                  <directory>${project.build.directory}/webjars/META-INF/resources/webjars/echarts/${echarts.version}
-                  </directory>
+                  <directory>${project.basedir}/node_modules/echarts/dist</directory>
                   <filtering>false</filtering>
                 </resource>
               </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-dependencies</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/classes</outputDirectory>
+              <includeArtifactIds>echarts-build-trends</includeArtifactIds>
+              <excludeTypes>test-jar</excludeTypes>
+              <excludes>META-INF/**/*</excludes>
             </configuration>
           </execution>
         </executions>
