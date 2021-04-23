@@ -53,7 +53,9 @@ EChartsJenkinsApi.prototype.renderZoomableTrendChart = function (chartDivId, mod
             },
             {
                 type: 'slider',
-                height: 20,
+                height: 25,
+                bottom: 0,
+                moveHandleSize: 0
             }],
         legend: {
             orient: 'horizontal',
@@ -67,7 +69,7 @@ EChartsJenkinsApi.prototype.renderZoomableTrendChart = function (chartDivId, mod
         grid: {
             left: '20',
             right: '10',
-            bottom: '20%',
+            bottom: '30',
             top: '15%',
             containLabel: true
         },
