@@ -21,8 +21,7 @@
         }
     });
 
-    const saveTrendConfiguration = $('#saveTrendConfiguration');
-    saveTrendConfiguration.on('click', function (e) {
+    $('#saveTrendConfiguration').on('click', function (e) {
         const configurationJson = {
             numberOfBuilds: numberOfBuildsInput.val(),
             numberOfDays: numberOfDaysInput.val(),
