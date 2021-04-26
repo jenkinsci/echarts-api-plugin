@@ -1,0 +1,54 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+  <st:documentation>
+    Provides a trend chart configuration dialog. This dialog configures the properties of a trend chart that uses
+    the Java class 'edu.hm.hafner.echarts.ChartModelConfiguration' as model. The trend chart configuration values
+    will be persisted in browser's local storage using the key `echarts#trendConfiguration`.
+  </st:documentation>
+
+  <st:adjunct includes="io.jenkins.plugins.bootstrap5"/>
+
+  <div class="modal fade" id="trendConfiguration" tabindex="-1" aria-labelledby="trendConfigurationLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="trendConfigurationLabel">Configure trend chart</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="buildDomain"/>
+              <label class="form-check-label" for="buildDomain">
+                Show results per build (x-axis: build number)
+              </label>
+            </div>
+            <div class="mb-3">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="dateDomain" checked="true"/>
+              <label class="form-check-label" for="dateDomain">
+                Show aggregated results per day (x-axis: day of build)
+              </label>
+            </div>
+            <div class="mb-3">
+              <label for="numberOfBuilds" class="form-label">Maximum number of builds to consider</label>
+              <input type="number" min="2" class="form-control" id="numberOfBuilds" required="true"/>
+              <div id="numberOfBuildsHelp" class="form-text">If set to a value less than 2 then all builds will be considered.</div>
+            </div>
+            <div class="mb-3">
+              <label for="numberOfDays" class="form-label">Maximum number of days to look into the past</label>
+              <input type="number" min="0" class="form-control" id="numberOfDays" required="true"/>
+              <div id="numberOfDaysHelp" class="form-text">If set to a value less than 1 then builds of all days are considered.</div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="saveTrendConfiguration">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/chart-configuration.js"/>
+
+</j:jelly>

@@ -1,18 +1,20 @@
-/* global echarts, jQuery3, EChartsJenkinsApi */
+/* global echarts, jQuery3, bootstrap5, EChartsJenkinsApi */
 /**
  * Renders a trend chart in the specified div using ECharts.
  *
  * @param {String} chartDivId - the ID of the div where the chart should be shown in
  * @param {String} model - the line chart model
  * @param {Function} redrawCallback - callback that will be invoked if the user toggles date or build domain
+ * @param {String} settingsDialogId - the optional ID of the div that provides a settings dialog
  */
-EChartsJenkinsApi.prototype.renderZoomableTrendChart = function (chartDivId, model, redrawCallback) {
+EChartsJenkinsApi.prototype.renderZoomableTrendChart = function (chartDivId, model, redrawCallback, settingsDialogId) {
     const chartModel = JSON.parse(model);
     const chartPlaceHolder = document.getElementById(chartDivId);
     const chart = echarts.init(chartPlaceHolder);
     chartPlaceHolder.echart = chart;
 
     const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
+    const showSettings = document.getElementById(settingsDialogId);
 
     const options = {
         tooltip: {
@@ -28,21 +30,12 @@ EChartsJenkinsApi.prototype.renderZoomableTrendChart = function (chartDivId, mod
             itemSize: 16,
             feature: {
                 myTool1: {
-                    show: true,
-                    title: 'Date',
-                    icon: 'path://M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z',
+                    show: showSettings != null,
+                    title: 'Settings',
+                    icon: 'ipath://M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z',
                     onclick: function () {
-                        localStorage.setItem('#trendBuildAxis', 'date');
-                        redrawCallback();
-                    }
-                },
-                myTool2: {
-                    show: true,
-                    title: 'Build#',
-                    icon: 'ipath://M440.667 182.109l7.143-40c1.313-7.355-4.342-14.109-11.813-14.109h-74.81l14.623-81.891C377.123 38.754 371.468 32 363.997 32h-40.632a12 12 0 0 0-11.813 9.891L296.175 128H197.54l14.623-81.891C213.477 38.754 207.822 32 200.35 32h-40.632a12 12 0 0 0-11.813 9.891L132.528 128H53.432a12 12 0 0 0-11.813 9.891l-7.143 40C33.163 185.246 38.818 192 46.289 192h74.81L98.242 320H19.146a12 12 0 0 0-11.813 9.891l-7.143 40C-1.123 377.246 4.532 384 12.003 384h74.81L72.19 465.891C70.877 473.246 76.532 480 84.003 480h40.632a12 12 0 0 0 11.813-9.891L151.826 384h98.634l-14.623 81.891C234.523 473.246 240.178 480 247.65 480h40.632a12 12 0 0 0 11.813-9.891L315.472 384h79.096a12 12 0 0 0 11.813-9.891l7.143-40c1.313-7.355-4.342-14.109-11.813-14.109h-74.81l22.857-128h79.096a12 12 0 0 0 11.813-9.891zM261.889 320h-98.634l22.857-128h98.634l-22.857 128z',
-                    onclick: function () {
-                        localStorage.setItem('#trendBuildAxis', 'build');
-                        redrawCallback();
+                        const settings = new bootstrap5.Modal(showSettings);
+                        settings.show();
                     }
                 }
             }
