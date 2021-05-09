@@ -14,6 +14,12 @@
       Determines if the chart is clickable. If the chart is clickable, then clicking on a chart will
       open the results of the selected build.
     </st:attribute>
+    <st:attribute name="configurationId" use="optional" type="String">
+      ID of the div-element that renders a configuration dialog of this trend chart.
+      If this element is defined, then the trend chart will provide a configuration button that
+      will invoke the specified element. If your trend has no special configuration dialog
+      then the ID "defaultTrendConfiguration" of the default configuration dialog should be used.
+    </st:attribute>
 
   </st:documentation>
 
@@ -30,12 +36,14 @@
     </div>
 
     <st:adjunct includes="io.jenkins.plugins.echarts"/>
+    <st:adjunct includes="io.jenkins.plugins.bootstrap5"/>
+    <st:adjunct includes="io.jenkins.plugins.chart-configuration-dialog"/>
 
     <script>
         {
             const trendProxy = <st:bind value="${it}"/>;
 
-            echartsJenkinsApi.renderTrendChart('${chartId}', '${enableLinks}', trendProxy);
+            echartsJenkinsApi.renderTrendChart('${chartId}', '${enableLinks}', '${configurationDialogElementId}', trendProxy);
         }
     </script>
 

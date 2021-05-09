@@ -1,14 +1,15 @@
 <?jelly escape-by-default='true'?>
+<!--
+Use it like <st:adjunct includes="io.jenkins.plugins.echarts"/>
+-->
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
-  <st:documentation>
-    Provides a trend chart configuration dialog. This dialog configures the properties of a trend chart that uses
-    the Java class 'edu.hm.hafner.echarts.ChartModelConfiguration' as model. The trend chart configuration values
-    will be persisted in browser's local storage using the key `echarts#trendConfiguration`.
-  </st:documentation>
+
+  <j:new var="h" className="hudson.Functions" />
+  ${h.initPageVariables(context)}
 
   <st:adjunct includes="io.jenkins.plugins.bootstrap5"/>
 
-  <div class="modal fade" id="defaultTrendConfiguration" tabindex="-1" aria-labelledby="trendConfigurationLabel" aria-hidden="true">
+  <div class="modal fade" id="trendConfiguration" tabindex="-1" aria-labelledby="trendConfigurationLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

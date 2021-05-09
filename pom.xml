@@ -24,9 +24,10 @@
     <module.name>${project.groupId}.echarts</module.name>
 
     <echarts-build-trends.version>2.1.0</echarts-build-trends.version>
-    <plugin-util-api.version>2.1.0</plugin-util-api.version>
+    <plugin-util-api.version>2.2.0</plugin-util-api.version>
     <jquery3-api.version>3.6.0-1</jquery3-api.version>
-    <bootstrap5-api.version>5.0.0-beta3-1</bootstrap5-api.version>
+    <bootstrap5-api.version>5.0.0-1</bootstrap5-api.version>
+    <fontawesome-api.version>5.15.3-1</fontawesome-api.version>
     <eclipse-collections.version>9.2.0</eclipse-collections.version>
 
   </properties>
@@ -52,6 +53,11 @@
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>plugin-util-api</artifactId>
       <version>${plugin-util-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.jenkins.plugins</groupId>
+      <artifactId>font-awesome-api</artifactId>
+      <version>${fontawesome-api.version}</version>
     </dependency>
     <dependency>
       <groupId>edu.hm.hafner</groupId>
