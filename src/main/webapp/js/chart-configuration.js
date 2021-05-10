@@ -1,10 +1,10 @@
 /* global jQuery3, view, echartsJenkinsApi, bootstrap5 */
 (function ($) {
-    const trendConfiguration = $('#trendConfiguration');
+    const trendConfiguration = $('#defaultTrendConfiguration');
     const numberOfBuildsInput = trendConfiguration.find('#numberOfBuilds');
     const numberOfDaysInput = trendConfiguration.find('#numberOfDays');
     const useBuildAsDomainCheckBox = trendConfiguration.find('#buildDomain');
-    const trendLocalStorageId = 'echarts#trendConfiguration';
+    const trendLocalStorageId = 'echarts#trend#defaultTrendConfiguration';
 
     trendConfiguration.on('show.bs.modal', function (e) {
         const trendJsonConfiguration = localStorage.getItem(trendLocalStorageId);

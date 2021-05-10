@@ -36,15 +36,19 @@
     </div>
 
     <st:adjunct includes="io.jenkins.plugins.echarts"/>
-    <st:adjunct includes="io.jenkins.plugins.bootstrap5"/>
-    <st:adjunct includes="io.jenkins.plugins.chart-configuration-dialog"/>
+
+    <j:if test="${configurationId=='defaultTrendConfiguration'}">
+
+      <st:adjunct includes="io.jenkins.plugins.bootstrap5"/>
+      <st:adjunct includes="io.jenkins.plugins.echarts-trend-configuration-dialog"/>
+
+    </j:if>
 
     <script>
-        {
-            const trendProxy = <st:bind value="${it}"/>;
-
-            echartsJenkinsApi.renderTrendChart('${chartId}', '${enableLinks}', '${configurationDialogElementId}', trendProxy);
-        }
+      {
+          const trendProxy = <st:bind value="${it}"/>;
+          echartsJenkinsApi.renderTrendChart('${chartId}', '${enableLinks}', '${configurationId}', trendProxy);
+      }
     </script>
 
   </j:if>
