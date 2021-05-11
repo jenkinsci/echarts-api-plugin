@@ -11,7 +11,7 @@
  then the ID "defaultTrendConfiguration" of the default configuration dialog should be used.
  * @param {Object} ajaxProxy - AJAX proxy of the endpoint in Jenkins Java model object
  */
-EChartsJenkinsApi.prototype.renderTrendChart = function (chartDivId, enableLinks, configurationId, ajaxProxy) {
+EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId, enableLinks, configurationId, ajaxProxy) {
     function hasConfigurationDialog() {
         return configurationId != null && configurationId.length > 0;
     }
@@ -141,7 +141,7 @@ EChartsJenkinsApi.prototype.renderTrendChart = function (chartDivId, enableLinks
     chart.showLoading();
     chartPlaceHolder.echart = chart;
 
-    function renderTrendChart() {
+    function renderAsynchronously() {
         // FIXME: handle exceptions
         const configuration = localStorage.getItem('echarts#trend#' + configurationId);
         ajaxProxy.getConfigurableBuildTrendModel(configuration, function (trendModel) {
@@ -150,9 +150,9 @@ EChartsJenkinsApi.prototype.renderTrendChart = function (chartDivId, enableLinks
     }
 
     if (hasConfigurationDialog()) { // AsyncConfigurableTrendChart
-        renderTrendChart();
+        renderAsynchronously();
         getConfigurationDialog().addEventListener("hidden.bs.modal", function() {
-            renderTrendChart();
+            renderAsynchronously();
         });
     }
     else { // AsyncTrendChart
@@ -160,4 +160,16 @@ EChartsJenkinsApi.prototype.renderTrendChart = function (chartDivId, enableLinks
             render(chartPlaceHolder, chart, trendModel.responseJSON, !!(enableLinks && enableLinks !== "false"));
         });
     }
+}
+
+/**
+ * Renders a trend chart in the specified div using ECharts.
+ *
+ * @param {String} chartDivId - the ID of the div where the chart should be shown in
+ * @param {String} enableLinks - determines if the chart is clickable. If the chart is clickable, then clicking on a
+ *     chart will open the results of the selected build.
+ * @param {Object} ajaxProxy - AJAX proxy of the endpoint in Jenkins Java model object
+ */
+EChartsJenkinsApi.prototype.renderTrendChart = function (chartDivId, enableLinks, ajaxProxy) {
+    EChartsJenkinsApi.prototype.renderConfigurableTrendChart(chartDivId, enableLinks, null, ajaxProxy);
 }

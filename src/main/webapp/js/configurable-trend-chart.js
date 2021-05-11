@@ -7,7 +7,7 @@
  * @param {Function} redrawCallback - callback that will be invoked if the user toggles date or build domain
  * @param {String} settingsDialogId - the optional ID of the div that provides a settings dialog
  */
-EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId, model, redrawCallback, settingsDialogId) {
+EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart = function (chartDivId, model, redrawCallback, settingsDialogId) {
     const chartModel = JSON.parse(model);
     const chartPlaceHolder = document.getElementById(chartDivId);
     const chart = echarts.init(chartPlaceHolder);
@@ -53,6 +53,7 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
         legend: {
             orient: 'horizontal',
             type: 'scroll',
+            pageButtonPosition: 'start',
             x: 'center',
             y: 'top',
             textStyle: {

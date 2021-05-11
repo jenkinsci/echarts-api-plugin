@@ -47,7 +47,7 @@
     <script>
       {
           const trendProxy = <st:bind value="${it}"/>;
-          echartsJenkinsApi.renderTrendChart('${chartId}', '${enableLinks}', '${configurationId}', trendProxy);
+          echartsJenkinsApi.renderConfigurableTrendChart('${chartId}', '${enableLinks}', '${configurationId}', trendProxy);
       }
     </script>
 
