@@ -94,6 +94,7 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
             legend: {
                 orient: 'horizontal',
                 type: 'scroll',
+                pageButtonPosition: 'start',
                 x: 'center',
                 y: 'top',
                 textStyle: {

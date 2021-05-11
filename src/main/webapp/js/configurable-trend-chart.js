@@ -53,7 +53,6 @@ EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart = function (cha
         legend: {
             orient: 'horizontal',
             type: 'scroll',
-            pageButtonPosition: 'start',
             x: 'center',
             y: 'top',
             textStyle: {
