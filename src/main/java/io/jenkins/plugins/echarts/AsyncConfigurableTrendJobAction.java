@@ -1,5 +1,6 @@
 package io.jenkins.plugins.echarts;
 
+import edu.hm.hafner.echarts.ChartModelConfiguration;
 import edu.hm.hafner.echarts.JacksonFacade;
 import edu.hm.hafner.echarts.LinesChartModel;
 
@@ -12,7 +13,11 @@ import io.jenkins.plugins.util.BuildAction;
  * A job action displays a link on the side panel of a job that refers to the last build that contains results (i.e. a
  * {@link BuildAction} with a corresponding result). This action also is responsible to render the historical trend via
  * its associated 'floatingBox.jelly' view. The trend chart will be rendered by ECharts: the model of the chart will be
- * obtained using an asynchronous Ajax call.
+ * obtained using an asynchronous Ajax call. This action basically is the same as {@link AsyncTrendJobAction},
+ * it additionally provides a configuration of the trend chart using a JSON object (given as a string value). This
+ * JSON object can be populated in the client using a configuration dialog (or using the browser's local storage).
+ * For the default trend charts that are simply built around {@link ChartModelConfiguration} you can include the provided
+ * global configuration dialog with {@code <st:adjunct includes="io.jenkins.plugins.echarts-trend-configuration-dialog"/>}.
  *
  * @param <T>
  *         type of the results
@@ -38,7 +43,7 @@ public abstract class AsyncConfigurableTrendJobAction<T extends BuildAction<?>> 
 
     @JavaScriptMethod
     @Override
-    public final String getBuildTrendModel() {
+    public final String getBuildTrendModel() { // This method will be invoked if the trend chart does not enable a configuration dialog
         return getConfigurableBuildTrendModel(EMPTY_CONFIGURATION);
     }
 
@@ -61,7 +66,7 @@ public abstract class AsyncConfigurableTrendJobAction<T extends BuildAction<?>> 
     protected abstract LinesChartModel createChartModel(String configuration);
 
     @Override
-    protected final LinesChartModel createChartModel() {
+    protected final LinesChartModel createChartModel() { // This method will be invoked if the trend chart does not enable the configuration dialog
         return createChartModel(EMPTY_CONFIGURATION);
     }
 }
