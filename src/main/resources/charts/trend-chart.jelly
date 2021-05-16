@@ -37,10 +37,9 @@
 
     <st:adjunct includes="io.jenkins.plugins.echarts"/>
 
-    <j:if test="${configurationId=='defaultTrendConfiguration'}">
+    <j:if test="${configurationId=='default'}">
 
-      <st:adjunct includes="io.jenkins.plugins.bootstrap5"/>
-      <st:adjunct includes="io.jenkins.plugins.echarts-trend-configuration-dialog"/>
+      <st:adjunct includes="io.jenkins.plugins.echarts-trend-default-setup"/>
 
     </j:if>
 

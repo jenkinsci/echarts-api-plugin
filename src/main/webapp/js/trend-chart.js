@@ -17,7 +17,7 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
     }
 
     function getConfigurationDialog() {
-        return document.getElementById(configurationId);
+        return document.getElementById('trend-configuration-' + configurationId);
     }
 
     /**
@@ -143,8 +143,16 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
     chartPlaceHolder.echart = chart;
 
     function renderAsynchronously() {
-        // FIXME: handle exceptions
-        const configuration = localStorage.getItem('echarts#trend#' + configurationId);
+        let configuration;
+        try {
+            configuration = localStorage.getItem('jenkins-echarts-trend-configuration-' + configurationId);
+        }
+        catch (e) {
+            // ignore and use fallback
+        }
+        if (!configuration) {
+            configuration = "{}";
+        }
         ajaxProxy.getConfigurableBuildTrendModel(configuration, function (trendModel) {
             render(chartPlaceHolder, chart, trendModel.responseJSON, !!(enableLinks && enableLinks !== "false"));
         });
