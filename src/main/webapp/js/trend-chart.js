@@ -20,32 +20,10 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
         return document.getElementById('trend-configuration-' + configurationId);
     }
 
-    /**
-     * Renders a trend chart in the specified div using ECharts.
-     *
-     * @param {HTMLElement} chartPlaceHolder - the div where the chart should be shown in
-     * @param {Object} chart - the ECharts instance
-     * @param {String} model - the line chart model
-     * @param {Boolean} enableOnClickHandler - to enable clicking on the chart to see the results
-     */
-     function render(chartPlaceHolder, chart, model, enableOnClickHandler) { // eslint-disable-line no-unused-vars
-        const chartModel = JSON.parse(model);
-        let selectedBuild; // the tooltip formatter will change this value while hoovering
-
-        if (enableOnClickHandler) {
-            const urlName = chartPlaceHolder.getAttribute("tool");
-            if (urlName) {
-                chartPlaceHolder.onclick = function () {
-                    if (urlName && selectedBuild > 0) {
-                        window.location.assign(selectedBuild + '/' + urlName);
-                    }
-                };
-            }
-        }
-
+    function createOptions(chartModel) {
         const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
 
-        const options = {
+        return {
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -126,8 +104,33 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
             ],
             series: chartModel.series
         };
+    }
+
+    /**
+     * Renders a trend chart in the specified div using ECharts.
+     *
+     * @param {HTMLElement} chartPlaceHolder - the div where the chart should be shown in
+     * @param {Object} chart - the ECharts instance
+     * @param {String} model - the line chart model
+     * @param {Boolean} enableOnClickHandler - to enable clicking on the chart to see the results
+     */
+     function render(chartPlaceHolder, chart, model, enableOnClickHandler) {
+        let selectedBuild; // the tooltip formatter will change this value while hoovering
+
+        if (enableOnClickHandler) {
+            const urlName = chartPlaceHolder.getAttribute("tool");
+            if (urlName) {
+                chartPlaceHolder.onclick = function () {
+                    if (urlName && selectedBuild > 0) {
+                        window.location.assign(selectedBuild + '/' + urlName);
+                    }
+                };
+            }
+        }
+
+        const chartModel = JSON.parse(model);
         chart.hideLoading();
-        chart.setOption(options);
+        chart.setOption(createOptions(chartModel));
         chart.on('legendselectchanged', function (params) {
             selectedBuild = 0; // clear selection to avoid navigating to the selected build
         });
@@ -135,6 +138,17 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
         window.onresize = function () {
             chart.resize();
         };
+    }
+
+    /**
+     * Redraws a trend chart in the specified div using ECharts.
+     *
+     * @param {Object} chart - the ECharts instance
+     * @param {String} model - the line chart model
+     */
+    function redraw(chart, model) {
+        chart.setOption(createOptions(JSON.parse(model)));
+        chart.resize();
     }
 
     const chartPlaceHolder = document.getElementById(chartDivId);
@@ -154,7 +168,7 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
             configuration = "{}";
         }
         ajaxProxy.getConfigurableBuildTrendModel(configuration, function (trendModel) {
-            render(chartPlaceHolder, chart, trendModel.responseJSON, !!(enableLinks && enableLinks !== "false"));
+            redraw(chart, trendModel.responseJSON);
         });
     }
 
@@ -166,7 +180,7 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
     }
     else { // AsyncTrendChart
         ajaxProxy.getBuildTrendModel(function (trendModel) {
-            render(chartPlaceHolder, chart, trendModel.responseJSON, !!(enableLinks && enableLinks !== "false"));
+            redraw(chart, trendModel.responseJSON);
         });
     }
 }
