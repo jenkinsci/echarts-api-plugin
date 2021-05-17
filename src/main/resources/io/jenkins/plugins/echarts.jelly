@@ -12,6 +12,7 @@ Use it like <st:adjunct includes="io.jenkins.plugins.echarts"/>
   <st:adjunct includes="io.jenkins.plugins.jquery3"/>
 
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/echarts-scope.js"/>
+  <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/chart-configuration.js"/>
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/trend-chart.js"/>
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/zoomable-trend-chart.js"/>
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/configurable-trend-chart.js"/>
