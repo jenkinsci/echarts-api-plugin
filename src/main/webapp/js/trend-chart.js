@@ -147,7 +147,8 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
      * @param {String} model - the line chart model
      */
     function redraw(chart, model) {
-        chart.setOption(createOptions(JSON.parse(model)));
+        chart.hideLoading();
+        chart.setOption(createOptions(JSON.parse(model)), true);
         chart.resize();
     }
 
