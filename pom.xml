@@ -23,7 +23,7 @@
 
     <module.name>${project.groupId}.echarts</module.name>
 
-    <echarts-build-trends.version>2.1.0</echarts-build-trends.version>
+    <echarts-build-trends.version>2.2.0</echarts-build-trends.version>
     <plugin-util-api.version>2.2.0</plugin-util-api.version>
     <jquery3-api.version>3.6.0-1</jquery3-api.version>
     <bootstrap5-api.version>5.0.0-1</bootstrap5-api.version>
