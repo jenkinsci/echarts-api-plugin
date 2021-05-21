@@ -158,16 +158,7 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
     chartPlaceHolder.echart = chart;
 
     function renderAsynchronously() {
-        let configuration;
-        try {
-            configuration = localStorage.getItem('jenkins-echarts-trend-configuration-' + configurationId);
-        }
-        catch (e) {
-            // ignore and use fallback
-        }
-        if (!configuration) {
-            configuration = "{}";
-        }
+        const configuration = echartsJenkinsApi.readConfiguration('jenkins-echarts-trend-configuration-' + configurationId);
         ajaxProxy.getConfigurableBuildTrendModel(configuration, function (trendModel) {
             redraw(chart, trendModel.responseJSON);
         });
