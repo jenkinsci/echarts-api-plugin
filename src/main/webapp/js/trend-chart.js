@@ -159,15 +159,21 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
 
     function renderAsynchronously() {
         const configuration = echartsJenkinsApi.readConfiguration('jenkins-echarts-trend-configuration-' + configurationId);
-        ajaxProxy.getConfigurableBuildTrendModel(configuration, function (trendModel) {
+        ajaxProxy.getConfigurableBuildTrendModel(JSON.stringify(configuration), function (trendModel) {
             redraw(chart, trendModel.responseJSON);
         });
     }
 
+    const redrawChartEvent = "echarts.trend.changed";
+    document.addEventListener(redrawChartEvent, function () {
+        renderAsynchronously();
+    });
+
     if (hasConfigurationDialog()) { // AsyncConfigurableTrendChart
         renderAsynchronously();
         getConfigurationDialog().addEventListener("hidden.bs.modal", function() {
-            renderAsynchronously();
+            const event = new Event(redrawChartEvent);
+            document.dispatchEvent(event);
         });
     }
     else { // AsyncTrendChart

@@ -1,22 +1,40 @@
 /* global jQuery3, view, echartsJenkinsApi, bootstrap5 */
 
+const trendDefaultStorageId = 'jenkins-echarts-trend-configuration-default';
+
 /**
- * Reads the trend configuration from the local storage.
+ * Reads the specified configuration from the local storage.
  *
  * @param {String} id - the ID of the configuration
  * @return the configuration or {} if no such configuration is found
  */
-EChartsJenkinsApi.prototype.readConfiguration = function (id) {
+function readFromLocalStorage (id) {
     try {
         const configuration = localStorage.getItem(id);
         if (configuration) {
-            return configuration;
+            return JSON.parse(configuration);
         }
     }
     catch (e) {
         // ignore any errors
     }
-    return "{}";
+    return {};
+}
+
+/**
+ * Reads the trend configuration from the local storage and merges it with the default configuration.
+ *
+ * @param {String} id - the ID of the configuration
+ * @return the configuration or {} if no such configuration is found
+ */
+EChartsJenkinsApi.prototype.readConfiguration = function (id) {
+    const specific = readFromLocalStorage(id);
+    const common = readFromLocalStorage(trendDefaultStorageId);
+
+    return {
+        ...specific,
+        ...common
+    };
 }
 
 /**
@@ -40,23 +58,22 @@ EChartsJenkinsApi.prototype.configureTrend = function (suffix, fillDialog, saveD
         numberOfDaysInput.val(0);
         useBuildAsDomainCheckBox.prop('checked', true);
         if (fillDialog) {
-            fillDialog(trendConfiguration, {});
+            fillDialog(trendConfiguration);
         }
     }
 
     trendConfiguration.on('show.bs.modal', function (e) {
         const trendJsonConfiguration = echartsJenkinsApi.readConfiguration(trendLocalStorageId);
-        if (trendJsonConfiguration === "{}") {
+        if (jQuery3.isEmptyObject(trendJsonConfiguration)) {
             setDefaultValues();
         }
         else {
             try {
-                const jsonNode = JSON.parse(trendJsonConfiguration);
-                numberOfBuildsInput.val(jsonNode.numberOfBuilds);
-                numberOfDaysInput.val(jsonNode.numberOfDays);
-                useBuildAsDomainCheckBox.prop('checked', jsonNode.buildAsDomain === 'true');
+                numberOfBuildsInput.val(trendJsonConfiguration.numberOfBuilds);
+                numberOfDaysInput.val(trendJsonConfiguration.numberOfDays);
+                useBuildAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain === 'true');
                 if (fillDialog) {
-                    fillDialog(trendConfiguration, jsonNode);
+                    fillDialog(trendConfiguration, trendJsonConfiguration);
                 }
             }
             catch (e) {
@@ -71,10 +88,11 @@ EChartsJenkinsApi.prototype.configureTrend = function (suffix, fillDialog, saveD
             numberOfDays: numberOfDaysInput.val(),
             buildAsDomain: useBuildAsDomainCheckBox.prop('checked') ? 'true' : 'false'
         };
+        localStorage.setItem(trendDefaultStorageId, JSON.stringify(configurationJson));
         if (saveDialog) {
-            saveDialog(trendConfiguration, configurationJson);
+            const specific = saveDialog(trendConfiguration);
+            localStorage.setItem(trendLocalStorageId, JSON.stringify(specific));
         }
-        localStorage.setItem(trendLocalStorageId, JSON.stringify(configurationJson));
     });
 
     trendConfiguration.on('keypress', function (e) {

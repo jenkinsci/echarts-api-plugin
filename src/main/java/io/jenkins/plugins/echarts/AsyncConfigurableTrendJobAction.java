@@ -17,7 +17,7 @@ import io.jenkins.plugins.util.BuildAction;
  * it additionally provides a configuration of the trend chart using a JSON object (given as a string value). This
  * JSON object can be populated in the client using a configuration dialog (or using the browser's local storage).
  * For the default trend charts that are simply built around {@link ChartModelConfiguration} you can include the provided
- * global configuration dialog with {@code <st:adjunct includes="io.jenkins.plugins.echarts-trend-configuration-dialog"/>}.
+ * global configuration dialog with {@code <st:adjunct includes="io.jenkins.plugins.echarts-trend-default-setup"/>}.
  *
  * @param <T>
  *         type of the results

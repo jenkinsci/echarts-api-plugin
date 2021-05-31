@@ -4,10 +4,9 @@
  *
  * @param {String} chartDivId - the ID of the div where the chart should be shown in
  * @param {String} model - the line chart model
- * @param {Function} redrawCallback - callback that will be invoked if the user toggles date or build domain
  * @param {String} settingsDialogId - the optional ID of the div that provides a settings dialog
  */
-EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart = function (chartDivId, model, redrawCallback, settingsDialogId) {
+EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart = function (chartDivId, model, settingsDialogId) {
     const chartModel = JSON.parse(model);
     const chartPlaceHolder = document.getElementById(chartDivId);
     const chart = echarts.init(chartPlaceHolder);
