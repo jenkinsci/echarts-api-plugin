@@ -11,7 +11,7 @@
     width: 100%;
 }
 
-.range-slider__range {
+.range-slider-range {
     -webkit-appearance: none;
     width: calc(100% - (73px));
     height: 8px;
@@ -70,7 +70,7 @@
     position: relative;
     width: 60px;
     color: #fff;
-    line-height: 20px;
+    line-height: 18px;
     text-align: center;
     border-radius: 3px;
     background: #2c3e50;
