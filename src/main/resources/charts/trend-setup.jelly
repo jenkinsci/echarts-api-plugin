@@ -51,6 +51,20 @@
                 considered.
               </div>
             </div>
+            <div class="mb-3">
+              <label for="width-${suffix}" class="form-label">Width (in Pixels)</label>
+              <div class="range-slider">
+                <input class="range-slider-range" type="range" value="500" min="100" max="1000" step="25" id="width-${suffix}"/>
+                <span class="range-slider-value">500</span>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="height-${suffix}" class="form-label">Height (in Pixels)</label>
+              <div class="range-slider">
+                <input class="range-slider-range" type="range" value="200" min="100" max="1000" step="25" id="width-${suffix}"/>
+                <span class="range-slider-value">200</span>
+              </div>
+            </div>
           </form>
         </div>
         <div class="modal-footer">

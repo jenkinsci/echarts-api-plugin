@@ -50,6 +50,8 @@ EChartsJenkinsApi.prototype.configureTrend = function (suffix, fillDialog, saveD
     const numberOfBuildsInput = trendConfiguration.find('#builds-' + suffix);
     const numberOfDaysInput = trendConfiguration.find('#days-' + suffix);
     const useBuildAsDomainCheckBox = trendConfiguration.find('#build-domain-' + suffix);
+    const widthSlider = trendConfiguration.find('#width-' + suffix);
+    const heightSlider = trendConfiguration.find('#height-' + suffix);
     const trendLocalStorageId = 'jenkins-echarts-trend-configuration-' + suffix;
     const saveButton = '#save-trend-configuration-' + suffix;
 
@@ -57,6 +59,8 @@ EChartsJenkinsApi.prototype.configureTrend = function (suffix, fillDialog, saveD
         numberOfBuildsInput.val(50);
         numberOfDaysInput.val(0);
         useBuildAsDomainCheckBox.prop('checked', true);
+        widthSlider.val(500);
+        heightSlider.val(200);
         if (fillDialog) {
             fillDialog(trendConfiguration);
         }
@@ -72,6 +76,8 @@ EChartsJenkinsApi.prototype.configureTrend = function (suffix, fillDialog, saveD
                 numberOfBuildsInput.val(trendJsonConfiguration.numberOfBuilds);
                 numberOfDaysInput.val(trendJsonConfiguration.numberOfDays);
                 useBuildAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain === 'true');
+                widthSlider.val(trendJsonConfiguration.width);
+                heightSlider.val(trendJsonConfiguration.height);
                 if (fillDialog) {
                     fillDialog(trendConfiguration, trendJsonConfiguration);
                 }
@@ -86,7 +92,9 @@ EChartsJenkinsApi.prototype.configureTrend = function (suffix, fillDialog, saveD
         const configurationJson = {
             numberOfBuilds: numberOfBuildsInput.val(),
             numberOfDays: numberOfDaysInput.val(),
-            buildAsDomain: useBuildAsDomainCheckBox.prop('checked') ? 'true' : 'false'
+            buildAsDomain: useBuildAsDomainCheckBox.prop('checked') ? 'true' : 'false',
+            width: widthSlider.val(),
+            height: heightSlider.val()
         };
         localStorage.setItem(trendDefaultStorageId, JSON.stringify(configurationJson));
         if (saveDialog) {
@@ -100,4 +108,23 @@ EChartsJenkinsApi.prototype.configureTrend = function (suffix, fillDialog, saveD
             jQuery3(saveButton).click();
         }
     });
+
+    var rangeSlider = function () {
+        const slider = jQuery3('.range-slider');
+        const range = jQuery3('.range-slider-range');
+        const value = jQuery3('.range-slider-value');
+
+        slider.each(function() {
+            value.each(function() {
+                const value = jQuery3(this).prev().attr('value');
+                jQuery3(this).html(value);
+            });
+
+            range.on('input', function() {
+                jQuery3(this).next(value).html(this.value);
+            });
+        });
+    };
+
+    rangeSlider();
 }

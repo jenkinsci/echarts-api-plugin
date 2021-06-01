@@ -31,7 +31,7 @@
     </div>
 
     <div align="right">
-      <div id="${chartId}" tool="${it.urlName}" class="graph-cursor-pointer"
+      <div id="${chartId}" tool="${it.urlName}" class="echarts-trend graph-cursor-pointer"
            style="width: 500px; min-height: 200px; min-width: 500px; height: 200px;"/>
     </div>
 

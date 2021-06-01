@@ -114,7 +114,7 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
      * @param {String} model - the line chart model
      * @param {Boolean} enableOnClickHandler - to enable clicking on the chart to see the results
      */
-     function render(chartPlaceHolder, chart, model, enableOnClickHandler) {
+    function render(chartPlaceHolder, chart, model, enableOnClickHandler) {
         let selectedBuild; // the tooltip formatter will change this value while hoovering
 
         if (enableOnClickHandler) {
@@ -169,9 +169,39 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
         renderAsynchronously();
     });
 
+    function setHeight(trend, configuration) {
+        const height = configuration.height + "px";
+        trend.style.height = height;
+        trend.style.minHeight = height;
+    }
+
+    function setWidth(trend, configuration) {
+        const width = configuration.width + "px";
+        trend.style.width = width;
+        trend.style.minWidth = width;
+    }
+
+    function setSize(trend, configuration) {
+        if (configuration && configuration.height) {
+            setHeight(trend, configuration);
+        }
+        if (configuration && configuration.width) {
+            setWidth(trend, configuration);
+        }
+    }
+
     if (hasConfigurationDialog()) { // AsyncConfigurableTrendChart
+        const localStorageId = 'jenkins-echarts-trend-configuration-' + configurationId;
+        const configuration = echartsJenkinsApi.readConfiguration(localStorageId);
+        setSize(chartPlaceHolder, configuration);
         renderAsynchronously();
-        getConfigurationDialog().addEventListener("hidden.bs.modal", function() {
+        getConfigurationDialog().addEventListener("hidden.bs.modal", function () {
+            const configuration = echartsJenkinsApi.readConfiguration(localStorageId);
+            const trends = document.getElementsByClassName("echarts-trend");
+            for (let i = 0; i < trends.length; i++) {
+                setSize(trends[i], configuration);
+            }
+
             const event = new Event(redrawChartEvent);
             document.dispatchEvent(event);
         });
