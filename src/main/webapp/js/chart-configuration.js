@@ -111,24 +111,20 @@ EChartsJenkinsApi.prototype.configureTrend = function (suffix, fillDialog, saveD
         }
     });
 
-    var rangeSlider = function () {
-        const slider = jQuery3('.range-slider');
-        const range = jQuery3('.range-slider-range');
-        const value = jQuery3('.range-slider-value');
+    const slider = jQuery3('.range-slider');
+    const range = jQuery3('.range-slider-range');
+    const value = jQuery3('.range-slider-value');
 
-        slider.each(function() {
-            value.each(function() {
-                const value = jQuery3(this).prev().attr('value');
-                jQuery3(this).html(value);
-            });
-
-            range.on('input', function() {
-                jQuery3(this).next(value).html(this.value);
-            });
+    slider.each(function() {
+        value.each(function() {
+            const value = jQuery3(this).prev().attr('value');
+            jQuery3(this).html(value);
         });
-    };
 
-    rangeSlider();
+        range.on('input', function() {
+            jQuery3(this).next(value).html(this.value);
+        });
+    });
 }
 
 /**
