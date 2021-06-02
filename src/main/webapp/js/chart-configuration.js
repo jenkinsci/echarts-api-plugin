@@ -8,7 +8,7 @@ const trendDefaultStorageId = 'jenkins-echarts-trend-configuration-default';
  * @param {String} id - the ID of the configuration
  * @return the configuration or {} if no such configuration is found
  */
-function readFromLocalStorage (id) {
+EChartsJenkinsApi.prototype.readFromLocalStorage = function (id) {
     try {
         const configuration = localStorage.getItem(id);
         if (configuration) {
@@ -28,8 +28,8 @@ function readFromLocalStorage (id) {
  * @return the configuration or {} if no such configuration is found
  */
 EChartsJenkinsApi.prototype.readConfiguration = function (id) {
-    const specific = readFromLocalStorage(id);
-    const common = readFromLocalStorage(trendDefaultStorageId);
+    const specific = echartsJenkinsApi.readFromLocalStorage(id);
+    const common = echartsJenkinsApi.readFromLocalStorage(trendDefaultStorageId);
 
     return {
         ...specific,
@@ -77,7 +77,9 @@ EChartsJenkinsApi.prototype.configureTrend = function (suffix, fillDialog, saveD
                 numberOfDaysInput.val(trendJsonConfiguration.numberOfDays);
                 useBuildAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain === 'true');
                 widthSlider.val(trendJsonConfiguration.width);
+                widthSlider.next().html(trendJsonConfiguration.width)
                 heightSlider.val(trendJsonConfiguration.height);
+                heightSlider.next().html(trendJsonConfiguration.height)
                 if (fillDialog) {
                     fillDialog(trendConfiguration, trendJsonConfiguration);
                 }
@@ -127,4 +129,57 @@ EChartsJenkinsApi.prototype.configureTrend = function (suffix, fillDialog, saveD
     };
 
     rangeSlider();
+}
+
+/**
+ * Configures the content of the trend configuration  dialog.
+ *
+ * @param {String} suffix - the suffix for the ID of the affected trend configuration dialog
+ *     configuration object
+ */
+EChartsJenkinsApi.prototype.configureChart = function (suffix) {
+    const chartConfiguration = jQuery3('#chart-configuration-' + suffix);
+    const numberOfBuildsInput = chartConfiguration.find('#builds-' + suffix);
+    const numberOfDaysInput = chartConfiguration.find('#days-' + suffix);
+    const useBuildAsDomainCheckBox = chartConfiguration.find('#build-domain-' + suffix);
+    const trendLocalStorageId = 'jenkins-echarts-chart-configuration-' + suffix;
+    const saveButton = '#save-chart-configuration-' + suffix;
+
+    function setDefaultValues() {
+        numberOfBuildsInput.val(50);
+        numberOfDaysInput.val(0);
+        useBuildAsDomainCheckBox.prop('checked', true);
+    }
+
+    chartConfiguration.on('show.bs.modal', function (e) {
+        const trendJsonConfiguration = echartsJenkinsApi.readFromLocalStorage(trendLocalStorageId);
+        if (jQuery3.isEmptyObject(trendJsonConfiguration)) {
+            setDefaultValues();
+        }
+        else {
+            try {
+                numberOfBuildsInput.val(trendJsonConfiguration.numberOfBuilds);
+                numberOfDaysInput.val(trendJsonConfiguration.numberOfDays);
+                useBuildAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain === 'true');
+            }
+            catch (e) {
+                setDefaultValues();
+            }
+        }
+    });
+
+    jQuery3(saveButton).on('click', function (e) {
+        const configurationJson = {
+            numberOfBuilds: numberOfBuildsInput.val(),
+            numberOfDays: numberOfDaysInput.val(),
+            buildAsDomain: useBuildAsDomainCheckBox.prop('checked') ? 'true' : 'false',
+        };
+        localStorage.setItem('jenkins-echarts-chart-configuration-' + suffix, JSON.stringify(configurationJson));
+    });
+
+    chartConfiguration.on('keypress', function (e) {
+        if (e.which === 13) {
+            jQuery3(saveButton).click();
+        }
+    });
 }

@@ -181,7 +181,8 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
         trend.style.minWidth = width;
     }
 
-    function setSize(trend, configuration) {
+    function setSize(trend, localStorageId) {
+        const configuration = echartsJenkinsApi.readConfiguration(localStorageId);
         if (configuration && configuration.height) {
             setHeight(trend, configuration);
         }
@@ -192,8 +193,7 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
 
     if (hasConfigurationDialog()) { // AsyncConfigurableTrendChart
         const localStorageId = 'jenkins-echarts-trend-configuration-' + configurationId;
-        const configuration = echartsJenkinsApi.readConfiguration(localStorageId);
-        setSize(chartPlaceHolder, configuration);
+        setSize(chartPlaceHolder, localStorageId);
         renderAsynchronously();
         getConfigurationDialog().addEventListener("hidden.bs.modal", function () {
             const configuration = echartsJenkinsApi.readConfiguration(localStorageId);
