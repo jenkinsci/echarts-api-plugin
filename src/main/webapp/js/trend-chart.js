@@ -12,6 +12,8 @@
  * @param {Object} ajaxProxy - AJAX proxy of the endpoint in Jenkins Java model object
  */
 EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId, enableLinks, configurationId, ajaxProxy) {
+    let selectedBuild; // global variable: the tooltip formatter will change this value while hoovering
+
     function hasConfigurationDialog() {
         return configurationId != null && configurationId.length > 0;
     }
@@ -107,40 +109,6 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
     }
 
     /**
-     * Renders a trend chart in the specified div using ECharts.
-     *
-     * @param {HTMLElement} chartPlaceHolder - the div where the chart should be shown in
-     * @param {Object} chart - the ECharts instance
-     * @param {String} model - the line chart model
-     * @param {Boolean} enableOnClickHandler - to enable clicking on the chart to see the results
-     */
-    function render(chartPlaceHolder, chart, model, enableOnClickHandler) {
-        let selectedBuild; // the tooltip formatter will change this value while hoovering
-
-        if (enableOnClickHandler) {
-            const urlName = chartPlaceHolder.getAttribute("tool");
-            if (urlName) {
-                chartPlaceHolder.onclick = function () {
-                    if (urlName && selectedBuild > 0) {
-                        window.location.assign(selectedBuild + '/' + urlName);
-                    }
-                };
-            }
-        }
-
-        const chartModel = JSON.parse(model);
-        chart.hideLoading();
-        chart.setOption(createOptions(chartModel));
-        chart.on('legendselectchanged', function (params) {
-            selectedBuild = 0; // clear selection to avoid navigating to the selected build
-        });
-        chart.resize();
-        window.onresize = function () {
-            chart.resize();
-        };
-    }
-
-    /**
      * Redraws a trend chart in the specified div using ECharts.
      *
      * @param {Object} chart - the ECharts instance
@@ -152,22 +120,12 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
         chart.resize();
     }
 
-    const chartPlaceHolder = document.getElementById(chartDivId);
-    const chart = echarts.init(chartPlaceHolder);
-    chart.showLoading();
-    chartPlaceHolder.echart = chart;
-
-    function renderAsynchronously() {
+    function renderAsynchronously(chart) {
         const configuration = echartsJenkinsApi.readConfiguration('jenkins-echarts-trend-configuration-' + configurationId);
         ajaxProxy.getConfigurableBuildTrendModel(JSON.stringify(configuration), function (trendModel) {
             redraw(chart, trendModel.responseJSON);
         });
     }
-
-    const redrawChartEvent = "echarts.trend.changed";
-    document.addEventListener(redrawChartEvent, function () {
-        renderAsynchronously();
-    });
 
     function setHeight(trend, configuration) {
         const height = configuration.height + "px";
@@ -191,10 +149,37 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
         }
     }
 
-    if (hasConfigurationDialog()) { // AsyncConfigurableTrendChart
+    const chartPlaceHolder = document.getElementById(chartDivId);
+
+    const chart = echarts.init(chartPlaceHolder);
+    chart.showLoading();
+    chartPlaceHolder.echart = chart;
+
+    if (!!(enableLinks && enableLinks !== "false")) {
+        const urlName = chartPlaceHolder.getAttribute("tool");
+        if (urlName) {
+            chartPlaceHolder.onclick = function () {
+                if (urlName && selectedBuild > 0) {
+                    window.location.assign(selectedBuild + '/' + urlName);
+                }
+            };
+        }
+    }
+
+    window.onresize = function () {
+        chart.resize();
+    };
+
+    if (hasConfigurationDialog()) {
         const localStorageId = 'jenkins-echarts-trend-configuration-' + configurationId;
         setSize(chartPlaceHolder, localStorageId);
-        renderAsynchronously();
+        renderAsynchronously(chart);
+
+        const redrawChartEvent = "echarts.trend.changed";
+        document.addEventListener(redrawChartEvent, function () {
+            renderAsynchronously(chart);
+        });
+
         getConfigurationDialog().addEventListener("hidden.bs.modal", function () {
             const configuration = echartsJenkinsApi.readConfiguration(localStorageId);
             const trends = document.getElementsByClassName("echarts-trend");
