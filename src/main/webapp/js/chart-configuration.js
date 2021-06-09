@@ -62,7 +62,7 @@ EChartsJenkinsApi.prototype.configureTrend = function (suffix, fillDialog, saveD
         widthSlider.val(500);
         heightSlider.val(200);
         if (fillDialog) {
-            fillDialog(trendConfiguration);
+            fillDialog(trendConfiguration, {});
         }
     }
 
