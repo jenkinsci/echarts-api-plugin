@@ -1,0 +1,19 @@
+<?jelly escape-by-default='true'?>
+<!--
+Use it like <st:adjunct includes="io.jenkins.plugins.echarts-trend-default-setup"/>
+-->
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:c="/charts">
+
+  <j:new var="h" className="hudson.Functions" />
+  ${h.initPageVariables(context)}
+
+  <st:adjunct includes="io.jenkins.plugins.jquery3"/>
+  <st:adjunct includes="io.jenkins.plugins.bootstrap5"/>
+
+  <c:trend-setup suffix="default"/>
+
+  <script>
+    echartsJenkinsApi.configureTrend('default')
+  </script>
+
+</j:jelly>

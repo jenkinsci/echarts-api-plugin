@@ -100,6 +100,47 @@ class BuildActionIteratorTest {
     }
 
     @Test
+    void shouldSkipBuildInThemMiddle() {
+        TestAction testAction = mock(TestAction.class);
+        Run<?, ?> baseline = mock(Run.class);
+        when(testAction.getOwner()).thenAnswer(i -> baseline);
+
+        TestAction middleAction = mock(TestAction.class);
+        Run<?, ?> middleBuild = mock(Run.class);
+        when(middleAction.getOwner()).thenAnswer(i -> middleBuild);
+
+        when(middleBuild.getActions(TestAction.class)).thenReturn(Collections.singletonList(middleAction));
+        when(baseline.getPreviousBuild()).thenAnswer(i -> middleBuild);
+
+        Run<?, ?> skippedBuild = mock(Run.class);
+        when(skippedBuild.getActions(TestAction.class)).thenReturn(Collections.emptyList());
+        when(middleBuild.getPreviousBuild()).thenAnswer(i -> skippedBuild);
+
+        TestAction previousAction = mock(TestAction.class);
+        Run<?, ?> previousBuild = mock(Run.class);
+        when(previousAction.getOwner()).thenAnswer(i -> previousBuild);
+
+        when(previousBuild.getActions(TestAction.class)).thenReturn(Collections.singletonList(previousAction));
+        when(skippedBuild.getPreviousBuild()).thenAnswer(i -> previousBuild);
+
+        BuildActionIterator<TestAction> iterator = new BuildActionIterator<>(TestAction.class, Optional.of(testAction));
+
+        assertThat(iterator).hasNext();
+        assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
+                .isEqualTo(new BuildResult<>(null, testAction));
+
+        assertThat(iterator).hasNext();
+        assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
+                .isEqualTo(new BuildResult<>(null, middleAction));
+
+        assertThat(iterator).hasNext();
+        assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
+                .isEqualTo(new BuildResult<>(null, previousAction));
+
+        assertThat(iterator).isExhausted();
+    }
+
+    @Test
     void shouldReturnResultOfPreviousBuildWithFilter() {
         TestAction first = mock(TestAction.class);
         TestAction second = mock(TestAction.class);
