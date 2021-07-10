@@ -75,6 +75,7 @@ EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart = function (cha
         }],
         yAxis: [{
             type: 'value',
+            min: 'dataMin',
             axisLabel: {
                 color: textColor
             }

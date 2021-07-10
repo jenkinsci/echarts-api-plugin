@@ -99,6 +99,7 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
             ],
             yAxis: [{
                 type: 'value',
+                min: 'dataMin',
                 axisLabel: {
                     color: textColor
                 }
