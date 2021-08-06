@@ -18,13 +18,6 @@ EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart
     const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
     const showSettings = document.getElementById(settingsDialogId);
 
-    let selectedXAxisElement; // global variable: the tooltip formatter will change this value while hoovering
-    chartPlaceHolder.onclick = function () {
-        if (selectedXAxisElement !== null && chartClickedEventHandler !== null) {
-            chartClickedEventHandler(selectedXAxisElement);
-        }
-    };
-
     const options = {
         tooltip: {
             trigger: 'axis',
@@ -33,33 +26,6 @@ EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart
                 label: {
                     backgroundColor: '#6a7985'
                 }
-            },
-            formatter: function (params, ticket, callback) {
-                if (params.componentType === 'legend') {
-                    selectedXAxisElement = null;
-                    return params.name;
-                }
-                const builds = chartModel.buildNumbers;
-                const labels = chartModel.domainAxisLabels;
-                let selectedBuild;
-                for (let i = 0; i < builds.length; i++) {
-                    if (params[0].name === labels[i]) {
-                        selectedBuild = builds[i];
-                        break;
-                    }
-                }
-                if (selectedBuild) {
-                    selectedXAxisElement = selectedBuild;
-                }
-                else {
-                    selectedXAxisElement = params[0].name;
-                }
-                let text = chartModel.domainAxisItemName + ' `' + params[0].name.escapeHTML() + '`';
-                for (let i = 0, l = params.length; i < l; i++) {
-                    text += '<br/>' + params[i].marker + params[i].seriesName + ' : ' + params[i].value;
-                }
-                text += '<br />';
-                return '<div style="text-align:left">' + text + '</div>';
             }
         },
         toolbox: {
@@ -104,6 +70,7 @@ EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart
         },
         xAxis: [{
             type: 'category',
+            triggerEvent: true,
             boundaryGap: false,
             data: chartModel.domainAxisLabels,
             axisLabel: {
@@ -121,7 +88,13 @@ EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart
     };
     chart.setOption(options);
     chart.resize();
-
+    if (chartClickedEventHandler !== null) {
+        chart.on('click', params => {
+            if (params.componentType === 'xAxis') {
+                chartClickedEventHandler(params.value);
+            }
+        })
+    }
     jQuery3(window).resize(function () {
         chart.resize();
     });
