@@ -31,10 +31,7 @@ EChartsJenkinsApi.prototype.readConfiguration = function (id) {
     const specific = echartsJenkinsApi.readFromLocalStorage(id);
     const common = echartsJenkinsApi.readFromLocalStorage(trendDefaultStorageId);
 
-    return {
-        ...specific,
-        ...common
-    };
+    return Object.assign(specific, common);
 }
 
 /**
