@@ -65,7 +65,6 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
             },
             xAxis: [{
                 type: 'category',
-                triggerEvent: true,
                 boundaryGap: false,
                 data: chartModel.domainAxisLabels,
                 axisLabel: {
@@ -101,13 +100,17 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
 
             const urlName = chartPlaceHolder.getAttribute("tool");
             if (urlName) {
-                chart.on('click', params => {
-                    if (params.componentType === 'xAxis') {
-                        let selectedBuild = 0;
+                chart.getZr().on('click', params => {
+                    if (params.offsetY > 30) { // skip the legend
+                        const pointInPixel = [params.offsetX, params.offsetY];
+                        const pointInGrid = chart.convertFromPixel('grid', pointInPixel);
+                        const buildDisplayName = chart.getModel().get('xAxis')[0].data[pointInGrid[0]]
                         const builds = chartPlaceHolder.model.buildNumbers;
                         const labels = chartPlaceHolder.model.domainAxisLabels;
+
+                        let selectedBuild = 0;
                         for (let i = 0; i < builds.length; i++) {
-                            if (params.value === labels[i]) {
+                            if (buildDisplayName === labels[i]) {
                                 selectedBuild = builds[i];
                                 break;
                             }

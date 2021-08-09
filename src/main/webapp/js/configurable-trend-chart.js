@@ -6,7 +6,7 @@
  * @param {String} model - the line chart model
  * @param {String} settingsDialogId - the optional ID of the div that provides a settings dialog (might be set to null
  *     if there is no such dialog)
- * @param {String} chartClickedEventHandler - the optional ID of the event handler that receives click events
+ * @param {Function} chartClickedEventHandler - the optional event handler that receives click events
  */
 EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart
     = function (chartDivId, model, settingsDialogId, chartClickedEventHandler) {
@@ -69,7 +69,6 @@ EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart
         },
         xAxis: [{
             type: 'category',
-            triggerEvent: true,
             boundaryGap: false,
             data: chartModel.domainAxisLabels,
             axisLabel: {
@@ -88,9 +87,12 @@ EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart
     chart.setOption(options);
     chart.resize();
     if (chartClickedEventHandler !== null) {
-        chart.on('click', params => {
-            if (params.componentType === 'xAxis') {
-                chartClickedEventHandler(params.value);
+        chart.getZr().on('click', params => {
+            if (params.offsetY > 30) { // skip the legend
+                const pointInPixel = [params.offsetX, params.offsetY];
+                const pointInGrid = chart.convertFromPixel('grid', pointInPixel);
+                const buildDisplayName = chart.getModel().get('xAxis')[0].data[pointInGrid[0]]
+                chartClickedEventHandler(buildDisplayName);
             }
         })
     }
