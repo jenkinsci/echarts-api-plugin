@@ -88,7 +88,8 @@ EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart
     chart.resize();
     if (chartClickedEventHandler !== null) {
         chart.getZr().on('click', params => {
-            if (params.offsetY > 30) { // skip the legend
+            const offset = 30;
+            if (params.offsetY > offset && chart.getHeight() - params.offsetY > offset) { // skip the legend and data zoom
                 const pointInPixel = [params.offsetX, params.offsetY];
                 const pointInGrid = chart.convertFromPixel('grid', pointInPixel);
                 const buildDisplayName = chart.getModel().get('xAxis')[0].data[pointInGrid[0]]
