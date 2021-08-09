@@ -88,7 +88,7 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
      * Redraws a trend chart in the specified div using ECharts.
      *
      * @param {Object} chart - the ECharts instance
-     * @param {String} model - the line chart options
+     * @param {String} model - the line chart model received from the Ajax call
      */
     function redraw(chart, model) {
         chart.hideLoading();
