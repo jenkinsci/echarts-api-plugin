@@ -74,7 +74,8 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
             ],
             yAxis: [{
                 type: 'value',
-                min: 'dataMin',
+                min: chartModel.rangeMin ?? 'dataMin',
+                max: chartModel.rangeMax ?? 'dataMax',
                 axisLabel: {
                     color: textColor
                 }
