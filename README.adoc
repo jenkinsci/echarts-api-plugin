@@ -12,7 +12,8 @@ JavaScript visualization tool to create intuitive, interactive, and highly-custo
 can run fluently on PC and mobile devices and it is compatible with most modern
 Web Browsers.
 
-This plugin contains the latest https://www.webjars.org[WebJars] release and corresponding Jenkins UI elements.
+This plugin contains the JS and CSS files of the latest https://echarts.apache.org/en/index.html[ECharts] release and
+corresponding Jenkins UI elements (model, view, and controller).
 
 == How to use the plugin
 
