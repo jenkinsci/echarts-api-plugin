@@ -80,7 +80,8 @@ EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart
             min: 'dataMin',
             axisLabel: {
                 color: textColor
-            }
+            },
+            minInterval: chartModel.integerRangeAxis ? 1 : null
         }],
         series: chartModel.series
     };
