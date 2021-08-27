@@ -6,9 +6,9 @@
  * @param {String} enableLinks - determines if the chart is clickable. If the chart is clickable, then clicking on a
  *     chart will open the results of the selected build.
  * @param {String} configurationId - ID of the div-element that renders a configuration dialog of this trend chart.
- If this element is defined, then the trend chart will use a configuration button that
- will invoke the specified element. If your trend has no special configuration dialog
- then the ID "defaultTrendConfiguration" of the default configuration dialog should be used.
+ *     If this element is defined, then the trend chart will use a configuration button that
+ *     will invoke the specified element. If your trend has no special configuration dialog
+ *     then the ID "defaultTrendConfiguration" of the default configuration dialog should be used.
  * @param {Object} ajaxProxy - AJAX proxy of the endpoint in Jenkins Java model object
  */
 EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId, enableLinks, configurationId, ajaxProxy) {
@@ -78,7 +78,8 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
                 max: chartModel.rangeMax ?? 'dataMax',
                 axisLabel: {
                     color: textColor
-                }
+                },
+                minInterval: chartModel.integerRangeAxis ? 1 : null
             }
             ],
             series: chartModel.series
