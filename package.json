@@ -6,7 +6,7 @@
     "doc": "doc"
   },
   "dependencies": {
-    "echarts": "^5.1.2",
+    "echarts": "^5.2.0",
     "remark-cli": "^10.0.0",
     "remark-lint": "^9.1.0",
     "remark-preset-lint-recommended": "^6.0.1"
