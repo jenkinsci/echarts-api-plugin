@@ -64,7 +64,7 @@ EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart
             left: '20',
             right: '10',
             bottom: '30',
-            top: '15%',
+            top: '40',
             containLabel: true
         },
         xAxis: [{
