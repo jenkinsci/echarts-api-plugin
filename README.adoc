@@ -195,7 +195,7 @@ public class FilesCountSeriesBuilder extends SeriesBuilder<ForensicsBuildAction>
 
 You are not limited to a single line chart. You can show several lines in a single chart, you can show stacked values,
 or even the delta between some values. You can also have a look at the
-https://github.com/jenkinsci/warnings-ng-plugin/tree/master/src/main/java/io/jenkins/plugins/analysis/core/charts[charts of the warnings plugin]
+https://github.com/jenkinsci/warnings-ng-plugin/tree/master/plugin/src/main/java/io/jenkins/plugins/analysis/core/charts[charts of the warnings plugin]
 to see some of these features in detail.
 
 .Trend chart with several lines in the Warnings plugin
