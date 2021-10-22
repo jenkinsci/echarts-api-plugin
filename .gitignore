@@ -3,9 +3,10 @@ node_modules
 target
 *.iml
 .classpath
+.project
+.settings
 pom.xml.versionsBackup
 pom.xml.releaseBackup
 release.properties
 .DS_Store
-work/
-
+/package-lock.json
