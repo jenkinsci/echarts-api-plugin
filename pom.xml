@@ -18,7 +18,7 @@
   <url>https://github.com/jenkinsci/echarts-api-plugin</url>
 
   <properties>
-    <revision>5.2.1-3</revision>
+    <revision>5.2.2-1</revision>
     <changelist>-SNAPSHOT</changelist>
 
     <module.name>${project.groupId}.echarts</module.name>
