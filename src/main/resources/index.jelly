@@ -1,0 +1,4 @@
+<?jelly escape-by-default='true'?>
+<div>
+    Provides ECharts for Jenkins plugins.
+</div>
