@@ -88,7 +88,6 @@ class BuildActionIteratorTest {
         when(previousBuild.getActions(TestAction.class)).thenReturn(Collections.singletonList(previousAction));
         when(skippedBuild.getPreviousBuild()).thenAnswer(i -> previousBuild);
 
-
         assertThat(iterator).hasNext();
         assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
                 .isEqualTo(new BuildResult<>(null, testAction));
