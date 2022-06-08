@@ -22,20 +22,6 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
 
     function createOptions(chartModel) {
         const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
-        let rangeMin;
-        if (typeof rangeMin === 'undefined' || rangeMin === null) {
-            rangeMin = 'dataMin';
-        }
-        else {
-            rangeMin = chartModel.rangeMin
-        }
-        let rangeMax;
-        if (typeof rangeMax === 'undefined' || rangeMax === null) {
-            rangeMax = 'dataMax';
-        }
-        else {
-            rangeMax = chartModel.rangeMax;
-        }
         return {
             tooltip: {
                 trigger: 'axis',
@@ -87,8 +73,8 @@ EChartsJenkinsApi.prototype.renderConfigurableTrendChart = function (chartDivId,
             ],
             yAxis: [{
                 type: 'value',
-                min: rangeMin,
-                max: rangeMax,
+                min: chartModel.rangeMin ?? 'dataMin',
+                max: chartModel.rangeMax ?? 'dataMax',
                 axisLabel: {
                     color: textColor
                 },
