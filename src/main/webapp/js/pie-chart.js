@@ -35,7 +35,7 @@ jQuery3(document).ready(function () {
                 }
             }
 
-            const chartPlaceHolder = jQuery3("#" + chartDivId);
+            const chartPlaceHolder = jQuery3("#" + escapeMetaCharacters(chartDivId));
             const model = JSON.parse(chartPlaceHolder.attr('data-chart-model'));
             const title = chartPlaceHolder.attr('data-title');
             const chartDiv = chartPlaceHolder[0];
