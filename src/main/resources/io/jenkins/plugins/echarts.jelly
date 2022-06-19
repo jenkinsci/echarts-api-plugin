@@ -20,5 +20,6 @@ Use it like <st:adjunct includes="io.jenkins.plugins.echarts"/>
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/configurable-trend-chart.js"/>
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/pie-chart.js"/>
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/progress-chart.js"/>
+  <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/escapeMetaCharacters.js"/>
 
 </j:jelly>

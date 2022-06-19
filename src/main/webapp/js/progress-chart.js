@@ -10,7 +10,7 @@ jQuery3(document).ready(function () {
          * @param {String} chartDivId - the ID of the div where the chart should be shown in
          */
         function renderProgressChart(chartDivId) {
-            const chartPlaceHolder = jQuery3("#" + chartDivId);
+            const chartPlaceHolder = jQuery3("#" + escapeMetaCharacters(chartDivId));
             const model = JSON.parse(chartPlaceHolder.attr('data-chart-model'));
             const title = chartPlaceHolder.attr('data-title');
             const tooltip = chartPlaceHolder.attr('data-tooltip');
