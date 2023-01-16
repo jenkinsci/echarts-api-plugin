@@ -5,7 +5,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 import edu.hm.hafner.echarts.Build;
 import edu.hm.hafner.echarts.BuildResult;
@@ -31,12 +30,12 @@ import io.jenkins.plugins.util.BuildAction;
 public class GenericBuildActionIterator<A extends BuildAction<?>, R> implements Iterator<BuildResult<R>> {
     private final ActionSelector<A> actionSelector;
     private Optional<A> latestAction;
-    private final Supplier<R> supplier;
+    private final Function<A, R> function;
 
     GenericBuildActionIterator(final Class<A> actionType, final Optional<A> latestAction,
-            final Predicate<A> predicate, final Supplier<R> supplier) {
+            final Predicate<A> predicate, final Function<A, R> function) {
         this.latestAction = latestAction;
-        this.supplier = supplier;
+        this.function = function;
         actionSelector = new ActionSelector<>(actionType, predicate);
     }
 
@@ -59,7 +58,7 @@ public class GenericBuildActionIterator<A extends BuildAction<?>, R> implements 
         int buildTimeInSeconds = (int) (run.getTimeInMillis() / 1000);
         Build build = new Build(run.getNumber(), run.getDisplayName(), buildTimeInSeconds);
 
-        return new BuildResult<>(build, supplier.get());
+        return new BuildResult<>(build, function.apply(buildAction));
     }
 
     /**
@@ -115,7 +114,9 @@ public class GenericBuildActionIterator<A extends BuildAction<?>, R> implements 
     }
 
     /**
-     * An iterable that provides an iterator for build results of a specific type.
+     * An iterable that provides an iterator for specific values of build that should be rendered in a trend chart. The
+     * build values must be stored in a concrete subclass of {@link BuildAction}. The property that contains the build value
+     * is selected by a generic predicate.
      *
      * @param <A>
      *         the type of the action
@@ -126,7 +127,7 @@ public class GenericBuildActionIterator<A extends BuildAction<?>, R> implements 
         private final Class<A> actionType;
         private final Optional<A> latestAction;
         private final Predicate<A> filter;
-        private final Supplier<R> supplier;
+        private final Function<A, R> function;
 
         /**
          * Creates a new instance of {@link BuildActionIterable}.
@@ -137,20 +138,20 @@ public class GenericBuildActionIterator<A extends BuildAction<?>, R> implements 
          *         the latest action that will be used as starting point for the sequence of results
          * @param filter
          *         filter that selects the action (if there are multiple actions of the same type)
-         * @param supplier
+         * @param function
          *         the supplier that extracts the specific results from the action
          */
         public BuildActionIterable(final Class<A> actionType, final Optional<A> latestAction,
-                final Predicate<A> filter, final Supplier<R> supplier) {
+                final Predicate<A> filter, final Function<A, R> function) {
             this.actionType = actionType;
             this.latestAction = latestAction;
             this.filter = filter;
-            this.supplier = supplier;
+            this.function = function;
         }
 
         @Override
         public Iterator<BuildResult<R>> iterator() {
-            return new GenericBuildActionIterator<>(actionType, latestAction, filter, supplier);
+            return new GenericBuildActionIterator<>(actionType, latestAction, filter, function);
         }
     }
 }
