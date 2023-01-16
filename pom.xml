@@ -23,7 +23,7 @@
 
     <module.name>${project.groupId}.echarts</module.name>
 
-    <echarts-build-trends.version>3.4.0</echarts-build-trends.version>
+    <echarts-build-trends.version>3.5.0</echarts-build-trends.version>
     <plugin-util-api.version>3.0.0-rc678.6c486d6f860f</plugin-util-api.version>
   </properties>
 
