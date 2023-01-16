@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>analysis-pom</artifactId>
-    <version>5.37.0</version>
+    <version>6.1.0</version>
     <relativePath />
   </parent>
 
@@ -23,9 +23,8 @@
 
     <module.name>${project.groupId}.echarts</module.name>
 
-    <echarts-build-trends.version>3.3.0</echarts-build-trends.version>
-    <eclipse-collections.version>9.2.0</eclipse-collections.version>
-
+    <echarts-build-trends.version>3.4.0</echarts-build-trends.version>
+    <plugin-util-api.version>3.0.0-rc678.6c486d6f860f</plugin-util-api.version>
   </properties>
 
   <licenses>
@@ -48,6 +47,7 @@
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>plugin-util-api</artifactId>
+      <version>${plugin-util-api.version}</version>
     </dependency>
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
@@ -100,16 +100,6 @@
           <artifactId>javax.annotation-api</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.collections</groupId>
-      <artifactId>eclipse-collections-api</artifactId>
-      <version>${eclipse-collections.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.collections</groupId>
-      <artifactId>eclipse-collections</artifactId>
-      <version>${eclipse-collections.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>

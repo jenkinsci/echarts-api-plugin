@@ -15,7 +15,7 @@ import io.jenkins.plugins.util.BuildAction;
 
 /**
  * Iterates over a collection of builds that contain results of a given generic type. These results are available via a
- * given sub type of {@link BuildAction} that has to be attached to each build of the selected job. A new iterator
+ * given subtype of {@link BuildAction} that has to be attached to each build of the selected job. A new iterator
  * starts from a baseline build where it selects the attached action of the given type. Then it moves back in the build
  * history until no more builds are available.
  *
