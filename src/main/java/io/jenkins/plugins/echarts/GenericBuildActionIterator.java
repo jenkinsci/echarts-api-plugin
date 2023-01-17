@@ -69,7 +69,7 @@ public class GenericBuildActionIterator<A extends BuildAction<?>, R> implements 
      * @param <T>
      *         the type of the action to select
      */
-    private static class ActionSelector<T extends BuildAction<?>> implements Function<Run<?, ?>, Optional<T>> {
+    static class ActionSelector<T extends BuildAction<?>> implements Function<Run<?, ?>, Optional<T>> {
         private final Class<T> actionType;
         private final Predicate<? super T> predicate;
 

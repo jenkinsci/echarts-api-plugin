@@ -11,6 +11,7 @@ import edu.hm.hafner.echarts.BuildResult;
 
 import hudson.model.Run;
 
+import io.jenkins.plugins.echarts.GenericBuildActionIterator.ActionSelector;
 import io.jenkins.plugins.util.BuildAction;
 
 /**
@@ -77,30 +78,5 @@ public class BuildActionIterator<T extends BuildAction<?>> implements Iterator<B
         int buildTimeInSeconds = (int) (run.getTimeInMillis() / 1000);
         Build build = new Build(run.getNumber(), run.getDisplayName(), buildTimeInSeconds);
         return new BuildResult<>(build, buildAction);
-    }
-
-    private static class ActionSelector<T extends BuildAction<?>> implements Function<Run<?, ?>, Optional<T>> {
-        private final Class<T> actionType;
-        private final Predicate<? super T> predicate;
-
-        ActionSelector(final Class<T> actionType, final Predicate<? super T> predicate) {
-            this.actionType = actionType;
-            this.predicate = predicate;
-        }
-
-        @Override
-        public Optional<T> apply(final Run<?, ?> baseline) {
-            for (Run<?, ?> run = baseline; run != null; run = run.getPreviousBuild()) {
-                Optional<T> action = run.getActions(actionType)
-                        .stream()
-                        .filter(predicate)
-                        .findAny();
-                if (action.isPresent()) {
-                    return action;
-                }
-            }
-
-            return Optional.empty();
-        }
     }
 }
