@@ -11,7 +11,6 @@ import edu.hm.hafner.echarts.BuildResult;
 
 import hudson.model.Run;
 
-import io.jenkins.plugins.echarts.GenericBuildActionIterator.ActionSelector;
 import io.jenkins.plugins.util.BuildAction;
 
 /**
@@ -66,7 +65,7 @@ public class BuildActionIterator<T extends BuildAction<?>> implements Iterator<B
 
     @Override
     public BuildResult<T> next() {
-        if (!latestAction.isPresent()) {
+        if (latestAction.isEmpty()) {
             throw new NoSuchElementException(
                     "There is no action available anymore. Use hasNext() before calling next().");
         }
