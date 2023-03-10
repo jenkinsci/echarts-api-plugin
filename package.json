@@ -1,12 +1,12 @@
 {
   "name": "echarts-api",
-  "version": "5.4.0",
+  "version": "5.4.1",
   "description": "ECharts Jenkins Plugin",
   "directories": {
     "doc": "doc"
   },
   "dependencies": {
-    "echarts": "^5.4.1",
+    "echarts": "5.4.0",
     "remark-cli": "^11.0.0",
     "remark-lint": "^9.1.1",
     "remark-preset-lint-recommended": "^6.1.2"
