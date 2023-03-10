@@ -23,6 +23,8 @@
 
     <module.name>${project.groupId}.echarts</module.name>
 
+    <eclipse-collections.version>9.2.0</eclipse-collections.version>
+
     <echarts-build-trends.version>4.3.0</echarts-build-trends.version>
     <plugin-util-api.version>3.0.0-rc693.c098b_871ea_49</plugin-util-api.version>
   </properties>
@@ -43,7 +45,16 @@
   </developers>
 
   <dependencies>
-
+    <dependency>
+      <groupId>org.eclipse.collections</groupId>
+      <artifactId>eclipse-collections-api</artifactId>
+      <version>${eclipse-collections.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.collections</groupId>
+      <artifactId>eclipse-collections</artifactId>
+      <version>${eclipse-collections.version}</version>
+    </dependency>
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>plugin-util-api</artifactId>
