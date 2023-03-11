@@ -48,8 +48,8 @@ EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart
             {
                 type: 'slider',
                 height: 25,
-                bottom: 0,
-                moveHandleSize: 0
+                bottom: 5,
+                moveHandleSize: 5
             }],
         legend: {
             orient: 'horizontal',
@@ -63,7 +63,7 @@ EChartsJenkinsApi.prototype.renderConfigurableZoomableTrendChart
         grid: {
             left: '20',
             right: '10',
-            bottom: '30',
+            bottom: '35',
             top: '40',
             containLabel: true
         },
