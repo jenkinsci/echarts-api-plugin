@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Jenkins color palette. Each color is represented as a CSS variable that will be rendered according to the
- * selected theme.
+ * Jenkins color palette. Each color is represented as a CSS variable that will be rendered according to the selected
+ * theme.
  *
  * @author Ullrich Hafner
  * @see "JS method resolveJenkinsColors in file echarts-scope.js"
- * @see <a href="https://github.com/jenkinsci/jenkins/blob/master/war/src/main/scss/abstracts/theme.scss">Jenkins colors</a>
+ * @see <a href="https://github.com/jenkinsci/jenkins/blob/master/war/src/main/scss/abstracts/theme.scss">Jenkins
+ *         colors</a>
  */
 public enum JenkinsPalette {
     BLACK(Variation.NO_VARIATION),
@@ -35,8 +36,20 @@ public enum JenkinsPalette {
      *
      * @return a list of colors
      */
-    public static List<JenkinsPalette> chartValues() {
+    public static List<JenkinsPalette> chartColors() {
         return CHART_COLORS;
+    }
+
+    /**
+     * Returns a chart color that can be used to render element {@code n} in a chart.
+     *
+     * @param n
+     *         the n-th element to render
+     *
+     * @return a color to be used for rendering the n-th element
+     */
+    public static JenkinsPalette chartColor(final int n) {
+        return CHART_COLORS.get(n % CHART_COLORS.size());
     }
 
     private final Variation variation;
