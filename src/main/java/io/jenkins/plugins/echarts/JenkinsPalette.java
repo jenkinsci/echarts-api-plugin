@@ -11,16 +11,34 @@ import java.util.Locale;
  * @see <a href="https://github.com/jenkinsci/jenkins/blob/master/war/src/main/scss/abstracts/theme.scss">Jenkins colors</a>
  */
 public enum JenkinsPalette {
+    BLACK(Variation.NO_VARIATION),
     BLUE,
     BROWN,
     CYAN,
+    GREY,
     GREEN,
     INDIGO,
     ORANGE,
     PINK,
     PURPLE,
     RED,
+    WHITE(Variation.NO_VARIATION),
     YELLOW;
+
+    private final Variation variation;
+
+    JenkinsPalette() {
+        this(Variation.VARIATION);
+    }
+
+    JenkinsPalette(final Variation variation) {
+        this.variation = variation;
+    }
+
+    private enum Variation {
+        NO_VARIATION,
+        VARIATION
+    }
 
     private static final String PREFIX = "--";
     private static final String DARK_ID = "dark-";
@@ -32,7 +50,7 @@ public enum JenkinsPalette {
      * @return the CSS variable name
      */
     public String light() {
-        return PREFIX + LIGHT_ID + cssName();
+        return getVariation(LIGHT_ID);
     }
 
     /**
@@ -50,7 +68,11 @@ public enum JenkinsPalette {
      * @return the CSS variable name
      */
     public String dark() {
-        return PREFIX + DARK_ID + cssName();
+        return getVariation(DARK_ID);
+    }
+
+    private String getVariation(final String prefix) {
+        return variation == Variation.NO_VARIATION ? normal() : PREFIX + prefix + cssName();
     }
 
     private String cssName() {
