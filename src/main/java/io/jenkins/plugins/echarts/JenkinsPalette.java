@@ -1,5 +1,6 @@
 package io.jenkins.plugins.echarts;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -24,6 +25,19 @@ public enum JenkinsPalette {
     RED,
     WHITE(Variation.NO_VARIATION),
     YELLOW;
+
+    private static final List<JenkinsPalette> CHART_COLORS = List.of(JenkinsPalette.RED, JenkinsPalette.BLUE,
+            JenkinsPalette.YELLOW, JenkinsPalette.GREEN, JenkinsPalette.CYAN, JenkinsPalette.INDIGO,
+            JenkinsPalette.ORANGE, JenkinsPalette.PINK, JenkinsPalette.PURPLE, JenkinsPalette.BROWN);
+
+    /**
+     * Returns a list of different colors that can be used for charts.
+     *
+     * @return a list of colors
+     */
+    public static List<JenkinsPalette> chartValues() {
+        return CHART_COLORS;
+    }
 
     private final Variation variation;
 
