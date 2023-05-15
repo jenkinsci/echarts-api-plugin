@@ -3,6 +3,8 @@ package io.jenkins.plugins.echarts;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Jenkins color palette. Each color is represented as a CSS variable that will be rendered according to the selected
  * theme.
@@ -13,35 +15,28 @@ import java.util.Locale;
  *         colors</a>
  */
 public enum JenkinsPalette {
-    BLACK(Variation.NO_VARIATION),
+    BLACK(StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY),
     BLUE,
     BROWN,
     CYAN,
-    GREY,
+    GREY("light-", "medium-", "dark-"),
     GREEN,
     INDIGO,
     ORANGE,
     PINK,
     PURPLE,
     RED,
-    WHITE(Variation.NO_VARIATION),
+    WHITE(StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY),
     YELLOW;
 
-    private static final List<JenkinsPalette> CHART_COLORS = List.of(JenkinsPalette.RED, JenkinsPalette.BLUE,
+    static final List<JenkinsPalette> CHART_COLORS = List.of(JenkinsPalette.RED, JenkinsPalette.BLUE,
             JenkinsPalette.YELLOW, JenkinsPalette.GREEN, JenkinsPalette.CYAN, JenkinsPalette.INDIGO,
             JenkinsPalette.ORANGE, JenkinsPalette.PINK, JenkinsPalette.PURPLE, JenkinsPalette.BROWN);
 
     /**
-     * Returns a list of different colors that can be used for charts.
-     *
-     * @return a list of colors
-     */
-    public static List<JenkinsPalette> chartColors() {
-        return CHART_COLORS;
-    }
-
-    /**
-     * Returns a chart color that can be used to render element {@code n} in a chart.
+     * Returns a chart color that can be used to render element {@code n} in a chart. If {@code n} is greater than
+     * the number of available colors then the color will be selected from the beginning of the list,
+     * and so on.
      *
      * @param n
      *         the n-th element to render
@@ -52,24 +47,23 @@ public enum JenkinsPalette {
         return CHART_COLORS.get(n % CHART_COLORS.size());
     }
 
-    private final Variation variation;
+    private final String infixLight;
+    private final String infixNormal;
+    private final String infixDark;
 
     JenkinsPalette() {
-        this(Variation.VARIATION);
+        this(LIGHT_INFIX, StringUtils.EMPTY, DARK_INFIX);
     }
 
-    JenkinsPalette(final Variation variation) {
-        this.variation = variation;
-    }
-
-    private enum Variation {
-        NO_VARIATION,
-        VARIATION
+    JenkinsPalette(final String infixLight, final String infixNormal, final String infixDark) {
+        this.infixLight = infixLight;
+        this.infixNormal = infixNormal;
+        this.infixDark = infixDark;
     }
 
     private static final String PREFIX = "--";
-    private static final String DARK_ID = "dark-";
-    private static final String LIGHT_ID = "light-";
+    private static final String DARK_INFIX = "dark-";
+    private static final String LIGHT_INFIX = "light-";
 
     /**
      * Returns the CSS variable name for this color (light variation).
@@ -77,7 +71,7 @@ public enum JenkinsPalette {
      * @return the CSS variable name
      */
     public String light() {
-        return getVariation(LIGHT_ID);
+        return compose(infixLight);
     }
 
     /**
@@ -86,7 +80,7 @@ public enum JenkinsPalette {
      * @return the CSS variable name
      */
     public String normal() {
-        return PREFIX + cssName();
+        return compose(infixNormal);
     }
 
     /**
@@ -95,14 +89,10 @@ public enum JenkinsPalette {
      * @return the CSS variable name
      */
     public String dark() {
-        return getVariation(DARK_ID);
+        return compose(infixDark);
     }
 
-    private String getVariation(final String prefix) {
-        return variation == Variation.NO_VARIATION ? normal() : PREFIX + prefix + cssName();
-    }
-
-    private String cssName() {
-        return name().toLowerCase(Locale.ENGLISH);
+    private String compose(final String infix) {
+        return PREFIX + infix + name().toLowerCase(Locale.ENGLISH);
     }
 }
