@@ -59,7 +59,7 @@ numerical proportions of the new, outstanding, or fixed warnings, see <<img-pie>
 image::pie.png[Pie chart example,width=60%]
 
 In order to include such a chart in your details view, you can use the provided `pie-chart` tag.
-In the following snippet you see this tag in action (embedded in a https://github.com/jenkinsci/bootstrap4-api-plugin[Bootstrap card]):
+In the following snippet you see this tag in action (embedded in a https://github.com/jenkinsci/bootstrap5-api-plugin[Bootstrap card]):
 
 [source,xml,linenums]
 .index.jelly
@@ -104,7 +104,7 @@ a simple progress value using a pie chart as backend.
 image::progress.png[Pie chart example]
 
 In order to include such a chart in your details view, you can use the provided `progress-chart` tag.
-In the following snippet you see this tag in action (embedded in a https://github.com/jenkinsci/bootstrap4-api-plugin[Bootstrap card]):
+In the following snippet you see this tag in action (embedded in a https://github.com/jenkinsci/bootstrap5-api-plugin[Bootstrap card]):
 
 [source,xml,linenums]
 .index.jelly
