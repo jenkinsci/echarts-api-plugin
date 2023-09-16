@@ -501,6 +501,11 @@ const echartsJenkinsApi = {
             document.addEventListener(redrawChartEvent, function () {
                 renderAsynchronously(chart);
             });
+            if (window.getThemeManagerProperty && window.isSystemRespectingTheme) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+                    renderAsynchronously(chart);
+                });
+            }
 
             getConfigurationDialog().addEventListener("hidden.bs.modal", function () {
                 const configuration = echartsJenkinsApi.readConfiguration(localStorageId);
