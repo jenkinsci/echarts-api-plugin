@@ -227,8 +227,9 @@ const echartsJenkinsApi = {
      * @param {String} settingsDialogId - the optional ID of the div that provides a settings dialog (might be set to null
      *     if there is no such dialog)
      * @param {Function} chartClickedEventHandler - the optional event handler that receives click events
+     * @param {Boolean} allowYAxisZoom - Allow zooming on the y-axis
      */
-    renderConfigurableZoomableTrendChart: function (chartDivId, model, settingsDialogId, chartClickedEventHandler) {
+    renderConfigurableZoomableTrendChart: function (chartDivId, model, settingsDialogId, chartClickedEventHandler, allowYAxisZoom = false) {
         const themedModel = echartsJenkinsApi.resolveJenkinsColors(model);
         const chartModel = JSON.parse(themedModel);
         const chartPlaceHolder = document.getElementById(chartDivId);
@@ -237,6 +238,35 @@ const echartsJenkinsApi = {
 
         const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
         const showSettings = document.getElementById(settingsDialogId);
+
+        function getDataZoomOptions(allowYAxisZoom) {
+            var dataZoomOptions = [
+                {
+                    type: 'inside'
+                },
+                {
+                    type: 'slider',
+                    height: 25,
+                    bottom: 5,
+                    moveHandleSize: 5,
+                    xAxisIndex: [0],
+                    filterMode: 'filter',
+                }
+            ];
+
+            if (allowYAxisZoom) {
+                dataZoomOptions.push({
+                    type: 'slider',
+                    width: 25,
+                    right: 5,
+                    moveHandleSize: 5,
+                    yAxisIndex: [0],
+                    filterMode: 'empty'
+                });
+            }
+
+            return dataZoomOptions;
+        };
 
         const options = {
             tooltip: {
@@ -261,16 +291,7 @@ const echartsJenkinsApi = {
                     }
                 }
             },
-            dataZoom: [
-                {
-                    type: 'inside'
-                },
-                {
-                    type: 'slider',
-                    height: 25,
-                    bottom: 5,
-                    moveHandleSize: 5
-                }],
+            dataZoom: getDataZoomOptions(allowYAxisZoom),
             legend: {
                 orient: 'horizontal',
                 type: 'scroll',
@@ -282,7 +303,7 @@ const echartsJenkinsApi = {
             },
             grid: {
                 left: '20',
-                right: '10',
+                right: allowYAxisZoom ? '40' : '10',
                 bottom: '35',
                 top: '40',
                 containLabel: true
