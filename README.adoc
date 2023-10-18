@@ -4,7 +4,8 @@
 = ECharts Jenkins Plugin
 
 image:https://ci.jenkins.io/job/Plugins/job/echarts-api-plugin/job/main/badge/icon?subject=Jenkins%20CI[Jenkins, link=https://ci.jenkins.io/job/Plugins/job/echarts-api-plugin/job/main/]
-image:https://github.com/jenkinsci/echarts-api-plugin/workflows/GitHub%20CI/badge.svg?branch=main[GitHub Actions, link=https://github.com/jenkinsci/echarts-api-plugin/actions]
+image:https://github.com/jenkinsci/echarts-api-plugin/workflows/GitHub%20CI/badge.svg[GitHub Actions, link=https://github.com/jenkinsci/echarts-api-plugin/actions]
+image:https://img.shields.io/github/issues-pr/jenkinsci/echarts-api-plugin.svg[GitHub pull requests, link=https://github.com/jenkinsci/echarts-api-plugin/pulls]
 
 Provides https://echarts.apache.org/en/index.html[ECharts] for Jenkins Plugins. ECharts is an open-sourced
 JavaScript visualization tool to create intuitive, interactive, and highly-customizable charts. It
