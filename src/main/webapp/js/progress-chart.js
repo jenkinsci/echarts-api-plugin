@@ -11,7 +11,8 @@ jQuery3(document).ready(function () {
          */
         function renderProgressChart(chartDivId) {
             const chartPlaceHolder = jQuery3("#" + echartsJenkinsApi.escapeMetaCharacters(chartDivId));
-            const model = JSON.parse(chartPlaceHolder.attr('data-chart-model'));
+            const themedModel = echartsJenkinsApi.resolveJenkinsColors(chartPlaceHolder.attr('data-chart-model'));
+            const model = JSON.parse(themedModel);
             const title = chartPlaceHolder.attr('data-title');
             const tooltip = chartPlaceHolder.attr('data-tooltip');
             const chartDiv = chartPlaceHolder[0];
