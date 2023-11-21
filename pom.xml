@@ -18,13 +18,14 @@
   <url>https://github.com/jenkinsci/echarts-api-plugin</url>
 
   <properties>
-    <revision>5.4.0-8</revision>
+    <revision>5.4.3-1</revision>
     <changelist>-SNAPSHOT</changelist>
 
     <module.name>${project.groupId}.echarts</module.name>
 
-    <echarts-build-trends.version>4.4.0</echarts-build-trends.version>
+    <jenkins.version>2.426.1</jenkins.version>
 
+    <echarts-build-trends.version>4.4.0</echarts-build-trends.version>
   </properties>
 
   <licenses>
