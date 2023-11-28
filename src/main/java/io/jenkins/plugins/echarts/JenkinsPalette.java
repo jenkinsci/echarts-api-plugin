@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author Ullrich Hafner
  * @see "JS method resolveJenkinsColors in file echarts-scope.js"
- * @see <a href="https://github.com/jenkinsci/jenkins/blob/master/war/src/main/scss/abstracts/theme.scss">Jenkins
+ * @see <a href="https://github.com/jenkinsci/jenkins/blob/master/war/src/main/scss/abstracts/_theme.scss">Jenkins
  *         colors</a>
  */
 public enum JenkinsPalette {
