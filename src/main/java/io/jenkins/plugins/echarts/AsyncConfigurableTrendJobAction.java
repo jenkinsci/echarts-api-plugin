@@ -26,7 +26,6 @@ import io.jenkins.plugins.util.BuildAction;
  */
 public abstract class AsyncConfigurableTrendJobAction<T extends BuildAction<?>> extends AsyncTrendJobAction<T>
         implements AsyncConfigurableTrendChart {
-
     private static final String EMPTY_CONFIGURATION = "{}";
 
     /**

@@ -31,7 +31,6 @@ import io.jenkins.plugins.util.JobAction;
  */
 public abstract class TrendChartJobAction<T extends BuildAction<?>> extends JobAction<T>
         implements AsyncConfigurableTrendChart {
-
     @NonNull // all actions that show a trend chart should get a unique ID
     @Override
     public abstract String getUrlName();
