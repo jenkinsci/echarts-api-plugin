@@ -12,8 +12,6 @@ Use it like <st:adjunct includes="io.jenkins.plugins.echarts-trend-default-setup
 
   <c:trend-setup suffix="default"/>
 
-  <script>
-    echartsJenkinsApi.configureTrend('default')
-  </script>
+  <st:adjunct includes="io.jenkins.plugins.echarts.configure-echarts-trend"/>
 
 </j:jelly>

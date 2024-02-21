@@ -1,0 +1,3 @@
+(function () {
+    echartsJenkinsApi.configureTrend('default');
+})();
