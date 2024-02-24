@@ -23,8 +23,6 @@
 
     <module.name>${project.groupId}.echarts</module.name>
 
-    <jenkins.version>2.426.1</jenkins.version>
-
     <echarts-build-trends.version>4.4.0</echarts-build-trends.version>
   </properties>
 
