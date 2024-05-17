@@ -29,9 +29,8 @@ public enum JenkinsPalette {
     WHITE(StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY),
     YELLOW;
 
-    static final List<JenkinsPalette> CHART_COLORS = List.of(JenkinsPalette.RED, JenkinsPalette.BLUE,
-            JenkinsPalette.YELLOW, JenkinsPalette.GREEN, JenkinsPalette.CYAN, JenkinsPalette.INDIGO,
-            JenkinsPalette.ORANGE, JenkinsPalette.PINK, JenkinsPalette.PURPLE, JenkinsPalette.BROWN);
+    static final List<JenkinsPalette> CHART_COLORS = List.of(RED, BLUE, YELLOW, GREEN, CYAN, INDIGO,
+            ORANGE, PINK, PURPLE, BROWN);
 
     /**
      * Returns a chart color that can be used to render element {@code n} in a chart. If {@code n} is greater than

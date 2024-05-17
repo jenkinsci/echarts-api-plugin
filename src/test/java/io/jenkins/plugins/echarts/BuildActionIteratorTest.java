@@ -5,8 +5,10 @@ import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.assertj.core.api.RecursiveComparisonAssert;
 import org.junit.jupiter.api.Test;
 
+import edu.hm.hafner.echarts.Build;
 import edu.hm.hafner.echarts.BuildResult;
 
 import hudson.model.Run;
@@ -22,6 +24,8 @@ import static org.mockito.Mockito.*;
  * @author Ullrich Hafner
  */
 class BuildActionIteratorTest {
+    private static final Build IGNORE_BUILD = new Build(0);
+
     @Test
     void shouldCreateEmptyIterator() {
         BuildActionIterator<TestAction> iterator = new BuildActionIterator<>(TestAction.class, Optional.empty());
@@ -39,8 +43,7 @@ class BuildActionIteratorTest {
         BuildActionIterator<TestAction> iterator = new BuildActionIterator<>(TestAction.class, Optional.of(testAction));
 
         assertThat(iterator).hasNext();
-        assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
-                .isEqualTo(new BuildResult<>(null, testAction));
+        verifyResult(testAction, iterator);
         assertThat(iterator).isExhausted();
     }
 
@@ -60,12 +63,10 @@ class BuildActionIteratorTest {
         when(baseline.getPreviousBuild()).thenAnswer(i -> previousBuild);
 
         assertThat(iterator).hasNext();
-        assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
-                .isEqualTo(new BuildResult<>(null, testAction));
+        verifyResult(testAction, iterator);
 
         assertThat(iterator).hasNext();
-        assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
-                .isEqualTo(new BuildResult<>(null, previousAction));
+        verifyResult(previousAction, iterator);
         assertThat(iterator).isExhausted();
     }
 
@@ -89,12 +90,10 @@ class BuildActionIteratorTest {
         when(skippedBuild.getPreviousBuild()).thenAnswer(i -> previousBuild);
 
         assertThat(iterator).hasNext();
-        assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
-                .isEqualTo(new BuildResult<>(null, testAction));
+        verifyResult(testAction, iterator);
 
         assertThat(iterator).hasNext();
-        assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
-                .isEqualTo(new BuildResult<>(null, previousAction));
+        verifyResult(previousAction, iterator);
         assertThat(iterator).isExhausted();
     }
 
@@ -125,16 +124,13 @@ class BuildActionIteratorTest {
         BuildActionIterator<TestAction> iterator = new BuildActionIterator<>(TestAction.class, Optional.of(testAction));
 
         assertThat(iterator).hasNext();
-        assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
-                .isEqualTo(new BuildResult<>(null, testAction));
+        verifyResult(testAction, iterator);
 
         assertThat(iterator).hasNext();
-        assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
-                .isEqualTo(new BuildResult<>(null, middleAction));
+        verifyResult(middleAction, iterator);
 
         assertThat(iterator).hasNext();
-        assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
-                .isEqualTo(new BuildResult<>(null, previousAction));
+        verifyResult(previousAction, iterator);
 
         assertThat(iterator).isExhausted();
     }
@@ -172,13 +168,17 @@ class BuildActionIteratorTest {
         when(baseline.getPreviousBuild()).thenAnswer(i -> previousBuild);
 
         assertThat(iterator).hasNext();
-        assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
-                .isEqualTo(new BuildResult<>(null, testAction));
+        verifyResult(testAction, iterator);
 
         assertThat(iterator).hasNext();
-        assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
-                .isEqualTo(new BuildResult<>(null, expectedResult));
+        verifyResult(expectedResult, iterator);
         assertThat(iterator).isExhausted();
+    }
+
+    private RecursiveComparisonAssert<?> verifyResult(final TestAction expectedResult,
+            final BuildActionIterator<TestAction> iterator) {
+        return assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
+                .isEqualTo(new BuildResult<>(IGNORE_BUILD, expectedResult));
     }
 
     private abstract static class TestAction extends BuildAction<String> {

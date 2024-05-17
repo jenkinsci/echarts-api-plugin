@@ -77,12 +77,13 @@ const echartsJenkinsApi = {
     },
 
     /**
-     * Configures the content of the trend configuration  dialog.
+     * Configures the content of the trend configuration dialog.
      *
      * @param {String} suffix - the suffix for the ID of the affected trend configuration dialog
      * @param {Function} fillDialog - a function to fill the configuration dialog with additional values from the JSON
      *     configuration object
-     * @param {Function} saveDialog - a function to save the configuration dialog values to the JSON configuration object
+     * @param {Function} saveDialog - a function to save the configuration dialog values to the JSON configuration
+     *     object
      */
     configureTrend: function (suffix, fillDialog, saveDialog) {
         const trendConfiguration = jQuery3('#trend-configuration-' + suffix);
@@ -224,23 +225,22 @@ const echartsJenkinsApi = {
      *
      * @param {String} chartDivId - the ID of the div where the chart should be shown in
      * @param {String} model - the line chart model
-     * @param {String} settingsDialogId - the optional ID of the div that provides a settings dialog (might be set to null
-     *     if there is no such dialog)
+     * @param {String} settingsDialogId - the optional ID of the div that provides a settings dialog (might be set to
+     *     null if there is no such dialog)
      * @param {Function} chartClickedEventHandler - the optional event handler that receives click events
      * @param {Boolean} allowYAxisZoom - Allow zooming on the y-axis
      */
     renderConfigurableZoomableTrendChart: function (chartDivId, model, settingsDialogId, chartClickedEventHandler, allowYAxisZoom = false) {
-        const themedModel = echartsJenkinsApi.resolveJenkinsColors(model);
-        const chartModel = JSON.parse(themedModel);
+        const chartModel = JSON.parse(echartsJenkinsApi.resolveJenkinsColors(model)); // NOPMD
         const chartPlaceHolder = document.getElementById(chartDivId);
         const chart = echarts.init(chartPlaceHolder);
-        chartPlaceHolder.echart = chart;
+        chartPlaceHolder.echart = chart; // NOPMD
 
         const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
         const showSettings = document.getElementById(settingsDialogId);
 
         function getDataZoomOptions(allowYAxisZoom) {
-            var dataZoomOptions = [
+            const dataZoomOptions = [
                 {
                     type: 'inside'
                 },
@@ -250,7 +250,7 @@ const echartsJenkinsApi = {
                     bottom: 5,
                     moveHandleSize: 5,
                     xAxisIndex: [0],
-                    filterMode: 'filter',
+                    filterMode: 'filter'
                 }
             ];
 
@@ -266,7 +266,7 @@ const echartsJenkinsApi = {
             }
 
             return dataZoomOptions;
-        };
+        }
 
         const options = {
             tooltip: {
@@ -588,9 +588,7 @@ const echartsJenkinsApi = {
                         left: 'center'
                     };
                 }
-                else {
-                    return null;
-                }
+                return null;
             }
 
             const chartPlaceHolder = jQuery3("#" + echartsJenkinsApi.escapeMetaCharacters(chartDivId));
