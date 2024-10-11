@@ -42,13 +42,13 @@
       <st:adjunct includes="io.jenkins.plugins.echarts-trend-default-setup"/>
 
     </j:if>
-
-    <script>
-      {
-          const trendProxy = <st:bind value="${it}"/>;
-          echartsJenkinsApi.renderConfigurableTrendChart('${chartId}', '${enableLinks}', '${configurationId}', trendProxy);
-      }
-    </script>
+    <st:bind value="${it}" var="trendProxy"/>
+    <span class="echarts-api-trend-chart-data-holder"
+          data-chart-id="${chartId}"
+          data-enable-links="${enableLinks}"
+          data-configuration-id="${configurationId}"
+          style="display:none" />
+    <st:adjunct includes="io.jenkins.plugins.echarts.render-configurable-trend-chart"/>
 
   </j:if>
 
