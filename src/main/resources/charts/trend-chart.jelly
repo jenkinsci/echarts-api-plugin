@@ -23,7 +23,8 @@
 
   </st:documentation>
 
-  <j:set var="chartId" value="history-chart-${h.generateId()}" />
+  <j:set var="generatedId" value="${h.generateId()}" />
+  <j:set var="chartId" value="history-chart-${generatedId}" />
   <j:if test="${it.isTrendVisible()}">
 
     <div class="test-trend-caption">
@@ -42,8 +43,9 @@
       <st:adjunct includes="io.jenkins.plugins.echarts-trend-default-setup"/>
 
     </j:if>
-    <st:bind value="${it}" var="trendProxy"/>
+    <st:bind value="${it}" var="trendProxy${generatedId}" />
     <span class="echarts-api-trend-chart-data-holder"
+          data-generated-id="${generatedId}"
           data-chart-id="${chartId}"
           data-enable-links="${enableLinks}"
           data-configuration-id="${configurationId}"
