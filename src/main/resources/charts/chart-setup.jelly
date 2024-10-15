@@ -63,9 +63,8 @@
     </div>
   </div>
 
-  <script>
-    echartsJenkinsApi.configureChart('${id}')
-  </script>
+  <span class="echarts-api-chart-setup-data-holder" data-chart-id="${id}" style="display:none"/>
+  <st:adjunct includes="io.jenkins.plugins.echarts.chart-setup-configure-chart"/>
 
 </j:jelly>
 
