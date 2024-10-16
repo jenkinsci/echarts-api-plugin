@@ -38,32 +38,32 @@
               </label>
             </div>
             <div class="mb-3">
-              <label for="builds" class="form-label">Maximum number of builds to consider</label>
               <input type="number" min="2" class="form-control" id="builds-${suffix}" required="true"/>
+              <label for="builds-${suffix}" class="form-label">Maximum number of builds to consider</label>
               <div id="builds-help-${suffix}" class="form-text">If set to a value less than 2 then all builds will be
                 considered.
               </div>
             </div>
             <div class="mb-3">
-              <label for="days" class="form-label">Maximum number of days to look into the past</label>
               <input type="number" min="0" class="form-control" id="days-${suffix}" required="true"/>
+              <label for="days-${suffix}" class="form-label">Maximum number of days to look into the past</label>
               <div id="days-help-${suffix}" class="form-text">If set to a value less than 1 then builds of all days are
                 considered.
               </div>
             </div>
             <div class="mb-3">
-              <label for="width-${suffix}" class="form-label">Width (in Pixels)</label>
               <div class="range-slider">
                 <input class="range-slider-range" type="range" value="500" min="100" max="1000" step="25" id="width-${suffix}"/>
                 <span class="range-slider-value">500</span>
               </div>
+              <label for="width-${suffix}" class="form-label">Width (in Pixels)</label>
             </div>
             <div class="mb-3">
-              <label for="height-${suffix}" class="form-label">Height (in Pixels)</label>
               <div class="range-slider">
                 <input class="range-slider-range" type="range" value="200" min="100" max="1000" step="25" id="height-${suffix}"/>
                 <span class="range-slider-value">200</span>
               </div>
+              <label for="height-${suffix}" class="form-label">Height (in Pixels)</label>
             </div>
           </form>
         </div>
