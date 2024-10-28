@@ -7,6 +7,6 @@ window.addEventListener("DOMContentLoaded", () => {
         const configurationId = dataHolder.getAttribute("data-configuration-id");
         const generatedId = dataHolder.getAttribute("data-generated-id");
 
-        echartsJenkinsApi.renderConfigurableTrendChart(`${chartId}`, `${enableLinks}`, `${configurationId}`, window[`trendProxy${generatedId}`]);
+        echartsJenkinsApi.renderConfigurableTrendChart(chartId, enableLinks, configurationId, window[`trendProxy${generatedId}`]);
     });
 });
