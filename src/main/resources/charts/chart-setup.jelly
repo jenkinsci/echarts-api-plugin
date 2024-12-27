@@ -39,7 +39,7 @@
             </div>
             <div class="mb-3">
               <label for="builds-${id}" class="form-label">Maximum number of builds to consider</label>
-              <input type="number" min="2" class="form-control" id="builds-${id}" required="true"/>
+              <input type="number" min="1" class="form-control" id="builds-${id}" required="true"/>
               <div id="builds-help-${id}" class="form-text">If set to a value less than 2 then all builds will be
                 considered.
               </div>
