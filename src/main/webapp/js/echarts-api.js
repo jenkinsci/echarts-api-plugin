@@ -31,56 +31,52 @@ const echartsJenkinsApi = {
      * @return {string|string}
      */
     resolveJenkinsColor: function (colorName) {
-        console.log(colorName, this.oklchToRgb(getComputedStyle(document.body).getPropertyValue(colorName)))
-        return this.oklchToRgb(getComputedStyle(document.body).getPropertyValue(colorName)) || '#333';
-    },
+        const oklchToRgb = function (oklchString) {
+            try {
+                let match = oklchString.match(/oklch\(\s*([\d.]+)%?\s+([\d.]+)\s+([\d.]+)deg?\s*\)/i);
+                if (!match) {
+                    return oklchString;
+                }
 
-    oklchToRgb: function (oklchString) {
-        try {
-            // Improved regex to support percentage and "deg" notation
-            let match = oklchString.match(/oklch\(\s*([\d.]+)%?\s+([\d.]+)\s+([\d.]+)deg?\s*\)/i);
-            if (!match) {
-                console.log("Invalid OKLCH format: " + oklchString)
-                return oklchString;
+                let L = parseFloat(match[1]) / 100; // Convert L from percentage (80.25% → 0.8025)
+                let C = parseFloat(match[2]); // Chroma remains the same
+                let h = parseFloat(match[3]); // Hue in degrees
+
+                // Convert OKLCH to OKLAB
+                let a = C * Math.cos((h * Math.PI) / 180);
+                let b = C * Math.sin((h * Math.PI) / 180);
+
+                // Convert OKLAB to linear RGB
+                let lms = [
+                    L + 0.3963377774 * a + 0.2158037573 * b,
+                    L - 0.1055613458 * a - 0.0638541728 * b,
+                    L - 0.0894841775 * a - 1.291485548 * b
+                ];
+
+                // Apply cube root decoding (reverse of OKLAB's non-linear encoding)
+                lms = lms.map(val => Math.pow(val, 3));
+
+                // Convert linear RGB to sRGB
+                let rgb = [
+                    +4.0767416621 * lms[0] - 3.3077115913 * lms[1] + 0.2309699292 * lms[2],
+                    -1.2684380046 * lms[0] + 2.6097574011 * lms[1] - 0.3413193965 * lms[2],
+                    -0.0041960863 * lms[0] - 0.7034186147 * lms[1] + 1.707614701 * lms[2]
+                ];
+
+                // Convert to sRGB range [0, 255] with gamma correction
+                rgb = rgb.map(val => {
+                    val = val <= 0.0031308 ? 12.92 * val : 1.055 * Math.pow(val, 1 / 2.4) - 0.055;
+                    return Math.round(Math.max(0, Math.min(1, val)) * 255);
+                });
+
+                return `rgb(${rgb[0]} ${rgb[1]} ${rgb[2]})`;
+            } catch (error) {
+                console.error("Conversion error:", error);
+                return null;
             }
-
-            // Parse values
-            let L = parseFloat(match[1]) / 100; // Convert L from percentage (80.25% → 0.8025)
-            let C = parseFloat(match[2]); // Chroma remains the same
-            let h = parseFloat(match[3]); // Hue in degrees
-
-            // Convert OKLCH to OKLAB
-            let a = C * Math.cos((h * Math.PI) / 180);
-            let b = C * Math.sin((h * Math.PI) / 180);
-
-            // Convert OKLAB to linear RGB
-            let lms = [
-                L + 0.3963377774 * a + 0.2158037573 * b,
-                L - 0.1055613458 * a - 0.0638541728 * b,
-                L - 0.0894841775 * a - 1.291485548 * b
-            ];
-
-            // Apply cube root decoding (reverse of OKLAB's non-linear encoding)
-            lms = lms.map(val => Math.pow(val, 3));
-
-            // Convert linear RGB to sRGB
-            let rgb = [
-                +4.0767416621 * lms[0] - 3.3077115913 * lms[1] + 0.2309699292 * lms[2],
-                -1.2684380046 * lms[0] + 2.6097574011 * lms[1] - 0.3413193965 * lms[2],
-                -0.0041960863 * lms[0] - 0.7034186147 * lms[1] + 1.707614701 * lms[2]
-            ];
-
-            // Convert to sRGB range [0, 255] with gamma correction
-            rgb = rgb.map(val => {
-                val = val <= 0.0031308 ? 12.92 * val : 1.055 * Math.pow(val, 1 / 2.4) - 0.055;
-                return Math.round(Math.max(0, Math.min(1, val)) * 255);
-            });
-
-            return `rgb(${rgb[0]} ${rgb[1]} ${rgb[2]})`;
-        } catch (error) {
-            console.error("Conversion error:", error);
-            return null;
         }
+
+        return oklchToRgb(getComputedStyle(document.body).getPropertyValue(colorName)) || '#333';
     },
 
     /**
@@ -285,7 +281,7 @@ const echartsJenkinsApi = {
         const chart = echarts.init(chartPlaceHolder);
         chartPlaceHolder.echart = chart; // NOPMD
 
-        const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
+        const textColor = echartsJenkinsApi.resolveJenkinsColor('--text-color');
         const showSettings = document.getElementById(settingsDialogId);
 
         function getDataZoomOptions(allowYAxisZoom) {
@@ -416,7 +412,7 @@ const echartsJenkinsApi = {
         }
 
         function createOptions(chartModel) {
-            const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
+            const textColor = echartsJenkinsApi.resolveJenkinsColor('--text-color');
             return {
                 tooltip: {
                     trigger: 'axis',
