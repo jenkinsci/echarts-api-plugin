@@ -1,13 +1,14 @@
 package io.jenkins.plugins.echarts;
 
+import edu.hm.hafner.echarts.Build;
+import edu.hm.hafner.echarts.BuildResult;
+import edu.umd.cs.findbugs.annotations.NonNull;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
-import edu.hm.hafner.echarts.Build;
-import edu.hm.hafner.echarts.BuildResult;
 
 import hudson.model.Run;
 
@@ -89,6 +90,23 @@ public class GenericBuildActionIterator<A extends BuildAction<?>, R> implements 
          * @param function
          *         the supplier that extracts the specific results from the action
          */
+        public BuildActionIterable(final Class<A> actionType, final A latestAction,
+                final Predicate<A> filter, final Function<A, R> function) {
+            this(actionType, Optional.of(latestAction), filter, function);
+        }
+
+        /**
+         * Creates a new instance of {@link BuildActionIterable}.
+         *
+         * @param actionType
+         *         the type of the action to select
+         * @param latestAction
+         *         the latest action that will be used as starting point for the sequence of results
+         * @param filter
+         *         filter that selects the action (if there are multiple actions of the same type)
+         * @param function
+         *         the supplier that extracts the specific results from the action
+         */
         public BuildActionIterable(final Class<A> actionType, final Optional<A> latestAction,
                 final Predicate<A> filter, final Function<A, R> function) {
             this.actionType = actionType;
@@ -97,6 +115,7 @@ public class GenericBuildActionIterator<A extends BuildAction<?>, R> implements 
             this.function = function;
         }
 
+        @NonNull
         @Override
         public Iterator<BuildResult<R>> iterator() {
             return new GenericBuildActionIterator<>(actionType, latestAction, filter, function);
