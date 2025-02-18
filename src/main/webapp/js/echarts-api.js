@@ -336,7 +336,7 @@ const echartsJenkinsApi = {
                     const pointInPixel = [params.offsetX, params.offsetY];
                     const pointInGrid = chart.convertFromPixel('grid', pointInPixel);
                     const buildDisplayName = chart.getModel().get('xAxis')[0].data[pointInGrid[0]]
-                    chartClickedEventHandler(buildDisplayName);
+                    handleChartClick(params.event, buildDisplayName, chartDivId);
                 }
             })
         }
@@ -454,22 +454,24 @@ const echartsJenkinsApi = {
                             const pointInPixel = [params.offsetX, params.offsetY];
                             const pointInGrid = chart.convertFromPixel('grid', pointInPixel);
                             const buildDisplayName = chart.getModel().get('xAxis')[0].data[pointInGrid[0]]
-                            const builds = chartPlaceHolder.model.buildNumbers;
-                            const labels = chartPlaceHolder.model.domainAxisLabels;
-
-                            let selectedBuild = 0;
-                            for (let i = 0; i < builds.length; i++) {
-                                if (buildDisplayName === labels[i]) {
-                                    selectedBuild = builds[i];
-                                    break;
-                                }
-                            }
-
-                            if (selectedBuild > 0) {
-                                window.location.assign(selectedBuild + '/' + urlName);
-                            }
+                            handleChartClick(params.event, buildDisplayName, chartDivId);
                         }
-                    })
+                    });
+
+
+
+    
+
+                            chart.getZr().on('contextmenu', params => {
+                                if (params.offsetY > 30) { // skip the legend
+                                    const pointInPixel = [params.offsetX, params.offsetY];
+                                    const pointInGrid = chart.convertFromPixel('grid', pointInPixel);
+                                    const buildDisplayName = chart.getModel().get('xAxis')[0].data[pointInGrid[0]];
+                                    handleContextMenu(params.event, buildDisplayName, chartDivId);
+                                }
+                            });
+                        
+                    
                 }
             }
         }
@@ -669,5 +671,113 @@ const echartsJenkinsApi = {
                 });
             });
         }
+    }
+}
+
+//Add global function
+function handleChartClick(event, buildDisplayName, chartDivId) {
+    let chartPlaceHolder = document.getElementById(chartDivId);
+    if (!chartPlaceHolder || !chartPlaceHolder.model) {
+        console.warn('Chart placeholder or model not found for:', chartDivId);
+        return;
+    }
+
+    let builds = chartPlaceHolder.model.buildNumbers;
+    let labels = chartPlaceHolder.model.domainAxisLabels;
+    let urlName = chartPlaceHolder.getAttribute("tool");
+
+
+    let selectedBuild = 0;
+    for (let i = 0; i < builds.length; i++) {
+        if (buildDisplayName === labels[i]) {
+            selectedBuild = builds[i];
+            break;
+        }
+    }
+
+    if (selectedBuild > 0) {
+        let url = selectedBuild + '/' + urlName;
+
+        if (event.ctrlKey || event.which === 2) { // Ctrl+Click or Middle-click
+            window.open(url, '_blank'); // Open in new tab/window
+        } else if (event.shiftKey) { // Shift+Click
+            window.open(url, '_blank', 'noopener,noreferrer'); // Open in a new window (more isolated)
+        } else {
+            window.location.href = url; // Original behavior (same tab)
+        }
+
+        event.preventDefault(); // Prevent default action if needed.
+    }
+}
+
+// Add global function
+function handleContextMenu(event, buildDisplayName, chartDivId) {
+    event.preventDefault(); // Prevent the browser's default context menu
+
+    let chartPlaceHolder = document.getElementById(chartDivId);
+    if (!chartPlaceHolder || !chartPlaceHolder.model) {
+        console.warn('Chart placeholder or model not found for:', chartDivId);
+        return;
+    }
+
+    let builds = chartPlaceHolder.model.buildNumbers;
+    let labels = chartPlaceHolder.model.domainAxisLabels;
+    let urlName = chartPlaceHolder.getAttribute("tool");
+
+    let selectedBuild = 0;
+    for (let i = 0; i < builds.length; i++) {
+        if (buildDisplayName === labels[i]) {
+            selectedBuild = builds[i];
+            break;
+        }
+    }
+
+    if (selectedBuild > 0) {
+        let url = selectedBuild + '/' + urlName;
+
+        // Create a custom context menu
+        const contextMenu = document.createElement('div');
+        contextMenu.style.position = 'absolute';
+        contextMenu.style.left = event.clientX + 'px';
+        contextMenu.style.top = event.clientY + 'px';
+        contextMenu.style.border = '1px solid #ccc';
+        contextMenu.style.backgroundColor = '#fff';
+        contextMenu.style.padding = '5px';
+        contextMenu.style.zIndex = '1000'; // Ensure it's above other elements
+        // Option to open in new tab
+        const openNewTabOption = document.createElement('div');
+        openNewTabOption.textContent = 'Open in New Tab';
+        openNewTabOption.style.cursor = 'pointer';
+        openNewTabOption.addEventListener('click', () => {
+            window.open(url, '_blank');
+            contextMenu.remove(); // Remove the context menu after selection
+        });
+        contextMenu.appendChild(openNewTabOption);
+
+        // Option to copy link address
+        const copyLinkOption = document.createElement('div');
+        copyLinkOption.textContent = 'Copy Link Address';
+        copyLinkOption.style.cursor = 'pointer';
+        copyLinkOption.addEventListener('click', () => {
+            navigator.clipboard.writeText(url).then(() => {
+                // Optional: Provide feedback to the user that the link was copied
+                console.log('Link copied to clipboard');
+            }).catch(err => {
+                console.error('Failed to copy link: ', err);
+            });
+            contextMenu.remove(); // Remove the context menu after selection
+        });
+        contextMenu.appendChild(copyLinkOption);
+
+        // Add the context menu to the document
+        document.body.appendChild(contextMenu);
+
+        // Remove the context menu when clicking outside of it
+        document.addEventListener('click', function removeContextMenu(e) {
+            if (!contextMenu.contains(e.target)) {
+                contextMenu.remove();
+                document.removeEventListener('click', removeContextMenu);
+            }
+        });
     }
 }
