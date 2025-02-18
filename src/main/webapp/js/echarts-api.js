@@ -457,11 +457,6 @@ const echartsJenkinsApi = {
                             handleChartClick(params.event, buildDisplayName, chartDivId);
                         }
                     });
-
-
-
-    
-
                             chart.getZr().on('contextmenu', params => {
                                 if (params.offsetY > 30) { // skip the legend
                                     const pointInPixel = [params.offsetX, params.offsetY];
@@ -469,9 +464,7 @@ const echartsJenkinsApi = {
                                     const buildDisplayName = chart.getModel().get('xAxis')[0].data[pointInGrid[0]];
                                     handleContextMenu(params.event, buildDisplayName, chartDivId);
                                 }
-                            });
-                        
-                    
+                            });    
                 }
             }
         }
