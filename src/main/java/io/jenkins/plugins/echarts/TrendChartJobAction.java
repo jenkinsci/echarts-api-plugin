@@ -1,12 +1,12 @@
 package io.jenkins.plugins.echarts;
 
-import java.util.Iterator;
-
 import edu.hm.hafner.echarts.BuildResult;
 import edu.hm.hafner.echarts.ChartModelConfiguration;
 import edu.hm.hafner.echarts.JacksonFacade;
 import edu.hm.hafner.echarts.line.LinesChartModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
+
+import java.util.Iterator;
 
 import org.kohsuke.stapler.bind.JavaScriptMethod;
 import hudson.model.Job;
@@ -15,9 +15,9 @@ import io.jenkins.plugins.util.BuildAction;
 import io.jenkins.plugins.util.JobAction;
 
 /**
- * A job action displays a link on the side panel of a job that refers to the last build that contains results (i.e. a
+ * A job action displays a link on the side panel of a job that refers to the last build that contains results (i.e., a
  * {@link BuildAction} with a corresponding result). This action also is responsible to render the historical trend via
- * its associated 'floatingBox.jelly' view. The trend chart will be rendered by ECharts: the model of the chart will be
+ * its associated 'floatingBox.jelly' view. ECharts will render the trend chart: the model of the chart will be
  * obtained using an asynchronous Ajax call. This action basically is the same as {@link TrendChartJobAction},
  * it additionally provides a configuration of the trend chart using a JSON object (given as a string value). This
  * JSON object can be populated in the client using a configuration dialog (or using the browser's local storage).
@@ -88,7 +88,8 @@ public abstract class TrendChartJobAction<T extends BuildAction<?>> extends JobA
     }
 
     /**
-     * Creates a history of build results. This default implementation selects all actions that share the same URL and returns these actions as value for the trend charts.
+     * Creates a history of build results. This default implementation selects all actions that share the same URL and
+     * returns these actions as value for the trend charts.
      *
      * @return the build history
      * @see GenericBuildActionIterator for details on how to construct such an iterator

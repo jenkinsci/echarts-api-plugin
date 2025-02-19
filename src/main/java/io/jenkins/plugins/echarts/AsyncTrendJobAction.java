@@ -1,10 +1,10 @@
 package io.jenkins.plugins.echarts;
 
-import java.util.Iterator;
-
 import edu.hm.hafner.echarts.BuildResult;
 import edu.hm.hafner.echarts.JacksonFacade;
 import edu.hm.hafner.echarts.LinesChartModel;
+
+import java.util.Iterator;
 
 import org.kohsuke.stapler.bind.JavaScriptMethod;
 import hudson.model.Job;
@@ -13,9 +13,9 @@ import io.jenkins.plugins.util.BuildAction;
 import io.jenkins.plugins.util.JobAction;
 
 /**
- * A job action displays a link on the side panel of a job that refers to the last build that contains results (i.e. a
+ * A job action displays a link on the side panel of a job that refers to the last build that contains results (i.e., a
  * {@link BuildAction} with a corresponding result). This action also is responsible to render the historical trend via
- * its associated 'floatingBox.jelly' view. The trend chart will be rendered by ECharts: the model of the chart will be
+ * its associated 'floatingBox.jelly' view. ECharts will render the trend chart: the model of the chart will be
  * obtained using an asynchronous Ajax call.
  *
  * @param <T>
