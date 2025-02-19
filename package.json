@@ -1,6 +1,6 @@
 {
   "name": "echarts-api",
-  "version": "5.5.1",
+  "version": "5.6.0",
   "description": "ECharts Jenkins Plugin",
   "directories": {
     "doc": "doc"
