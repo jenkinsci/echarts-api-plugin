@@ -694,7 +694,7 @@ function handleChartClick(event, buildDisplayName, chartDivId) {
         if (event.ctrlKey || event.which === 2) { // Ctrl+Click or Middle-click
             window.open(url, '_blank'); // Open in new tab/window
         } else if (event.shiftKey) { // Shift+Click
-            window.open(url, '_blank', 'noopener,noreferrer'); // Open in a new window (more isolated)
+            window.open(url, '_blank'); // just open in new window
         } else {
             window.location.href = url; // Original behavior (same tab)
         }
