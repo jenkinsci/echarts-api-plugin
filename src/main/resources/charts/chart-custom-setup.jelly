@@ -1,8 +1,11 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+<j:jelly xmlns:j="jelly:core" xmlns:d="jelly:define" xmlns:st="jelly:stapler">
 
   <st:documentation>
-    Provides a generic chart configuration dialog.
+    Provides a generic chart configuration dialog with the possibility to hook into a custom configuration.
+    This dialog is not yet linked to a JS snippet that provides the save and load functionality. This needs to be
+    implemented in the consuming plugin.
+    TODO: example
 
     <st:attribute name="id" type="String" use="required">
       ID for the this chart configuration dialog.
@@ -23,6 +26,7 @@
         </div>
         <div class="modal-body">
           <form>
+            <d:invokeBody />
             <div class="mb-3">
               <input class="form-check-input" type="radio" name="domain-axis-type" id="build-domain-${id}"
                      checked="true"/>
