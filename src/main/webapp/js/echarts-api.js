@@ -31,7 +31,14 @@ const echartsJenkinsApi = {
      * @return {string|string}
      */
     resolveJenkinsColor: function (colorName) {
-        return getComputedStyle(document.body).getPropertyValue(colorName) || '#333';
+        const color = getComputedStyle(document.body).getPropertyValue(colorName) || '#333';
+
+        try {
+            return new Color(color).to("sRGB").toString({format: "hex"});
+        }
+        catch (e) {
+            return '#333';
+        }
     },
 
     /**

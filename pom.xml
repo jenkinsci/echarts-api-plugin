@@ -152,6 +152,16 @@
                   <directory>${project.basedir}/node_modules/echarts/dist</directory>
                   <filtering>false</filtering>
                 </resource>
+                <resource>
+                  <directory>${project.basedir}/node_modules/colorjs.io/dist</directory>
+                  <filtering>false</filtering>
+                  <includes>
+                    <include>color.global.js</include>
+                    <include>color.global.js.map</include>
+                    <include>color.global.min.js</include>
+                    <include>color.global.min.js.map</include>
+                  </includes>
+                </resource>
               </resources>
             </configuration>
           </execution>
