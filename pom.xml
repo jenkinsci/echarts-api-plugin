@@ -12,13 +12,13 @@
   <groupId>io.jenkins.plugins</groupId>
   <packaging>hpi</packaging>
   <name>ECharts API Plugin</name>
-  <version>5.6.0-2</version>
+  <version>${revision}${changelist}</version>
 
   <description>Provides ECharts for Jenkins plugins.</description>
   <url>https://github.com/jenkinsci/echarts-api-plugin</url>
 
   <properties>
-    <revision>5.6.0-2</revision>
+    <revision>5.6.0-3</revision>
     <changelist>-SNAPSHOT</changelist>
 
     <module.name>${project.groupId}.echarts</module.name>
@@ -201,7 +201,7 @@
     <connection>scm:git:https://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
     <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
-    <tag>v5.6.0-2</tag>
+    <tag>${scmTag}</tag>
   </scm>
 
   <repositories>
