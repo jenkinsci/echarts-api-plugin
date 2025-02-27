@@ -77,6 +77,24 @@ const echartsJenkinsApi = {
     },
 
     /**
+     * Fixes the emphasis of the series elements in the specified model.
+     *
+     * @param {String} model - the model that contains the chart series
+     */
+    fixEmphasis: function fixEmphasis(model) {
+        const inheritColors = {
+            focus: 'series',
+            color: 'inherit',
+            areaStyle: {color: 'inherit'}
+        };
+        model.series.forEach(seriesElement => {
+            if (!seriesElement.hasOwnProperty('emphasis') || seriesElement.emphasis === null) {
+                seriesElement.emphasis = inheritColors; // NOPMD
+            }
+        });
+    },
+
+    /**
      * Configures the content of the trend configuration dialog.
      *
      * @param {String} suffix - the suffix for the ID of the affected trend configuration dialog
@@ -287,14 +305,7 @@ const echartsJenkinsApi = {
             return dataZoomOptions;
         }
 
-        const inheritColors = {
-            focus: 'series',
-            color: 'inherit',
-            areaStyle: {color: 'inherit'}
-        };
-        chartModel.series.forEach(seriesElement => {
-            seriesElement.emphasis = inheritColors;
-        });
+        echartsJenkinsApi.fixEmphasis(chartModel);
 
         const options = {
             tooltip: {
@@ -394,14 +405,7 @@ const echartsJenkinsApi = {
         }
 
         function createOptions(chartModel) {
-            const inheritColors = {
-                focus: 'series',
-                color: 'inherit',
-                areaStyle: {color: 'inherit'}
-            };
-            chartModel.series.forEach(seriesElement => {
-                seriesElement.emphasis = inheritColors;
-            });
+            echartsJenkinsApi.fixEmphasis(chartModel);
 
             const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
             return {
@@ -654,9 +658,6 @@ const echartsJenkinsApi = {
                         color: textColor
                     }
                 },
-                emphasis: {
-                    color: 'inherit'
-                },
                 series: [{
                     type: 'pie',
                     radius: ['30%', '70%'],
@@ -672,7 +673,9 @@ const echartsJenkinsApi = {
                         }
                     },
                     emphasis: {
-                        color: 'inherit'
+                        itemStyle: {
+                            color: 'inherit'
+                        }
                     },
                     labelLine: {
                         normal: {
@@ -683,7 +686,7 @@ const echartsJenkinsApi = {
                 }
                 ]
             };
-            chart.setOption(options);
+            chart.setOption(options, true);
             chart.resize();
 
             const useLinks = chartPlaceHolder.attr('data-links');
