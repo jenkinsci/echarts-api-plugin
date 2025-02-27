@@ -31,14 +31,7 @@ const echartsJenkinsApi = {
      * @return {string|string}
      */
     resolveJenkinsColor: function (colorName) {
-        const color = getComputedStyle(document.body).getPropertyValue(colorName) || '#333';
-
-        try {
-            return new Color(color).to("sRGB").toString({format: "hex"});
-        }
-        catch (e) {
-            return '#333';
-        }
+        return getComputedStyle(document.body).getPropertyValue(colorName) || '#333';
     },
 
     /**
@@ -294,6 +287,15 @@ const echartsJenkinsApi = {
             return dataZoomOptions;
         }
 
+        const inheritColors = {
+            focus: 'series',
+            color: 'inherit',
+            areaStyle: {color: 'inherit'}
+        };
+        chartModel.series.forEach(seriesElement => {
+            seriesElement.emphasis = inheritColors;
+        });
+
         const options = {
             tooltip: {
                 trigger: 'axis',
@@ -392,6 +394,15 @@ const echartsJenkinsApi = {
         }
 
         function createOptions(chartModel) {
+            const inheritColors = {
+                focus: 'series',
+                color: 'inherit',
+                areaStyle: {color: 'inherit'}
+            };
+            chartModel.series.forEach(seriesElement => {
+                seriesElement.emphasis = inheritColors;
+            });
+
             const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
             return {
                 tooltip: {
@@ -643,6 +654,9 @@ const echartsJenkinsApi = {
                         color: textColor
                     }
                 },
+                emphasis: {
+                    color: 'inherit'
+                },
                 series: [{
                     type: 'pie',
                     radius: ['30%', '70%'],
@@ -656,6 +670,9 @@ const echartsJenkinsApi = {
                         emphasis: {
                             show: false
                         }
+                    },
+                    emphasis: {
+                        color: 'inherit'
                     },
                     labelLine: {
                         normal: {

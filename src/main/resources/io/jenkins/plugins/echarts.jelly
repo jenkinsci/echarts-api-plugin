@@ -8,7 +8,6 @@ Use it like <st:adjunct includes="io.jenkins.plugins.echarts"/>
   ${h.initPageVariables(context)}
 
   <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/echarts.min.js" />
-  <script type="text/javascript" src="${resURL}/plugin/echarts-api/js/color.global.min.js"/>
 
   <st:adjunct includes="io.jenkins.plugins.jquery3"/>
 
