@@ -293,7 +293,7 @@ const echartsJenkinsApi = {
             areaStyle: {color: 'inherit'}
         };
         chartModel.series.forEach(seriesElement => {
-            seriesElement.emphasis = inheritColors;
+            seriesElement.emphasis = inheritColors; // NOPMD
         });
 
         const options = {
@@ -400,7 +400,7 @@ const echartsJenkinsApi = {
                 areaStyle: {color: 'inherit'}
             };
             chartModel.series.forEach(seriesElement => {
-                seriesElement.emphasis = inheritColors;
+                seriesElement.emphasis = inheritColors; // NOPMD
             });
 
             const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
