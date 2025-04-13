@@ -506,7 +506,15 @@ const echartsJenkinsApi = {
                             }
 
                             if (selectedBuild > 0) {
-                                window.location.assign(selectedBuild + '/' + urlName);
+                                const buildUrl = selectedBuild + '/' + urlName;
+                                const evt = params.event;
+                                if (evt && (evt.ctrlKey || evt.metaKey || evt.button === 1)) {
+                                    window.open(buildUrl, '_blank');
+                                } else if (evt && evt.shiftKey) {
+                                    window.open(buildUrl, '_newWindow');
+                                } else {
+                                    window.location.assign(buildUrl)
+                                }
                             }
                         }
                     })
