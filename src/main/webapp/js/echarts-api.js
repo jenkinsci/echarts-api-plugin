@@ -508,7 +508,7 @@ const echartsJenkinsApi = {
                             if (selectedBuild > 0) {
                                 const buildUrl = selectedBuild + '/' + urlName;
                                 const evt = params.event;
-                                if (evt && (evt.ctrlKey || evt.metaKey || evt.button === 1)) {
+                                if (evt && (evt.ctrlKey || evt.metaKey)) {
                                     window.open(buildUrl, '_blank');
                                 } else if (evt && evt.shiftKey) {
                                     window.open(buildUrl, '_newWindow');
