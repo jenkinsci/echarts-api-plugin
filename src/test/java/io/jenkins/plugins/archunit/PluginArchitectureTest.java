@@ -1,4 +1,4 @@
-package io.jenkins.plugins.echarts;
+package io.jenkins.plugins.archunit;
 
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
