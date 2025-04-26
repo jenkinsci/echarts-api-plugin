@@ -147,6 +147,19 @@
                 <resource>
                   <directory>${project.basedir}/node_modules/echarts/dist</directory>
                   <filtering>false</filtering>
+                  <excludes>
+                    <exclude>*esm*</exclude>
+                  </excludes>
+                </resource>
+                <resource>
+                  <directory>${project.basedir}/node_modules/culori/bundled/</directory>
+                  <filtering>false</filtering>
+                  <excludes>
+                    <exclude>*esm*</exclude>
+                    <exclude>*umd*</exclude>
+                    <exclude>*mjs*</exclude>
+                    <exclude>*cjs*</exclude>
+                  </excludes>
                 </resource>
               </resources>
             </configuration>
