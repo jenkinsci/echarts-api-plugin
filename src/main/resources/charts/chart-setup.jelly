@@ -24,14 +24,14 @@
         <div class="modal-body">
           <form>
             <div class="mb-3">
-              <input class="form-check-input" type="radio" name="domain-axis-type" id="build-domain-${id}"
+              <input class="form-check-input" type="radio" name="domain-axis-type-${id}" id="build-domain-${id}"
                      checked="true"/>
               <label class="form-check-label" for="build-domain-${id}">
                 Show results per build (x-axis: build number)
               </label>
             </div>
             <div class="mb-3">
-              <input class="form-check-input" type="radio" name="domain-axis-type" id="date-domain-${id}"/>
+              <input class="form-check-input" type="radio" name="domain-axis-type-${id}" id="date-domain-${id}"/>
               <label class="form-check-label" for="date-domain-${id}">
                 Show aggregated results per day (x-axis: day of build)
               </label>
