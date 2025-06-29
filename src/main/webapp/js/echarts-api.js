@@ -108,6 +108,7 @@ const echartsJenkinsApi = {
         const numberOfBuildsInput = trendConfiguration.find('#builds-' + suffix);
         const numberOfDaysInput = trendConfiguration.find('#days-' + suffix);
         const useBuildAsDomainCheckBox = trendConfiguration.find('#build-domain-' + suffix);
+        const useDateAsDomainCheckBox = trendConfiguration.find('#date-domain-' + suffix);
         const widthSlider = trendConfiguration.find('#width-' + suffix);
         const heightSlider = trendConfiguration.find('#height-' + suffix);
         const trendLocalStorageId = 'jenkins-echarts-trend-configuration-' + suffix;
@@ -117,6 +118,7 @@ const echartsJenkinsApi = {
             numberOfBuildsInput.val(50);
             numberOfDaysInput.val(0);
             useBuildAsDomainCheckBox.prop('checked', true);
+            useDateAsDomainCheckBox.prop('checked', false);
             widthSlider.val(500);
             heightSlider.val(200);
             if (fillDialog) {
@@ -134,6 +136,7 @@ const echartsJenkinsApi = {
                     numberOfBuildsInput.val(trendJsonConfiguration.numberOfBuilds);
                     numberOfDaysInput.val(trendJsonConfiguration.numberOfDays);
                     useBuildAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain === 'true');
+                    useDateAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain !== 'true');
                     widthSlider.val(trendJsonConfiguration.width);
                     widthSlider.next().html(trendJsonConfiguration.width)
                     heightSlider.val(trendJsonConfiguration.height);
