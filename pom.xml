@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>analysis-pom</artifactId>
-    <version>11.2812.vde3e22ec61c7</version>
+    <version>11.2824.v933a_cd41a_8e2</version>
     <relativePath />
   </parent>
 
@@ -110,12 +110,6 @@
         <artifactId>maven-clean-plugin</artifactId>
         <configuration>
           <filesets>
-            <fileset>
-              <directory>./</directory>
-              <includes>
-                <include>package-lock.json</include>
-              </includes>
-            </fileset>
             <fileset>
               <directory>node</directory>
               <includes>
