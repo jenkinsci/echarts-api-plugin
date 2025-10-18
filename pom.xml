@@ -111,12 +111,6 @@
         <configuration>
           <filesets>
             <fileset>
-              <directory>./</directory>
-              <includes>
-                <include>package-lock.json</include>
-              </includes>
-            </fileset>
-            <fileset>
               <directory>node</directory>
               <includes>
                 <include>**/*</include>
