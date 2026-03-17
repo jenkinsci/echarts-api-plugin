@@ -2,54 +2,24 @@
 
 const trendDefaultStorageId = 'jenkins-echarts-trend-configuration-default';
 const echartsJenkinsApi = {
-    /**
-     * Resolves all Jenkins colors within the specified string model. These colors are specified as CSS variables
-     * of the form <code>--color-name</code>. The method replaces all occurrences of these variables with the actual
-     * color value of the current Jenkins theme.
-     *
-     * @param {String} model - the model to escape the Jenkins colors
-     * @returns {String} the escaped string
-     */
     resolveJenkinsColors: function (model) {
         return model.replaceAll(/--([a-z-]+)/g, function (match) {
             return echartsJenkinsApi.resolveJenkinsColor(match)
         })
     },
 
-    /**
-     * Returns the theme-aware color of all texts.
-     *
-     * @return {string|string}
-     */
     getTextColor: function () {
         return echartsJenkinsApi.resolveJenkinsColor('--text-color');
     },
 
-    /**
-     * Returns the theme-aware color of all texts.
-     *
-     * @return {string|string}
-     */
     resolveJenkinsColor: function (colorName) {
         return getComputedStyle(document.body).getPropertyValue(colorName) || '#333';
     },
 
-    /**
-     * Escapes the meta characters of the specified string so that the string can be used as an ID.
-     *
-     * @param {String} string - the string to escape
-     * @returns {String} the escaped string
-     */
     escapeMetaCharacters: function (string) {
         return string.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&')
     },
 
-    /**
-     * Reads the specified configuration from the local storage.
-     *
-     * @param {String} id - the ID of the configuration
-     * @return the configuration or {} if no such configuration is found
-     */
     readFromLocalStorage: function (id) {
         try {
             const configuration = localStorage.getItem(id);
@@ -63,24 +33,12 @@ const echartsJenkinsApi = {
         return {};
     },
 
-    /**
-     * Reads the trend configuration from the local storage and merges it with the default configuration.
-     *
-     * @param {String} id - the ID of the configuration
-     * @return the configuration or {} if no such configuration is found
-     */
     readConfiguration: function (id) {
         const specific = echartsJenkinsApi.readFromLocalStorage(id);
         const common = echartsJenkinsApi.readFromLocalStorage(trendDefaultStorageId);
-
         return Object.assign(specific, common);
     },
 
-    /**
-     * Fixes the emphasis of the series elements in the specified model.
-     *
-     * @param {String} model - the model that contains the chart series
-     */
     fixEmphasis: function fixEmphasis(model) {
         const inheritColors = {
             focus: 'series',
@@ -89,20 +47,11 @@ const echartsJenkinsApi = {
         };
         model.series.forEach(seriesElement => {
             if (!seriesElement.hasOwnProperty('emphasis') || seriesElement.emphasis === null) {
-                seriesElement.emphasis = inheritColors; // NOPMD
+                seriesElement.emphasis = inheritColors;
             }
         });
     },
 
-    /**
-     * Configures the content of the trend configuration dialog.
-     *
-     * @param {String} suffix - the suffix for the ID of the affected trend configuration dialog
-     * @param {Function} fillDialog - a function to fill the configuration dialog with additional values from the JSON
-     *     configuration object
-     * @param {Function} saveDialog - a function to save the configuration dialog values to the JSON configuration
-     *     object
-     */
     configureTrend: function (suffix, fillDialog, saveDialog) {
         const trendConfiguration = jQuery3('#trend-configuration-' + suffix);
         const numberOfBuildsInput = trendConfiguration.find('#builds-' + suffix);
@@ -188,17 +137,6 @@ const echartsJenkinsApi = {
         });
     },
 
-    /**
-     * Configures the content of the trend configuration dialog.
-     *
-     * @param {String} suffix - the suffix for the ID of the affected trend configuration dialog
-     *     configuration object
-     * @param {Function} fillDialog - a function to fill the configuration dialog with additional values from the JSON
-     *     configuration object
-     * @param {Function} saveDialog - a function to save the configuration dialog values to the JSON configuration
-     *     object
-     *
-     */
     configureChart: function (suffix, fillDialog, saveDialog) {
         const chartConfiguration = jQuery3('#chart-configuration-' + suffix);
         const numberOfBuildsInput = chartConfiguration.find('#builds-' + suffix);
@@ -245,12 +183,11 @@ const echartsJenkinsApi = {
             if (saveDialog) {
                 const specific = saveDialog(chartConfiguration);
                 localStorage.setItem('jenkins-echarts-chart-configuration-' + suffix,
-                    JSON.stringify({... configurationJson, ... specific}));
+                    JSON.stringify({...configurationJson, ...specific}));
             }
             else {
                 localStorage.setItem('jenkins-echarts-chart-configuration-' + suffix, JSON.stringify(configurationJson));
             }
-
         });
 
         chartConfiguration.on('keypress', function (e) {
@@ -260,30 +197,18 @@ const echartsJenkinsApi = {
         });
     },
 
-    /**
-     * Renders a configurable trend chart in the specified div using ECharts.
-     *
-     * @param {String} chartDivId - the ID of the div where the chart should be shown in
-     * @param {String} model - the line chart model
-     * @param {String} settingsDialogId - the optional ID of the div that provides a settings dialog (might be set to
-     *     null if there is no such dialog)
-     * @param {Function} chartClickedEventHandler - the optional event handler that receives click events
-     * @param {Boolean} allowYAxisZoom - Allow zooming on the y-axis
-     */
     renderConfigurableZoomableTrendChart: function (chartDivId, model, settingsDialogId, chartClickedEventHandler, allowYAxisZoom = false) {
-        const chartModel = JSON.parse(echartsJenkinsApi.resolveJenkinsColors(model)); // NOPMD
+        const chartModel = JSON.parse(echartsJenkinsApi.resolveJenkinsColors(model));
         const chartPlaceHolder = document.getElementById(chartDivId);
         const chart = echarts.init(chartPlaceHolder);
-        chartPlaceHolder.echart = chart; // NOPMD
+        chartPlaceHolder.echart = chart;
 
         const textColor = getComputedStyle(document.body).getPropertyValue('--text-color') || '#333';
         const showSettings = document.getElementById(settingsDialogId);
 
         function getDataZoomOptions(allowYAxisZoom) {
             const dataZoomOptions = [
-                {
-                    type: 'inside'
-                },
+                { type: 'inside' },
                 {
                     type: 'slider',
                     height: 25,
@@ -315,9 +240,7 @@ const echartsJenkinsApi = {
                 trigger: 'axis',
                 axisPointer: {
                     type: 'cross',
-                    label: {
-                        backgroundColor: '#6a7985'
-                    }
+                    label: { backgroundColor: '#6a7985' }
                 }
             },
             toolbox: {
@@ -339,9 +262,7 @@ const echartsJenkinsApi = {
                 type: 'scroll',
                 x: 'center',
                 y: 'top',
-                textStyle: {
-                    color: textColor
-                }
+                textStyle: { color: textColor }
             },
             grid: {
                 left: '20',
@@ -355,25 +276,27 @@ const echartsJenkinsApi = {
                 boundaryGap: false,
                 data: chartModel.domainAxisLabels,
                 axisLabel: {
-                    color: textColor
+                    color: textColor,
+                    showMaxLabel: true  // FIX: always show the last (highest) build number label
                 }
             }],
             yAxis: [{
                 type: 'value',
                 min: chartModel.rangeMin ?? 'dataMin',
                 max: chartModel.rangeMax ?? 'dataMax',
-                axisLabel: {
-                },
+                axisLabel: {},
                 minInterval: chartModel.integerRangeAxis ? 1 : null
             }],
             series: chartModel.series
         };
+
         chart.setOption(options, true);
         chart.resize();
+
         if (chartClickedEventHandler !== null) {
             chart.getZr().on('click', params => {
                 const offset = 30;
-                if (params.offsetY > offset && chart.getHeight() - params.offsetY > offset) { // skip the legend and data zoom
+                if (params.offsetY > offset && chart.getHeight() - params.offsetY > offset) {
                     const pointInPixel = [params.offsetX, params.offsetY];
                     const pointInGrid = chart.convertFromPixel('grid', pointInPixel);
                     const buildDisplayName = chart.getModel().get('xAxis')[0].data[pointInGrid[0]]
@@ -381,23 +304,12 @@ const echartsJenkinsApi = {
                 }
             })
         }
+
         jQuery3(window).resize(function () {
             chart.resize();
         });
     },
 
-    /**
-     * Renders a trend chart in the specified div using ECharts.
-     *
-     * @param {String} chartDivId - the ID of the div where the chart should be shown in
-     * @param {String} enableLinks - determines if the chart is clickable. If the chart is clickable, then clicking on a
-     *     chart will open the results of the selected build.
-     * @param {String} configurationId - ID of the div-element that renders a configuration dialog of this trend chart.
-     *     If this element is defined, then the trend chart will use a configuration button that
-     *     will invoke the specified element. If your trend has no special configuration dialog
-     *     then the ID "defaultTrendConfiguration" of the default configuration dialog should be used.
-     * @param {Object} ajaxProxy - AJAX proxy of the endpoint in Jenkins Java model object
-     */
     renderConfigurableTrendChart: function (chartDivId, enableLinks, configurationId, ajaxProxy) {
         function hasConfigurationDialog() {
             return configurationId != null && configurationId.length > 0;
@@ -416,9 +328,7 @@ const echartsJenkinsApi = {
                     trigger: 'axis',
                     axisPointer: {
                         type: 'cross',
-                        label: {
-                            backgroundColor: '#6a7985'
-                        }
+                        label: { backgroundColor: '#6a7985' }
                     },
                 },
                 toolbox: {
@@ -440,9 +350,7 @@ const echartsJenkinsApi = {
                     pageButtonPosition: 'start',
                     x: 'center',
                     y: 'top',
-                    textStyle: {
-                        color: textColor
-                    }
+                    textStyle: { color: textColor }
                 },
                 grid: {
                     left: '20',
@@ -456,30 +364,21 @@ const echartsJenkinsApi = {
                     boundaryGap: false,
                     data: chartModel.domainAxisLabels,
                     axisLabel: {
-                        color: textColor
+                        color: textColor,
+                        showMaxLabel: true  // FIX: always show the last (highest) build number label
                     }
-                }
-                ],
+                }],
                 yAxis: [{
                     type: 'value',
                     min: chartModel.rangeMin ?? 'dataMin',
                     max: chartModel.rangeMax ?? 'dataMax',
-                    axisLabel: {
-                        color: textColor
-                    },
+                    axisLabel: { color: textColor },
                     minInterval: chartModel.integerRangeAxis ? 1 : null
-                }
-                ],
+                }],
                 series: chartModel.series
             };
         }
 
-        /**
-         * Redraws a trend chart in the specified div using ECharts.
-         *
-         * @param {Object} chart - the ECharts instance
-         * @param {String} model - the line chart model received from the Ajax call
-         */
         function redraw(chart, model) {
             chart.hideLoading();
             const themedModel = echartsJenkinsApi.resolveJenkinsColors(model);
@@ -493,7 +392,7 @@ const echartsJenkinsApi = {
                 const urlName = chartPlaceHolder.getAttribute("tool");
                 if (urlName) {
                     chart.getZr().on('click', params => {
-                        if (params.offsetY > 30) { // skip the legend
+                        if (params.offsetY > 30) {
                             const pointInPixel = [params.offsetX, params.offsetY];
                             const pointInGrid = chart.convertFromPixel('grid', pointInPixel);
                             const buildDisplayName = chart.getModel().get('xAxis')[0].data[pointInGrid[0]]
@@ -555,7 +454,6 @@ const echartsJenkinsApi = {
         }
 
         const chartPlaceHolder = document.getElementById(chartDivId);
-
         const chart = echarts.init(chartPlaceHolder);
         chart.showLoading();
         chartPlaceHolder.echart = chart;
@@ -573,6 +471,7 @@ const echartsJenkinsApi = {
             document.addEventListener(redrawChartEvent, function () {
                 renderAsynchronously(chart);
             });
+
             if (window.getThemeManagerProperty && window.isSystemRespectingTheme) {
                 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
                     renderAsynchronously(chart);
@@ -585,49 +484,27 @@ const echartsJenkinsApi = {
                 for (let i = 0; i < trends.length; i++) {
                     setSize(trends[i], configuration);
                 }
-
                 const event = new Event(redrawChartEvent);
                 document.dispatchEvent(event);
             });
         }
-        else { // AsyncTrendChart
+        else {
             ajaxProxy.getBuildTrendModel(function (trendModel) {
                 redraw(chart, trendModel.responseJSON);
             });
         }
     },
 
-    /**
-     * Renders a trend chart in the specified div using ECharts.
-     *
-     * @param {String} chartDivId - the ID of the div where the chart should be shown in
-     * @param {String} enableLinks - determines if the chart is clickable. If the chart is clickable, then clicking on a
-     *     chart will open the results of the selected build.
-     * @param {Object} ajaxProxy - AJAX proxy of the endpoint in Jenkins Java model object
-     */
     renderTrendChart: function (chartDivId, enableLinks, ajaxProxy) {
         echartsJenkinsApi.renderConfigurableTrendChart(chartDivId, enableLinks, null, ajaxProxy);
     },
 
-    /**
-     * Renders all div elements that have the class 'echarts-pie-chart' using ECharts.
-     */
     renderPieCharts: function () {
-        /**
-         * Renders a trend chart in a div using ECharts.
-         *
-         * @param {String} chartDivId - the ID of the div where the chart should be shown in
-         */
         function renderPieChart(chartDivId) {
             function isEmpty(string) {
                 return (!string || string.length === 0);
             }
 
-            /**
-             * Returns the title properties of the chart.
-             *
-             * @param {String} title - the title
-             */
             function getTitle(title) {
                 if (!isEmpty(title)) {
                     return {
@@ -665,9 +542,7 @@ const echartsJenkinsApi = {
                     x: 'center',
                     y: 'bottom',
                     type: 'scroll',
-                    textStyle: {
-                        color: textColor
-                    }
+                    textStyle: { color: textColor }
                 },
                 series: [{
                     type: 'pie',
@@ -675,28 +550,19 @@ const echartsJenkinsApi = {
                     avoidLabelOverlap: false,
                     color: themedColors,
                     label: {
-                        normal: {
-                            show: false,
-                            position: 'center'
-                        },
-                        emphasis: {
-                            show: false
-                        }
+                        normal: { show: false, position: 'center' },
+                        emphasis: { show: false }
                     },
                     emphasis: {
-                        itemStyle: {
-                            color: 'inherit'
-                        }
+                        itemStyle: { color: 'inherit' }
                     },
                     labelLine: {
-                        normal: {
-                            show: true
-                        }
+                        normal: { show: true }
                     },
                     data: model.data
-                }
-                ]
+                }]
             };
+
             chart.setOption(options, true);
             chart.resize();
 
@@ -715,9 +581,9 @@ const echartsJenkinsApi = {
         allPieCharts.each(function () {
             const chart = jQuery3(this);
             const id = chart.attr('id');
-
             pieChartInstances.push(renderPieChart(id));
         });
+
         if (pieChartInstances.length > 0) {
             jQuery3(window).resize(function () {
                 pieChartInstances.forEach(function (chartInstance) {
