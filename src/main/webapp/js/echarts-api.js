@@ -355,7 +355,8 @@ const echartsJenkinsApi = {
                 boundaryGap: false,
                 data: chartModel.domainAxisLabels,
                 axisLabel: {
-                    color: textColor
+                    color: textColor,
+                    showMaxLabel: true
                 }
             }],
             yAxis: [{
@@ -456,7 +457,8 @@ const echartsJenkinsApi = {
                     boundaryGap: false,
                     data: chartModel.domainAxisLabels,
                     axisLabel: {
-                        color: textColor
+                        color: textColor,
+                        showMaxLabel: true
                     }
                 }
                 ],
