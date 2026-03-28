@@ -38,18 +38,24 @@
               </label>
             </div>
             <div class="mb-3">
-              <input type="number" min="1" class="form-control" id="builds-${suffix}" required="true"/>
+              <input type="number" min="1" class="form-control" id="builds-${suffix}" required="required" />
               <label for="builds-${suffix}" class="form-label">Maximum number of builds to consider</label>
               <div id="builds-help-${suffix}" class="form-text">If set to a value less than 2 then all builds will be
                 considered.
               </div>
             </div>
             <div class="mb-3">
-              <input type="number" min="0" class="form-control" id="days-${suffix}" required="true"/>
+              <input type="number" min="0" class="form-control" id="days-${suffix}" required="required" />
               <label for="days-${suffix}" class="form-label">Maximum number of days to look into the past</label>
               <div id="days-help-${suffix}" class="form-text">If set to a value less than 1 then builds of all days are
                 considered.
               </div>
+            </div>
+            <div class="mb-3">
+              <input class="form-check-input" type="checkbox" id="zero-based-y-axis-${suffix}" />
+              <label class="form-check-label" for="zero-based-y-axis-${suffix}">
+                Start Y-axis from zero
+              </label>
             </div>
             <div class="mb-3">
               <div class="range-slider">

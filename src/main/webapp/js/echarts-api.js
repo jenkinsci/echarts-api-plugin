@@ -137,6 +137,10 @@ const echartsJenkinsApi = {
                     numberOfDaysInput.val(trendJsonConfiguration.numberOfDays);
                     useBuildAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain === 'true');
                     useDateAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain !== 'true');
+                    jQuery3('#zero-based-y-axis-' + suffix).prop(
+                        'checked',
+                        trendJsonConfiguration.zeroBasedYAxis === 'true'
+                    );
                     widthSlider.val(trendJsonConfiguration.width);
                     widthSlider.next().html(trendJsonConfiguration.width)
                     heightSlider.val(trendJsonConfiguration.height);
@@ -156,6 +160,7 @@ const echartsJenkinsApi = {
                 numberOfBuilds: numberOfBuildsInput.val(),
                 numberOfDays: numberOfDaysInput.val(),
                 buildAsDomain: useBuildAsDomainCheckBox.prop('checked') ? 'true' : 'false',
+                zeroBasedYAxis: jQuery3('#zero-based-y-axis-' + suffix).prop('checked') ? 'true' : 'false',
                 width: widthSlider.val(),
                 height: heightSlider.val()
             };
