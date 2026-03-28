@@ -137,6 +137,10 @@ const echartsJenkinsApi = {
                     numberOfDaysInput.val(trendJsonConfiguration.numberOfDays);
                     useBuildAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain === 'true');
                     useDateAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain !== 'true');
+                    jQuery3('#zero-based-y-axis-' + suffix).prop(
+                        'checked',
+                        trendJsonConfiguration.zeroBasedYAxis === 'true'
+                    );
                     widthSlider.val(trendJsonConfiguration.width);
                     widthSlider.next().html(trendJsonConfiguration.width)
                     heightSlider.val(trendJsonConfiguration.height);
@@ -156,6 +160,7 @@ const echartsJenkinsApi = {
                 numberOfBuilds: numberOfBuildsInput.val(),
                 numberOfDays: numberOfDaysInput.val(),
                 buildAsDomain: useBuildAsDomainCheckBox.prop('checked') ? 'true' : 'false',
+                zeroBasedYAxis: jQuery3('#zero-based-y-axis-' + suffix).prop('checked') ? 'true' : 'false',
                 width: widthSlider.val(),
                 height: heightSlider.val()
             };
@@ -271,7 +276,9 @@ const echartsJenkinsApi = {
      * @param {Boolean} allowYAxisZoom - Allow zooming on the y-axis
      */
     renderConfigurableZoomableTrendChart: function (chartDivId, model, settingsDialogId, chartClickedEventHandler, allowYAxisZoom = false) {
-        const chartModel = JSON.parse(echartsJenkinsApi.resolveJenkinsColors(model)); // NOPMD
+        const chartModel = JSON.parse(echartsJenkinsApi.resolveJenkinsColors(model));
+        // Add support for optional zero-based Y-axis (defaults to false if not provided by backend)
+        chartModel.zeroBasedYAxis = chartModel.zeroBasedYAxis ?? false;
         const chartPlaceHolder = document.getElementById(chartDivId);
         const chart = echarts.init(chartPlaceHolder);
         chartPlaceHolder.echart = chart; // NOPMD
@@ -361,7 +368,7 @@ const echartsJenkinsApi = {
             }],
             yAxis: [{
                 type: 'value',
-                min: chartModel.rangeMin ?? 'dataMin',
+                min: chartModel.zeroBasedYAxis ? 0 : (chartModel.rangeMin ?? 'dataMin'),
                 max: chartModel.rangeMax ?? 'dataMax',
                 axisLabel: {
                 },
@@ -464,7 +471,7 @@ const echartsJenkinsApi = {
                 ],
                 yAxis: [{
                     type: 'value',
-                    min: chartModel.rangeMin ?? 'dataMin',
+                    min: chartModel.zeroBasedYAxis ? 0 : (chartModel.rangeMin ?? 'dataMin'),
                     max: chartModel.rangeMax ?? 'dataMax',
                     axisLabel: {
                         color: textColor

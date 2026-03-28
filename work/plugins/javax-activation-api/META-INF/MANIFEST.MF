@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Created-By: Maven Archiver 3.6.0
+Build-Jdk-Spec: 17
+Specification-Title: JavaBeans Activation Framework (JAF) API
+Specification-Version: 1.2
+Implementation-Title: JavaBeans Activation Framework (JAF) API
+Implementation-Version: 1.2.0-8
+Group-Id: io.jenkins.plugins
+Artifact-Id: javax-activation-api
+Short-Name: javax-activation-api
+Long-Name: JavaBeans Activation Framework (JAF) API
+Url: https://github.com/jenkinsci/javax-activation-api-plugin
+Plugin-Version: 1.2.0-8
+Hudson-Version: 2.479.1
+Jenkins-Version: 2.479.1
+Plugin-Developers: 
+Support-Dynamic-Loading: true
+Plugin-License-Name: CDDL-1.1
+Plugin-License-Url: https://spdx.org/licenses/CDDL-1.1.html
+Plugin-ScmConnection: scm:git:https://github.com/jenkinsci/javax-activat
+ ion-api-plugin.git
+Plugin-ScmTag: javax-activation-api-1.2.0-8
+Plugin-ScmUrl: https://github.com/jenkinsci/javax-activation-api-plugin
+Implementation-Build: e924d05219fb9bab23f08a27fd9b5186a06ec4f6
+

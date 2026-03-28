@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Group-Id: io.jenkins.plugins
+Artifact-Id: echarts-api
+Short-Name: echarts-api
+Long-Name: ECharts API Plugin
+Url: https://github.com/jenkinsci/echarts-api-plugin
+Plugin-Version: 6.0.0-999999-SNAPSHOT (private-4fd39220-ashuverma5576)
+Hudson-Version: 2.516.3
+Jenkins-Version: 2.516.3
+Plugin-Dependencies: bootstrap5-api:5.3.8-895.v4d0d8e47fea_d,commons-lan
+ g3-api:3.19.0-104.v12125f33a_255,commons-text-api:1.14.0-194.v804a_dc3a
+ _1b_d8,font-awesome-api:7.1.0-882.v1dfb_771e3278,jquery3-api:3.7.1-619.
+ vdb_10e002501a_,plugin-util-api:6.1192.v30fe6e2837ff,jackson2-api:2.20.
+ 1-423.v13951f6b_6532
+Plugin-Developers: Ullrich Hafner:uhafner:ullrich.hafner@gmail.com
+Support-Dynamic-Loading: true
+Plugin-License-Name: MIT license
+Plugin-ScmConnection: scm:git:https://github.com/jenkinsci/echarts-api-p
+ lugin.git
+Plugin-ScmTag: HEAD
+Plugin-ScmUrl: https://github.com/jenkinsci/echarts-api-plugin
+Implementation-Build: 4fd392206a88e5b0063c14512d574d5a7ea551b2
+Libraries: /Users/ashuverma5576/Desktop/GSOC 2026/Jenkins/echarts-api-pl
+ ugin/src/main/resources,/Users/ashuverma5576/Desktop/GSOC 2026/Jenkins/
+ echarts-api-plugin/target/classes
+Resource-Path: /Users/ashuverma5576/Desktop/GSOC 2026/Jenkins/echarts-ap
+ i-plugin/src/main/webapp
+

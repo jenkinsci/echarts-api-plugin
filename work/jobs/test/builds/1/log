@@ -1,0 +1,7 @@
+Started by user unknown or anonymous
+Running as SYSTEM
+Building in workspace /Users/ashuverma5576/Desktop/GSOC 2026/Jenkins/echarts-api-plugin/work/workspace/test
+[test] $ /bin/sh -xe /var/folders/0y/k513082142q8cl512cl20jgm0000gn/T/jenkins8193552741148111446.sh
++ echo Hello
+Hello
+Finished: SUCCESS

@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<l:dependencies xmlns:l='licenses' groupId='org.jenkins-ci.plugins' artifactId='scm-api' version='724.v7d839074eb_5c'><l:dependency name='SCM API Plugin' groupId='org.jenkins-ci.plugins' artifactId='scm-api' version='724.v7d839074eb_5c' url='https://github.com/jenkinsci/scm-api-plugin/blob/master/docs/consumer.adoc'><l:description>The Jenkins Plugins Parent POM Project</l:description><l:license name='The MIT license' url='https://opensource.org/licenses/MIT'/></l:dependency></l:dependencies>

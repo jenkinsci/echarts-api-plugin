@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Created-By: Maven Archiver 3.6.4
+Build-Jdk-Spec: 17
+Specification-Title: Font Awesome API Plugin
+Specification-Version: 7.1
+Implementation-Title: Font Awesome API Plugin
+Implementation-Version: 7.1.0-882.v1dfb_771e3278
+Group-Id: io.jenkins.plugins
+Artifact-Id: font-awesome-api
+Short-Name: font-awesome-api
+Long-Name: Font Awesome API Plugin
+Url: https://github.com/jenkinsci/font-awesome-api-plugin
+Plugin-Version: 7.1.0-882.v1dfb_771e3278
+Hudson-Version: 2.516.3
+Jenkins-Version: 2.516.3
+Plugin-Dependencies: commons-lang3-api:3.19.0-104.v12125f33a_255,commons
+ -text-api:1.14.0-194.v804a_dc3a_1b_d8,plugin-util-api:6.1192.v30fe6e283
+ 7ff
+Plugin-Developers: Ullrich Hafner:uhafner:ullrich.hafner@gmail.com
+Support-Dynamic-Loading: true
+Plugin-License-Name: MIT license
+Plugin-ScmConnection: scm:git:https://github.com/jenkinsci/font-awesome-
+ api-plugin.git
+Plugin-ScmTag: 1dfb771e3278c28a34692d131013151beaefc327
+Plugin-ScmUrl: https://github.com/jenkinsci/font-awesome-api-plugin
+Implementation-Build: 1dfb771e3278c28a34692d131013151beaefc327
+
