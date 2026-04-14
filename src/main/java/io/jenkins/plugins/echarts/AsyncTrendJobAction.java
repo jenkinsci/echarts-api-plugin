@@ -1,10 +1,10 @@
 package io.jenkins.plugins.echarts;
 
 import edu.hm.hafner.echarts.BuildResult;
-import edu.hm.hafner.echarts.JacksonFacade;
 import edu.hm.hafner.echarts.LinesChartModel;
 
 import java.util.Iterator;
+import tools.jackson.databind.ObjectMapper;
 
 import org.kohsuke.stapler.bind.JavaScriptMethod;
 import hudson.model.Job;
@@ -40,7 +40,7 @@ public abstract class AsyncTrendJobAction<T extends BuildAction<?>> extends JobA
     @JavaScriptMethod
     @SuppressWarnings("unused") // Called by jelly view
     public String getBuildTrendModel() {
-        return new JacksonFacade().toJson(createChartModel());
+        return new ObjectMapper().writeValueAsString(createChartModel());
     }
 
     /**
