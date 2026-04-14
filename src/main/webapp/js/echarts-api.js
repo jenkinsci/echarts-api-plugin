@@ -109,6 +109,7 @@ const echartsJenkinsApi = {
         const numberOfDaysInput = trendConfiguration.find('#days-' + suffix);
         const useBuildAsDomainCheckBox = trendConfiguration.find('#build-domain-' + suffix);
         const useDateAsDomainCheckBox = trendConfiguration.find('#date-domain-' + suffix);
+        const zeroBasedYAxisCheckBox = trendConfiguration.find('#zero-based-y-axis-' + suffix);
         const widthSlider = trendConfiguration.find('#width-' + suffix);
         const heightSlider = trendConfiguration.find('#height-' + suffix);
         const trendLocalStorageId = 'jenkins-echarts-trend-configuration-' + suffix;
@@ -137,10 +138,7 @@ const echartsJenkinsApi = {
                     numberOfDaysInput.val(trendJsonConfiguration.numberOfDays);
                     useBuildAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain === 'true');
                     useDateAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain !== 'true');
-                    jQuery3('#zero-based-y-axis-' + suffix).prop(
-                        'checked',
-                        trendJsonConfiguration.zeroBasedYAxis === 'true'
-                    );
+                    zeroBasedYAxisCheckBox.prop('checked', trendJsonConfiguration.zeroBasedYAxis === 'true');
                     widthSlider.val(trendJsonConfiguration.width);
                     widthSlider.next().html(trendJsonConfiguration.width)
                     heightSlider.val(trendJsonConfiguration.height);
@@ -160,7 +158,7 @@ const echartsJenkinsApi = {
                 numberOfBuilds: numberOfBuildsInput.val(),
                 numberOfDays: numberOfDaysInput.val(),
                 buildAsDomain: useBuildAsDomainCheckBox.prop('checked') ? 'true' : 'false',
-                zeroBasedYAxis: jQuery3('#zero-based-y-axis-' + suffix).prop('checked') ? 'true' : 'false',
+                zeroBasedYAxis: zeroBasedYAxisCheckBox.prop('checked') ? 'true' : 'false',
                 width: widthSlider.val(),
                 height: heightSlider.val()
             };
@@ -278,7 +276,7 @@ const echartsJenkinsApi = {
     renderConfigurableZoomableTrendChart: function (chartDivId, model, settingsDialogId, chartClickedEventHandler, allowYAxisZoom = false) {
         const chartModel = JSON.parse(echartsJenkinsApi.resolveJenkinsColors(model));
         // Add support for optional zero-based Y-axis (defaults to false if not provided by backend)
-        chartModel.zeroBasedYAxis = chartModel.zeroBasedYAxis ?? false;
+        chartModel.zeroBasedYAxis = chartModel.zeroBasedYAxis ?? false; // NOPMD
         const chartPlaceHolder = document.getElementById(chartDivId);
         const chart = echarts.init(chartPlaceHolder);
         chartPlaceHolder.echart = chart; // NOPMD
@@ -493,6 +491,12 @@ const echartsJenkinsApi = {
             chart.hideLoading();
             const themedModel = echartsJenkinsApi.resolveJenkinsColors(model);
             const chartModel = JSON.parse(themedModel);
+            if (hasConfigurationDialog()) {
+                const trendConfig = echartsJenkinsApi.readConfiguration(
+                    'jenkins-echarts-trend-configuration-' + configurationId
+                );
+                chartModel.zeroBasedYAxis = trendConfig.zeroBasedYAxis === 'true'; // NOPMD
+            }
             chart.setOption(createOptions(chartModel), true);
             chart.resize();
 
