@@ -274,9 +274,8 @@ const echartsJenkinsApi = {
      * @param {Boolean} allowYAxisZoom - Allow zooming on the y-axis
      */
     renderConfigurableZoomableTrendChart: function (chartDivId, model, settingsDialogId, chartClickedEventHandler, allowYAxisZoom = false) {
-        const chartModel = JSON.parse(echartsJenkinsApi.resolveJenkinsColors(model));
-        // Add support for optional zero-based Y-axis (defaults to false if not provided by backend)
-        chartModel.zeroBasedYAxis = chartModel.zeroBasedYAxis ?? false; // NOPMD
+        const chartModel = JSON.parse(echartsJenkinsApi.resolveJenkinsColors(model)); // NOPMD
+        chartModel.zeroBasedYAxis = chartModel.zeroBasedYAxis ?? false; 
         const chartPlaceHolder = document.getElementById(chartDivId);
         const chart = echarts.init(chartPlaceHolder);
         chartPlaceHolder.echart = chart; // NOPMD
