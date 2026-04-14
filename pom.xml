@@ -23,7 +23,7 @@
 
     <module.name>${project.groupId}.echarts</module.name>
 
-    <echarts-build-trends.version>5.1.0</echarts-build-trends.version>
+    <echarts-build-trends.version>6.0.0</echarts-build-trends.version>
   </properties>
 
   <licenses>
@@ -45,6 +45,7 @@
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>plugin-util-api</artifactId>
+      <version>7.1320.v684dd26fca_19</version>
     </dependency>
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
@@ -65,10 +66,6 @@
       <scope>provided</scope>
       <exclusions>
         <exclusion>
-          <artifactId>jackson-databind</artifactId>
-          <groupId>com.fasterxml.jackson.core</groupId>
-        </exclusion>
-        <exclusion>
           <groupId>com.github.spotbugs</groupId>
           <artifactId>spotbugs-annotations</artifactId>
         </exclusion>
@@ -88,11 +85,15 @@
           <groupId>javax.annotation</groupId>
           <artifactId>javax.annotation-api</artifactId>
         </exclusion>
+        <exclusion>
+          <artifactId>jackson-databind</artifactId>
+          <groupId>tools.jackson.core</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.jenkins-ci.plugins</groupId>
-      <artifactId>jackson2-api</artifactId>
+      <groupId>io.jenkins.plugins</groupId>
+      <artifactId>jackson3-api</artifactId>
     </dependency>
     <dependency>
       <groupId>io.jenkins.plugins</groupId>

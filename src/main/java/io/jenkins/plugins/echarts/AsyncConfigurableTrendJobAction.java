@@ -1,8 +1,9 @@
 package io.jenkins.plugins.echarts;
 
 import edu.hm.hafner.echarts.ChartModelConfiguration;
-import edu.hm.hafner.echarts.JacksonFacade;
 import edu.hm.hafner.echarts.LinesChartModel;
+
+import tools.jackson.databind.ObjectMapper;
 
 import org.kohsuke.stapler.bind.JavaScriptMethod;
 import hudson.model.Job;
@@ -49,7 +50,7 @@ public abstract class AsyncConfigurableTrendJobAction<T extends BuildAction<?>> 
     @JavaScriptMethod
     @Override
     public String getConfigurableBuildTrendModel(final String configuration) {
-        return new JacksonFacade().toJson(createChartModel(configuration));
+        return new ObjectMapper().writeValueAsString(createChartModel(configuration));
     }
 
     /**
