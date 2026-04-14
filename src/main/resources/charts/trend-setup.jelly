@@ -52,6 +52,12 @@
               </div>
             </div>
             <div class="mb-3">
+              <input class="form-check-input" type="checkbox" id="zero-based-y-axis-${suffix}" />
+              <label class="form-check-label" for="zero-based-y-axis-${suffix}">
+                Start Y-axis from zero
+              </label>
+            </div>
+            <div class="mb-3">
               <div class="range-slider">
                 <input class="range-slider-range" type="range" value="500" min="100" max="1000" step="25" id="width-${suffix}"/>
                 <span class="range-slider-value">500</span>
@@ -78,5 +84,3 @@
   </div>
 
 </j:jelly>
-
-

@@ -13,7 +13,6 @@
   <packaging>hpi</packaging>
   <name>ECharts API Plugin</name>
   <version>${revision}-${changelist}</version>
-
   <description>Provides ECharts for Jenkins plugins.</description>
   <url>https://github.com/jenkinsci/echarts-api-plugin</url>
 

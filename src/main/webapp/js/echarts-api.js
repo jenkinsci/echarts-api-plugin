@@ -109,6 +109,7 @@ const echartsJenkinsApi = {
         const numberOfDaysInput = trendConfiguration.find('#days-' + suffix);
         const useBuildAsDomainCheckBox = trendConfiguration.find('#build-domain-' + suffix);
         const useDateAsDomainCheckBox = trendConfiguration.find('#date-domain-' + suffix);
+        const zeroBasedYAxisCheckBox = trendConfiguration.find('#zero-based-y-axis-' + suffix);
         const widthSlider = trendConfiguration.find('#width-' + suffix);
         const heightSlider = trendConfiguration.find('#height-' + suffix);
         const trendLocalStorageId = 'jenkins-echarts-trend-configuration-' + suffix;
@@ -137,6 +138,7 @@ const echartsJenkinsApi = {
                     numberOfDaysInput.val(trendJsonConfiguration.numberOfDays);
                     useBuildAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain === 'true');
                     useDateAsDomainCheckBox.prop('checked', trendJsonConfiguration.buildAsDomain !== 'true');
+                    zeroBasedYAxisCheckBox.prop('checked', trendJsonConfiguration.zeroBasedYAxis === 'true');
                     widthSlider.val(trendJsonConfiguration.width);
                     widthSlider.next().html(trendJsonConfiguration.width)
                     heightSlider.val(trendJsonConfiguration.height);
@@ -156,6 +158,7 @@ const echartsJenkinsApi = {
                 numberOfBuilds: numberOfBuildsInput.val(),
                 numberOfDays: numberOfDaysInput.val(),
                 buildAsDomain: useBuildAsDomainCheckBox.prop('checked') ? 'true' : 'false',
+                zeroBasedYAxis: zeroBasedYAxisCheckBox.prop('checked') ? 'true' : 'false',
                 width: widthSlider.val(),
                 height: heightSlider.val()
             };
@@ -272,6 +275,7 @@ const echartsJenkinsApi = {
      */
     renderConfigurableZoomableTrendChart: function (chartDivId, model, settingsDialogId, chartClickedEventHandler, allowYAxisZoom = false) {
         const chartModel = JSON.parse(echartsJenkinsApi.resolveJenkinsColors(model)); // NOPMD
+        chartModel.zeroBasedYAxis = chartModel.zeroBasedYAxis ?? false; 
         const chartPlaceHolder = document.getElementById(chartDivId);
         const chart = echarts.init(chartPlaceHolder);
         chartPlaceHolder.echart = chart; // NOPMD
@@ -361,7 +365,7 @@ const echartsJenkinsApi = {
             }],
             yAxis: [{
                 type: 'value',
-                min: chartModel.rangeMin ?? 'dataMin',
+                min: chartModel.zeroBasedYAxis ? 0 : (chartModel.rangeMin ?? 'dataMin'),
                 max: chartModel.rangeMax ?? 'dataMax',
                 axisLabel: {
                 },
@@ -464,7 +468,7 @@ const echartsJenkinsApi = {
                 ],
                 yAxis: [{
                     type: 'value',
-                    min: chartModel.rangeMin ?? 'dataMin',
+                    min: chartModel.zeroBasedYAxis ? 0 : (chartModel.rangeMin ?? 'dataMin'),
                     max: chartModel.rangeMax ?? 'dataMax',
                     axisLabel: {
                         color: textColor
@@ -486,6 +490,12 @@ const echartsJenkinsApi = {
             chart.hideLoading();
             const themedModel = echartsJenkinsApi.resolveJenkinsColors(model);
             const chartModel = JSON.parse(themedModel);
+            if (hasConfigurationDialog()) {
+                const trendConfig = echartsJenkinsApi.readConfiguration(
+                    'jenkins-echarts-trend-configuration-' + configurationId
+                );
+                chartModel.zeroBasedYAxis = trendConfig.zeroBasedYAxis === 'true'; // NOPMD
+            }
             chart.setOption(createOptions(chartModel), true);
             chart.resize();
 
