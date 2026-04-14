@@ -1,9 +1,6 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core">
 
-  <div>
-    Provides <a href="https://echarts.apache.org/en/index.html">ECharts</a> for Jenkins Plugins,
-    a JavaScript visualization tool to create intuitive, interactive, and highly-customizable charts.
-  </div>
-
-</j:jelly>
+<div>
+  Provides <a href="https://echarts.apache.org/en/index.html">ECharts</a> for Jenkins Plugins,
+  a JavaScript visualization tool to create intuitive, interactive, and highly-customizable charts.
+</div>
