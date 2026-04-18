@@ -2,9 +2,13 @@ package io.jenkins.plugins.echarts;
 
 import edu.hm.hafner.echarts.BuildResult;
 import edu.hm.hafner.echarts.LinesChartModel;
+import edu.umd.cs.findbugs.annotations.CheckForNull;
 
 import java.util.Iterator;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.ObjectNode;
 
 import org.kohsuke.stapler.bind.JavaScriptMethod;
 import hudson.model.Job;
@@ -24,6 +28,8 @@ import io.jenkins.plugins.util.JobAction;
  * @author Ullrich Hafner
  */
 public abstract class AsyncTrendJobAction<T extends BuildAction<?>> extends JobAction<T> implements AsyncTrendChart {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     /**
      * Creates a new instance of {@link AsyncTrendJobAction}.
      *
@@ -40,7 +46,7 @@ public abstract class AsyncTrendJobAction<T extends BuildAction<?>> extends JobA
     @JavaScriptMethod
     @SuppressWarnings("unused") // Called by jelly view
     public String getBuildTrendModel() {
-        return new ObjectMapper().writeValueAsString(createChartModel());
+        return OBJECT_MAPPER.writeValueAsString(createChartModel());
     }
 
     /**
@@ -76,5 +82,64 @@ public abstract class AsyncTrendJobAction<T extends BuildAction<?>> extends JobA
 
     protected Iterable<? extends BuildResult<T>> createBuildHistory() {
         return () -> new BuildActionIterator<>(getBuildActionClass(), getLatestAction());
+    }
+
+    /**
+     * Returns the text value of the specified JSON property.
+     *
+     * @param json
+     *         the JSON object to extract the property value from
+     * @param property
+     *         the name of the property
+     * @param defaultValue
+     *         the default value if the property is undefined or invalid
+     *
+     * @return the value of the property
+     */
+    protected String getStringFromJson(final String json, final String property, final String defaultValue) {
+        try {
+            var typeNode = getPropertyAsNode(json, property);
+            if (typeNode != null) {
+                return typeNode.asString(defaultValue);
+            }
+        }
+        catch (JacksonException exception) {
+            // ignore
+        }
+
+        return defaultValue;
+    }
+
+    /**
+     * Returns the text value of the specified JSON property.
+     *
+     * @param json
+     *         the JSON object to extract the property value from
+     * @param property
+     *         the name of the property
+     * @param defaultValue
+     *         the default value if the property is undefined or invalid
+     *
+     * @return the value of the property
+     */
+    protected int getIntegerFromJson(final String json, final String property, final int defaultValue) {
+        try {
+            var typeNode = getPropertyAsNode(json, property);
+            if (typeNode != null) {
+                return typeNode.asInt(defaultValue);
+            }
+        }
+        catch (JacksonException exception) {
+            // ignore
+        }
+
+        return defaultValue;
+    }
+
+    @CheckForNull
+    private JsonNode getPropertyAsNode(final String json, final String property)
+            throws JacksonException {
+        var node = OBJECT_MAPPER.readValue(json, ObjectNode.class);
+        return node.get(property);
     }
 }
