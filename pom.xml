@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>analysis-pom</artifactId>
-    <version>12.3159.v1734d34dfb_fc</version>
+    <version>12.3200.vc79dce20f68b_</version>
     <relativePath />
   </parent>
 
@@ -44,7 +44,6 @@
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>plugin-util-api</artifactId>
-      <version>7.1330.v47b_46ee2047a_</version>
     </dependency>
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
