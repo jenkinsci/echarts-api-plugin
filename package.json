@@ -6,7 +6,7 @@
     "doc": "doc"
   },
   "dependencies": {
-    "echarts": "6.0.0",
+    "echarts": "6.1.0",
     "culori": "4.0.2"
   },
   "devDependencies": {
