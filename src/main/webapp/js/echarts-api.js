@@ -1,19 +1,38 @@
 /* exported echartsJenkinsApi */
 
 const trendDefaultStorageId = 'jenkins-echarts-trend-configuration-default';
+
 const echartsJenkinsApi = {
     /**
-     * Resolves all Jenkins colors within the specified string model. These colors are specified as CSS variables
-     * of the form <code>--color-name</code>. The method replaces all occurrences of these variables with the actual
-     * color value of the current Jenkins theme.
+     * Resolves all Jenkins colors within the specified JSON model or String. These colors are specified as CSS
+     * variables of the form <code>--color-name</code>. The method replaces all occurrences of these variables with the
+     * actual color value of the current Jenkins theme, recursively, in every string value of the given object or
+     * array.
      *
-     * @param {String} model - the model to escape the Jenkins colors
-     * @returns {String} the escaped string
+     * @param {*} model - the JSON model (object, array, string, or primitive) to escape the Jenkins colors in
+     * @returns {*} a new model with all Jenkins colors resolved
      */
     resolveJenkinsColors: function (model) {
-        return model.replaceAll(/--([a-z-]+)/g, function (match) {
-            return echartsJenkinsApi.resolveJenkinsColor(match)
-        })
+        if (typeof model === 'string') {
+            return model.replaceAll(/--([a-z-]+)/g, function (match) {
+                return echartsJenkinsApi.resolveJenkinsColor(match);
+            });
+        }
+        if (Array.isArray(model)) {
+            return model.map(function (item) {
+                return echartsJenkinsApi.resolveJenkinsColors(item);
+            })
+        }
+        if (model !== null && typeof model === 'object') {
+            var result = {}
+            for (const key in model) {
+                if (Object.prototype.hasOwnProperty.call(model, key)) {
+                    result[key] = echartsJenkinsApi.resolveJenkinsColors(model[key]);
+                }
+            }
+            return result;
+        }
+        return model;
     },
 
     /**
@@ -179,13 +198,13 @@ const echartsJenkinsApi = {
         const range = jQuery3('.range-slider-range');
         const value = jQuery3('.range-slider-value');
 
-        slider.each(function() {
-            value.each(function() {
+        slider.each(function () {
+            value.each(function () {
                 const value = jQuery3(this).prev().attr('value');
                 jQuery3(this).html(value);
             });
 
-            range.on('input', function() {
+            range.on('input', function () {
                 jQuery3(this).next(value).html(this.value);
             });
         });
@@ -243,12 +262,12 @@ const echartsJenkinsApi = {
             const configurationJson = {
                 numberOfBuilds: numberOfBuildsInput.val(),
                 numberOfDays: numberOfDaysInput.val(),
-                buildAsDomain: useBuildAsDomainCheckBox.prop('checked') ? 'true' : 'false',
+                buildAsDomain: useBuildAsDomainCheckBox.prop('checked') ? 'true' : 'false'
             };
             if (saveDialog) {
                 const specific = saveDialog(chartConfiguration);
                 localStorage.setItem('jenkins-echarts-chart-configuration-' + suffix,
-                    JSON.stringify({... configurationJson, ... specific}));
+                    JSON.stringify({...configurationJson, ...specific}));
             }
             else {
                 localStorage.setItem('jenkins-echarts-chart-configuration-' + suffix, JSON.stringify(configurationJson));
@@ -274,8 +293,15 @@ const echartsJenkinsApi = {
      * @param {Boolean} allowYAxisZoom - Allow zooming on the y-axis
      */
     renderConfigurableZoomableTrendChart: function (chartDivId, model, settingsDialogId, chartClickedEventHandler, allowYAxisZoom = false) {
-        const chartModel = JSON.parse(echartsJenkinsApi.resolveJenkinsColors(model)); // NOPMD
-        chartModel.zeroBasedYAxis = chartModel.zeroBasedYAxis ?? false; 
+        function toJson(object) {
+            if (object instanceof String) {
+                return JSON.parse(object);
+            }
+            return object;
+        }
+
+        const chartModel = toJson(echartsJenkinsApi.resolveJenkinsColors(model)); // NOPMD
+        chartModel.zeroBasedYAxis = chartModel.zeroBasedYAxis ?? false;
         const chartPlaceHolder = document.getElementById(chartDivId);
         const chart = echarts.init(chartPlaceHolder);
         chartPlaceHolder.echart = chart; // NOPMD
@@ -367,8 +393,7 @@ const echartsJenkinsApi = {
                 type: 'value',
                 min: chartModel.zeroBasedYAxis ? 0 : (chartModel.rangeMin ?? 'dataMin'),
                 max: chartModel.rangeMax ?? 'dataMax',
-                axisLabel: {
-                },
+                axisLabel: {},
                 minInterval: chartModel.integerRangeAxis ? 1 : null
             }],
             series: chartModel.series
@@ -525,9 +550,11 @@ const echartsJenkinsApi = {
                                 const evt = params.event;
                                 if (evt && (evt.ctrlKey || evt.metaKey)) {
                                     window.open(buildUrl, '_blank');
-                                } else if (evt && evt.shiftKey) {
+                                }
+                                else if (evt && evt.shiftKey) {
                                     window.open(buildUrl, '_newWindow');
-                                } else {
+                                }
+                                else {
                                     window.location.assign(buildUrl)
                                 }
                             }
