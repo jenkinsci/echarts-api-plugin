@@ -294,7 +294,7 @@ const echartsJenkinsApi = {
      */
     renderConfigurableZoomableTrendChart: function (chartDivId, model, settingsDialogId, chartClickedEventHandler, allowYAxisZoom = false) {
         function toJson(object) {
-            if (object instanceof String) {
+            if (typeof object === 'string') {
                 return JSON.parse(object);
             }
             return object;
