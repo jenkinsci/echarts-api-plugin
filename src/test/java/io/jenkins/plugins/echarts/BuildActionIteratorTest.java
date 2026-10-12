@@ -1,22 +1,18 @@
 package io.jenkins.plugins.echarts;
 
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import edu.hm.hafner.echarts.Build;
+import edu.hm.hafner.echarts.BuildResult;
+import hudson.model.Run;
+import io.jenkins.plugins.util.BuildAction;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-
 import org.assertj.core.api.RecursiveComparisonAssert;
 import org.junit.jupiter.api.Test;
-
-import edu.hm.hafner.echarts.Build;
-import edu.hm.hafner.echarts.BuildResult;
-
-import hudson.model.Run;
-
-import io.jenkins.plugins.util.BuildAction;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Tests the class {@link BuildActionIterator}.
@@ -151,8 +147,8 @@ class BuildActionIteratorTest {
         shouldSelectResultByFilter(first, second, second);
     }
 
-    private void shouldSelectResultByFilter(final TestAction first, final TestAction second,
-            final TestAction expectedResult) {
+    private void shouldSelectResultByFilter(
+            final TestAction first, final TestAction second, final TestAction expectedResult) {
         TestAction testAction = mock(TestAction.class);
         Run<?, ?> baseline = mock(Run.class);
         when(testAction.getOwner()).thenAnswer(i -> baseline);
@@ -175,9 +171,11 @@ class BuildActionIteratorTest {
         assertThat(iterator).isExhausted();
     }
 
-    private RecursiveComparisonAssert<?> verifyResult(final TestAction expectedResult,
-            final BuildActionIterator<TestAction> iterator) {
-        return assertThat(iterator.next()).usingRecursiveComparison().ignoringFields("build")
+    private RecursiveComparisonAssert<?> verifyResult(
+            final TestAction expectedResult, final BuildActionIterator<TestAction> iterator) {
+        return assertThat(iterator.next())
+                .usingRecursiveComparison()
+                .ignoringFields("build")
                 .isEqualTo(new BuildResult<>(IGNORE_BUILD, expectedResult));
     }
 

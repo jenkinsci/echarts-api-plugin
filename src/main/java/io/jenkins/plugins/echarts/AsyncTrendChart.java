@@ -1,7 +1,6 @@
 package io.jenkins.plugins.echarts;
 
 import edu.hm.hafner.echarts.LinesChartModel;
-
 import org.kohsuke.stapler.bind.JavaScriptMethod;
 
 /**

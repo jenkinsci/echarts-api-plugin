@@ -1,12 +1,10 @@
 package io.jenkins.plugins.echarts;
 
+import hudson.model.Run;
+import io.jenkins.plugins.util.BuildAction;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
-import hudson.model.Run;
-
-import io.jenkins.plugins.util.BuildAction;
 
 /**
  * Selects a specific action from the all actions that are attached to the given build. The action is selected by a
@@ -47,10 +45,8 @@ public class ActionSelector<T extends BuildAction<?>> implements Function<Run<?,
     @Override
     public Optional<T> apply(final Run<?, ?> baseline) {
         for (Run<?, ?> run = baseline; run != null; run = run.getPreviousBuild()) {
-            Optional<T> action = run.getActions(actionType)
-                    .stream()
-                    .filter(predicate)
-                    .findAny();
+            Optional<T> action =
+                    run.getActions(actionType).stream().filter(predicate).findAny();
             if (action.isPresent()) {
                 return action;
             }

@@ -1,17 +1,14 @@
 package io.jenkins.plugins.echarts;
 
+import edu.hm.hafner.echarts.Build;
+import edu.hm.hafner.echarts.BuildResult;
+import hudson.model.Run;
+import io.jenkins.plugins.util.BuildAction;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
-import edu.hm.hafner.echarts.Build;
-import edu.hm.hafner.echarts.BuildResult;
-
-import hudson.model.Run;
-
-import io.jenkins.plugins.util.BuildAction;
 
 /**
  * Iterates over a collection of builds that contain results of a given generic type. These results are available via a
@@ -52,8 +49,8 @@ public class BuildActionIterator<T extends BuildAction<?>> implements Iterator<B
      * @param filter
      *         a predicate to filter the build actions of a build so that the selected action is unique
      */
-    public BuildActionIterator(final Class<T> actionType, final Optional<T> baseline,
-            final Predicate<? super T> filter) {
+    public BuildActionIterator(
+            final Class<T> actionType, final Optional<T> baseline, final Predicate<? super T> filter) {
         latestAction = baseline;
         actionSelector = new ActionSelector<>(actionType, filter);
     }

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -7,23 +8,14 @@
     <version>12.3362.vd97f455460a_2</version>
     <relativePath />
   </parent>
+  <groupId>io.jenkins.plugins</groupId>
 
   <artifactId>echarts-api</artifactId>
-  <groupId>io.jenkins.plugins</groupId>
+  <version>${revision}-${changelist}</version>
   <packaging>hpi</packaging>
   <name>ECharts API Plugin</name>
-  <version>${revision}-${changelist}</version>
   <description>Provides ECharts for Jenkins plugins.</description>
   <url>https://github.com/jenkinsci/echarts-api-plugin</url>
-
-  <properties>
-    <revision>6.1.0</revision>
-    <changelist>999999-SNAPSHOT</changelist>
-
-    <module.name>${project.groupId}.echarts</module.name>
-
-    <echarts-build-trends.version>6.1.0</echarts-build-trends.version>
-  </properties>
 
   <licenses>
     <license>
@@ -34,16 +26,32 @@
 
   <developers>
     <developer>
-      <name>Ullrich Hafner</name>
       <id>uhafner</id>
+      <name>Ullrich Hafner</name>
       <email>ullrich.hafner@gmail.com</email>
     </developer>
   </developers>
 
+  <scm>
+    <connection>scm:git:https://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
+    <tag>${scmTag}</tag>
+    <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
+  </scm>
+
+  <properties>
+    <revision>6.1.0</revision>
+    <changelist>999999-SNAPSHOT</changelist>
+
+    <module.name>${project.groupId}.echarts</module.name>
+
+    <echarts-build-trends.version>6.1.0</echarts-build-trends.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
-      <artifactId>plugin-util-api</artifactId>
+      <artifactId>bootstrap5-api</artifactId>
     </dependency>
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
@@ -51,11 +59,15 @@
     </dependency>
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
-      <artifactId>bootstrap5-api</artifactId>
+      <artifactId>jackson3-api</artifactId>
     </dependency>
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>jquery3-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.jenkins.plugins</groupId>
+      <artifactId>plugin-util-api</artifactId>
     </dependency>
     <dependency>
       <groupId>edu.hm.hafner</groupId>
@@ -68,30 +80,26 @@
           <artifactId>spotbugs-annotations</artifactId>
         </exclusion>
         <exclusion>
-          <artifactId>codingstyle</artifactId>
-          <groupId>edu.hm.hafner</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>commons-lang3</artifactId>
-          <groupId>org.apache.commons</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>error_prone_annotations</artifactId>
           <groupId>com.google.errorprone</groupId>
+          <artifactId>error_prone_annotations</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>edu.hm.hafner</groupId>
+          <artifactId>codingstyle</artifactId>
         </exclusion>
         <exclusion>
           <groupId>javax.annotation</groupId>
           <artifactId>javax.annotation-api</artifactId>
         </exclusion>
         <exclusion>
-          <artifactId>jackson-databind</artifactId>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+        </exclusion>
+        <exclusion>
           <groupId>tools.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>io.jenkins.plugins</groupId>
-      <artifactId>jackson3-api</artifactId>
     </dependency>
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
@@ -101,6 +109,20 @@
     </dependency>
 
   </dependencies>
+
+  <repositories>
+    <repository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>repo.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/public/</url>
+    </pluginRepository>
+  </pluginRepositories>
 
   <build>
     <plugins>
@@ -130,10 +152,10 @@
         <executions>
           <execution>
             <id>copy-resources</id>
-            <phase>process-resources</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
+            <phase>process-resources</phase>
             <configuration>
               <outputDirectory>${project.build.directory}/${project.artifactId}/js</outputDirectory>
               <resources>
@@ -166,10 +188,10 @@
         <executions>
           <execution>
             <id>unpack-dependencies</id>
-            <phase>generate-resources</phase>
             <goals>
               <goal>unpack-dependencies</goal>
             </goals>
+            <phase>generate-resources</phase>
             <configuration>
               <outputDirectory>${project.build.directory}/classes</outputDirectory>
               <includeArtifactIds>echarts-build-trends</includeArtifactIds>
@@ -189,26 +211,4 @@
     </plugins>
   </build>
 
-  <scm>
-    <connection>scm:git:https://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
-    <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
-    <tag>${scmTag}</tag>
-  </scm>
-
-  <repositories>
-    <repository>
-      <id>repo.jenkins-ci.org</id>
-      <url>https://repo.jenkins-ci.org/public/</url>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>repo.jenkins-ci.org</id>
-      <url>https://repo.jenkins-ci.org/public/</url>
-    </pluginRepository>
-  </pluginRepositories>
-
 </project>
-

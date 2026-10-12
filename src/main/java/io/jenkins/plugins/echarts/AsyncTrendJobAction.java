@@ -3,18 +3,15 @@ package io.jenkins.plugins.echarts;
 import edu.hm.hafner.echarts.BuildResult;
 import edu.hm.hafner.echarts.LinesChartModel;
 import edu.umd.cs.findbugs.annotations.CheckForNull;
-
+import hudson.model.Job;
+import io.jenkins.plugins.util.BuildAction;
+import io.jenkins.plugins.util.JobAction;
 import java.util.Iterator;
+import org.kohsuke.stapler.bind.JavaScriptMethod;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.node.ObjectNode;
-
-import org.kohsuke.stapler.bind.JavaScriptMethod;
-import hudson.model.Job;
-
-import io.jenkins.plugins.util.BuildAction;
-import io.jenkins.plugins.util.JobAction;
 
 /**
  * A job action displays a link on the side panel of a job that refers to the last build that contains results (i.e., a
@@ -102,8 +99,7 @@ public abstract class AsyncTrendJobAction<T extends BuildAction<?>> extends JobA
             if (typeNode != null) {
                 return typeNode.asString(defaultValue);
             }
-        }
-        catch (JacksonException exception) {
+        } catch (JacksonException exception) {
             // ignore
         }
 
@@ -128,8 +124,7 @@ public abstract class AsyncTrendJobAction<T extends BuildAction<?>> extends JobA
             if (typeNode != null) {
                 return typeNode.asInt(defaultValue);
             }
-        }
-        catch (JacksonException exception) {
+        } catch (JacksonException exception) {
             // ignore
         }
 
@@ -137,8 +132,7 @@ public abstract class AsyncTrendJobAction<T extends BuildAction<?>> extends JobA
     }
 
     @CheckForNull
-    private JsonNode getPropertyAsNode(final String json, final String property)
-            throws JacksonException {
+    private JsonNode getPropertyAsNode(final String json, final String property) throws JacksonException {
         var node = OBJECT_MAPPER.readValue(json, ObjectNode.class);
         return node.get(property);
     }

@@ -3,16 +3,13 @@ package io.jenkins.plugins.echarts;
 import edu.hm.hafner.echarts.Build;
 import edu.hm.hafner.echarts.BuildResult;
 import edu.umd.cs.findbugs.annotations.NonNull;
-
+import hudson.model.Run;
+import io.jenkins.plugins.util.BuildAction;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
-import hudson.model.Run;
-
-import io.jenkins.plugins.util.BuildAction;
 
 /**
  * Iterates over a collection of builds that contain results of a given generic type. These results are available via a
@@ -33,8 +30,11 @@ public class GenericBuildActionIterator<A extends BuildAction<?>, R> implements 
     private Optional<A> latestAction;
     private final Function<A, R> function;
 
-    GenericBuildActionIterator(final Class<A> actionType, final Optional<A> latestAction,
-            final Predicate<A> predicate, final Function<A, R> function) {
+    GenericBuildActionIterator(
+            final Class<A> actionType,
+            final Optional<A> latestAction,
+            final Predicate<A> predicate,
+            final Function<A, R> function) {
         this.latestAction = latestAction;
         this.function = function;
         actionSelector = new ActionSelector<>(actionType, predicate);
@@ -90,8 +90,11 @@ public class GenericBuildActionIterator<A extends BuildAction<?>, R> implements 
          * @param function
          *         the supplier that extracts the specific results from the action
          */
-        public BuildActionIterable(final Class<A> actionType, final A latestAction,
-                final Predicate<A> filter, final Function<A, R> function) {
+        public BuildActionIterable(
+                final Class<A> actionType,
+                final A latestAction,
+                final Predicate<A> filter,
+                final Function<A, R> function) {
             this(actionType, Optional.of(latestAction), filter, function);
         }
 
@@ -107,8 +110,11 @@ public class GenericBuildActionIterator<A extends BuildAction<?>, R> implements 
          * @param function
          *         the supplier that extracts the specific results from the action
          */
-        public BuildActionIterable(final Class<A> actionType, final Optional<A> latestAction,
-                final Predicate<A> filter, final Function<A, R> function) {
+        public BuildActionIterable(
+                final Class<A> actionType,
+                final Optional<A> latestAction,
+                final Predicate<A> filter,
+                final Function<A, R> function) {
             this.actionType = actionType;
             this.latestAction = latestAction;
             this.filter = filter;
