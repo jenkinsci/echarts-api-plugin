@@ -4,15 +4,12 @@ import edu.hm.hafner.echarts.BuildResult;
 import edu.hm.hafner.echarts.ChartModelConfiguration;
 import edu.hm.hafner.echarts.line.LinesChartModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
-
-import java.util.Iterator;
-import tools.jackson.databind.ObjectMapper;
-
-import org.kohsuke.stapler.bind.JavaScriptMethod;
 import hudson.model.Job;
-
 import io.jenkins.plugins.util.BuildAction;
 import io.jenkins.plugins.util.JobAction;
+import java.util.Iterator;
+import org.kohsuke.stapler.bind.JavaScriptMethod;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * A job action displays a link on the side panel of a job that refers to the last build that contains results (i.e., a
@@ -96,7 +93,6 @@ public abstract class TrendChartJobAction<T extends BuildAction<?>> extends JobA
      */
     protected Iterable<? extends BuildResult<T>> createBuildHistory() {
         return () -> new GenericBuildActionIterator<>(
-                getBuildActionClass(), getLatestAction(),
-                a -> getUrlName().equals(a.getUrlName()), a -> a);
+                getBuildActionClass(), getLatestAction(), a -> getUrlName().equals(a.getUrlName()), a -> a);
     }
 }

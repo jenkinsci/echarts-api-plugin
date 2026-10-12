@@ -111,6 +111,7 @@ In the following snippet you see this tag in action (embedded in a https://githu
 
 You need to provide a unique ID for this chart and the corresponding model value.
 The model must be the JSON representation of a corresponding `PieChartModel` instance.
+Such a model can be created with a couple of lines, see the class https://github.com/uhafner/echarts-build-trends/blob/main/src/main/java/edu/hm/hafner/echarts/PercentagePieChart.java[PercentagePieChart].
 
 [#trend-charts]
 === Trend charts on the job level view

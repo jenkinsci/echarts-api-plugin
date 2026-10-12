@@ -2,7 +2,6 @@ package io.jenkins.plugins.echarts;
 
 import java.util.List;
 import java.util.Locale;
-
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -29,8 +28,8 @@ public enum JenkinsPalette {
     WHITE(StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY),
     YELLOW;
 
-    static final List<JenkinsPalette> CHART_COLORS = List.of(RED, BLUE, YELLOW, GREEN, CYAN, INDIGO,
-            ORANGE, PINK, PURPLE, BROWN);
+    static final List<JenkinsPalette> CHART_COLORS =
+            List.of(RED, BLUE, YELLOW, GREEN, CYAN, INDIGO, ORANGE, PINK, PURPLE, BROWN);
 
     /**
      * Returns a chart color that can be used to render element {@code n} in a chart. If {@code n} is greater than

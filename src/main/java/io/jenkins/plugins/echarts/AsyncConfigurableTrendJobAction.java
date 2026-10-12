@@ -2,13 +2,10 @@ package io.jenkins.plugins.echarts;
 
 import edu.hm.hafner.echarts.ChartModelConfiguration;
 import edu.hm.hafner.echarts.LinesChartModel;
-
-import tools.jackson.databind.ObjectMapper;
-
-import org.kohsuke.stapler.bind.JavaScriptMethod;
 import hudson.model.Job;
-
 import io.jenkins.plugins.util.BuildAction;
+import org.kohsuke.stapler.bind.JavaScriptMethod;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * A job action displays a link on the side panel of a job that refers to the last build that contains results (i.e. a
@@ -43,7 +40,9 @@ public abstract class AsyncConfigurableTrendJobAction<T extends BuildAction<?>> 
 
     @JavaScriptMethod
     @Override
-    public final String getBuildTrendModel() { // This method will be invoked if the trend chart does not enable a configuration dialog
+    public final String
+            getBuildTrendModel() { // This method will be invoked if the trend chart does not enable a configuration
+        // dialog
         return getConfigurableBuildTrendModel(EMPTY_CONFIGURATION);
     }
 
@@ -66,7 +65,9 @@ public abstract class AsyncConfigurableTrendJobAction<T extends BuildAction<?>> 
     protected abstract LinesChartModel createChartModel(String configuration);
 
     @Override
-    protected final LinesChartModel createChartModel() { // This method will be invoked if the trend chart does not enable the configuration dialog
+    protected final LinesChartModel
+            createChartModel() { // This method will be invoked if the trend chart does not enable the configuration
+        // dialog
         return createChartModel(EMPTY_CONFIGURATION);
     }
 }
